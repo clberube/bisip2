@@ -51,7 +51,7 @@ fig = model.plot_traces()
 ```
 ```
 Out:
-
+![traces](https://raw.githubusercontent.com/clberube/bisip2/master/figures/traces.png)
 ```
 
 ```python
