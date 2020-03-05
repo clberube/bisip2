@@ -9,7 +9,6 @@
 
 import numpy as np
 from src.bisip.models import PolynomialDecomposition
-from src.bisip.plotlib import plot_traces
 
 
 model = PolynomialDecomposition(nwalkers=32, poly_deg=4, c_exp=1.0, nsteps=5000)
@@ -20,5 +19,9 @@ model.fit(fp)
 fig = model.plot_traces(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'])
 
 chain = model.get_chain(discard=1000, thin=10, flat=True)
+chain.shape
+
+fig = model.plot_histograms(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], chain=chain)
+
 
 fig = model.plot_fit(chain)

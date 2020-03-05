@@ -11,6 +11,24 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+def parse_chain(model, chain, **kwargs):
+    if chain is None:
+        # if discard is not None and thin is not None:
+        kwargs['flat'] = True
+        chain = model.get_chain(**kwargs)
+
+    else:
+        if chain.ndim > 2:
+            raise ValueError('Flatten chain before passing to plot_fit().')
+
+        if 'discard' in kwargs or 'thin' in kwargs:
+            raise ValueError('Please pass either a chain obtained with '
+                             'the get_chain() method or pass '
+                             'discard and thin keywords to plot_fit(). '
+                             'Do not pass both arguments.')
+    return chain
+
+
 def plot_traces(model, labels):
     fig, axes = plt.subplots(model.ndim, figsize=(10, 7), sharex=True)
     chain = model.get_chain()
@@ -26,22 +44,23 @@ def plot_traces(model, labels):
     return fig
 
 
+def plot_histograms(model, labels, chain=None, bins=25, **kwargs):
+
+    chain = parse_chain(model, chain, **kwargs)
+    fig, axes = plt.subplots(model.ndim, figsize=(5, 1.5*chain.shape[1]))
+    for i in range(model.ndim):
+        ax = axes[i]
+        ax.hist(chain[:, i], bins=bins, fc='w', ec='k')
+        ax.set_xlabel(labels[i])
+        ax.ticklabel_format(axis='x', scilimits=[-2, 2])
+    fig.tight_layout()
+
+    return fig
+
+
 def plot_fit(model, chain=None, **kwargs):
 
-    if chain is None:
-        # if discard is not None and thin is not None:
-        kwargs['flat'] = True
-        chain = model.get_chain(**kwargs)
-
-    else:
-        if chain.ndim > 2:
-            raise ValueError('Flatten chain before passing to plot_fit().')
-
-        if 'discard' in kwargs or 'thin' in kwargs:
-            raise ValueError('Please pass either a chain obtained with '
-                             'the get_chain() method or pass '
-                             'discard and thin keywords to plot_fit(). '
-                             'Do not pass both arguments.')
+    chain = parse_chain(model, chain, **kwargs)
 
     fig, ax = plt.subplots(2, 1, figsize=(4, 5), sharex=True)
     data = model.data

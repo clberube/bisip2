@@ -36,6 +36,7 @@ def log_probability(theta, model, bounds, x, y, yerr):
 class Inversion(object):
 
     plot_traces = plotlib.plot_traces
+    plot_histograms = plotlib.plot_histograms
     plot_fit = plotlib.plot_fit
 
     def __init__(self, pool=None, moves=None):
