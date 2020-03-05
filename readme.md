@@ -49,7 +49,7 @@ Out:
 # Plot the parameter traces
 fig = model.plot_traces()
 ```
-<img src="https://raw.githubusercontent.com/clberube/bisip2/master/figures/traces.png" width="50%" align="center">
+<img src="https://raw.githubusercontent.com/clberube/bisip2/master/figures/traces.png" width="50%" align="right">
 
 ```python
 # Extract the parameter values for all walkers after a <discard> period
@@ -60,4 +60,4 @@ chain = model.get_chain(discard=1000, thin=10, flat=True)
 # Plot the model against the data for these parameter values
 fig = model.plot_fit(chain)
 ```
-<img src="https://raw.githubusercontent.com/clberube/bisip2/master/figures/fitted.png" width="25%" align="center">
+<img src="https://raw.githubusercontent.com/clberube/bisip2/master/figures/fitted.png" width="25%" align="right">
