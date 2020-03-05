@@ -1,13 +1,27 @@
 # BISIP
 ## This is the development repository for BISIP2, the successor of BISIP: https://github.com/clberube/BISIP
-### BISIP is being re-written from scratch with better code practice, documentation, and most importantly with a more powerful Ensemble MCMC sampler.
+### BISIP is being re-written with a powerful ensemble MCMC sampler, better code practice and improved documentation.
 
 
+### Requirements
+- Python 3 (BISIP is developed on Python 3.7)  
+- emcee (https://emcee.readthedocs.io/en/stable/)
+- numpy (https://numpy.org/)
+- matplotlib (https://matplotlib.org/)
 
 
 ### Installation
+Clone this repository to your computer. Then navigate to the bisip directory. Finally run the setup.py script with Python.
+
+```
+git clone https://github.com/clberube/bisip2
+cd bisip2
+python setup.py install -f
+```
 
 ### Quickstart
+Import BISIP in your Python scripts as follows:
+
 ```python
 from bisip import PolynomialDecomposition
 
@@ -32,7 +46,7 @@ Out:
 ```
 
 ```python
-# Plot the parameter parameter traces
+# Plot the parameter traces
 fig = model.plot_traces()
 ```
 ```
