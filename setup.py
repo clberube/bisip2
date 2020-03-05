@@ -14,17 +14,18 @@ Created on Fri Sep 29 16:18:50 2017
 
 from setuptools import setup, find_packages
 
-from distutils.core import setup
+# from distutils.core import setup
 from distutils.extension import Extension
 from distutils.command.sdist import sdist as _sdist
 import numpy
 
-PACKAGES = find_packages(where="src")
+
+SRC_DIR = 'src'
+PACKAGES = find_packages(where=SRC_DIR)
 
 
 class sdist(_sdist):
     def run(self):
-        # Make sure the compiled Cython files in the distribution are up-to-date
         from Cython.Build import cythonize
         cythonize(['./src/bisip/cython_funcs.pyx'])
         _sdist.run(self)
@@ -54,22 +55,20 @@ else:
     ]
 
 setup(
-  name = 'bisip',
-  packages=PACKAGES, # this must be the same as the name above
-  package_dir={"": "src"},
-  # py_models=['models','plotlib','utils'],
-  version = '0.0.1',
-  license = 'MIT',
+  name='bisip',
+  packages=PACKAGES,
+  package_dir={"": SRC_DIR},
+  version='0.0.1',
+  license='MIT',
   install_requires=['emcee', 'numpy', 'matplotlib'],
-  description = 'Bayesian inversion of SIP data',
-  long_description = 'README.md',
-  author = 'Charles L. Berube',
-  author_email = 'charleslberube@gmail.com',
-  url = 'https://github.com/clberube/bisip2', # use the URL to the github repo
-#  download_url = 'https://github.com/clberube/BISIP/archive/0.0.1.tar.gz', # I'll explain this in a second
-  keywords = ['stochastic inversion','spectral induced polarization','mcmc'], # arbitrary keywords
-  classifiers = [],
-  cmdclass = cmdclass,
-  ext_modules = ext_modules,
+  description='Bayesian inversion of SIP data',
+  long_description='README.md',
+  author='Charles L. Berube',
+  author_email='charleslberube@gmail.com',
+  url='https://github.com/clberube/bisip2',
+  keywords=['stochastic inversion', 'spectral induced polarization', 'mcmc'],
+  classifiers=[],
+  cmdclass=cmdclass,
+  ext_modules=ext_modules,
   include_dirs=[numpy.get_include()],
 )
