@@ -72,7 +72,7 @@ class PolynomialDecomposition(Inversion):
         self.poly_deg = poly_deg
 
     def forward(self, theta, w):
-        rho, _, *a = theta
+        rho, *a = theta
         a = np.array(a)
         return Decomp_cyth(w, self.taus, self.log_taus, self.c_exp, rho, a)
 
@@ -84,13 +84,19 @@ class PolynomialDecomposition(Inversion):
         n_tau = 2*self.data['N']
         self.log_tau = np.linspace(min_tau, max_tau, n_tau)
 
-        deg_range = range(self.poly_deg+1)
-        rev_deg_range = reversed(deg_range)
+        deg_range = list(range(self.poly_deg+1))
+        rev_deg_range = list(reversed(deg_range))
         self.log_taus = np.array([self.log_tau**i for i in rev_deg_range])
         self.taus = 10**self.log_tau  # Accelerates sampling
 
-        self.bounds = np.array([[0.9, 0] + [-1 for i in deg_range],
-                                [1.1, 1] + [1 for i in deg_range],
-                                ])
+        params = {'r0': [0.9, 1.1]}
+        params.update({f'a{x}': [-1, 1] for x in rev_deg_range})
+
+        self.bounds = np.array([params[x] for x in params.keys()]).T
+        self.params = params
+
+        # self.bounds = np.array([[0.9, 0] + [-1 for i in deg_range],
+        #                         [1.1, 1] + [1 for i in deg_range],
+        #                         ])
 
         self._start_sampling(pool=self.pool, moves=self.moves)

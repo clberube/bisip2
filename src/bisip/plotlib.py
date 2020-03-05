@@ -14,12 +14,11 @@ import matplotlib.pyplot as plt
 def parse_chain(model, chain, **kwargs):
     if chain is None:
         # if discard is not None and thin is not None:
-        kwargs['flat'] = True
         chain = model.get_chain(**kwargs)
 
     else:
         if chain.ndim > 2:
-            raise ValueError('Flatten chain before passing to plot_fit().')
+            raise ValueError('Flatten chain by passing to plot_fit().')
 
         if 'discard' in kwargs or 'thin' in kwargs:
             raise ValueError('Please pass either a chain obtained with '
@@ -29,9 +28,11 @@ def parse_chain(model, chain, **kwargs):
     return chain
 
 
-def plot_traces(model, labels):
+def plot_traces(model, chain=None, **kwargs):
+    if chain is None:
+        chain = model.get_chain(**kwargs)
+    labels = list(model.params.keys())
     fig, axes = plt.subplots(model.ndim, figsize=(10, 7), sharex=True)
-    chain = model.get_chain()
     for i in range(model.ndim):
         ax = axes[i]
         ax.plot(chain[:, :, i], 'k', alpha=0.3)
@@ -44,9 +45,10 @@ def plot_traces(model, labels):
     return fig
 
 
-def plot_histograms(model, labels, chain=None, bins=25, **kwargs):
+def plot_histograms(model, chain=None, bins=25, **kwargs):
 
     chain = parse_chain(model, chain, **kwargs)
+    labels = list(model.params.keys())
     fig, axes = plt.subplots(model.ndim, figsize=(5, 1.5*chain.shape[1]))
     for i in range(model.ndim):
         ax = axes[i]
