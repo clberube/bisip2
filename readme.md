@@ -61,7 +61,4 @@ chain = model.get_chain(discard=1000, thin=10, flat=True)
 # Plot the model against the data for these parameter values
 fig = model.plot_fit(chain)
 ```
-```
-Out:
-
-```
+![fit](https://raw.githubusercontent.com/clberube/bisip2/master/figures/fitted.png)
