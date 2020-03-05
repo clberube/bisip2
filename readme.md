@@ -58,10 +58,13 @@ fig = model.plot_traces()
 ```python
 # Extract the parameter values for all walkers
 # after a <discard> period.
-# Thin is by taking every 10 iterations
+# Thin the chain by only keeping every 10 iterations
 # Flatten the walkers into a single chain
-chain = model.get_chain(discard=1000, thin=10, flat=True)
+chain = model.get_chain(discard=1000,
+                        thin=10,
+                        flat=True)
 
-# Plot the model against the data for these parameter values
+# Plot the model against the data for
+# the remaining parameter values in the chain
 fig = model.plot_fit(chain)
 ```
