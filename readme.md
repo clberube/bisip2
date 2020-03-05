@@ -49,10 +49,8 @@ Out:
 # Plot the parameter traces
 fig = model.plot_traces()
 ```
-```
-Out:
 ![traces](https://raw.githubusercontent.com/clberube/bisip2/master/figures/traces.png)
-```
+
 
 ```python
 # Extract the parameter values for all walkers after a <discard> period
