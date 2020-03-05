@@ -27,10 +27,10 @@ from bisip import PolynomialDecomposition
 
 # Define a Polynomial Decomposition model with
 # a 4th order approximation and c-exponent equal to 1 (Debye)
-# The simulation will run for 5000 steps with 32 walkers
+# The simulation will run for 500 steps with 32 walkers
 # exploring the Debye Decomposition parameter space
 model = PolynomialDecomposition(nwalkers=32,  # number of walkers
-                                nsteps=5000,  # number of MCMC steps
+                                nsteps=500,  # number of MCMC steps
                                 poly_deg=4,  # 4th order polynomial
                                 c_exp=1.0,  # debye decomposition
                                 )
@@ -58,9 +58,9 @@ fig = model.plot_traces()
 ```python
 # Extract the parameter values for all walkers
 # after a <discard> period.
-# Thin the chain by only keeping every 10 iterations
+# Thin the chain by selecting every <thin> steps
 # Flatten the walkers into a single chain
-chain = model.get_chain(discard=1000,
+chain = model.get_chain(discard=300,
                         thin=10,
                         flat=True)
 
