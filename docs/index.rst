@@ -49,7 +49,7 @@ You can then plot the parameter space with:
 
   model.plot_corner(discard=200)
 
-.. image:: https://raw.githubusercontent.com/clberube/bisip2/master/figures/corner.png
+.. image:: https://raw.githubusercontent.com/clberube/bisip2/master/figures/corner_plot.png
 
 
 A more detailed guide is available in the :ref:`quickstart` tutorial.
