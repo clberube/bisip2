@@ -47,9 +47,9 @@ You can then plot the parameter space with:
 
 .. code-block:: python
 
-  model.plot_traces()
+  model.plot_corner(discard=200)
 
-.. image:: https://raw.githubusercontent.com/clberube/bisip2/master/figures/corner_plot.png
+.. image:: https://raw.githubusercontent.com/clberube/bisip2/master/figures/corner.png
 
 
 A more detailed guide is available in the :ref:`quickstart` tutorial.
