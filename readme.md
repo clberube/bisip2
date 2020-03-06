@@ -42,7 +42,7 @@ model.fit(filepath)
 ```
 ```
 Out:
-100%|██████████| 5000/5000 [00:09<00:00, 512.08it/s]
+100%|██████████| 1000/1000 [00:01<00:00, 558.64it/s]
 ```
 
 ```python
@@ -61,7 +61,7 @@ fig = model.plot_traces()
 # Thin the chain by selecting every <thin> steps
 # Flatten the walkers into a single chain
 chain = model.get_chain(discard=300,
-                        thin=10,
+                        thin=30,
                         flat=True)
 
 # Plot the model against the data for

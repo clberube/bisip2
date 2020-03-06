@@ -3,11 +3,36 @@
 # @Author: cberube
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
-# @Last modified by:   cberube
-# @Last modified time: 05-03-2020
+# @Last modified by:   charles
+# @Last modified time: 2020-03-06T10:45:21-05:00
 
+
+import warnings
 
 import numpy as np
+
+
+def parse_chain(self, chain, **kwargs):
+    if chain is None:
+        # if discard is not None and thin is not None:
+        kwargs['flat'] = True
+        chain = self.get_chain(**kwargs)
+        if 'discard' not in kwargs and 'thin' not in kwargs:
+            warnings.warn(('No samples were discarded from the chain.\n'
+                           'Pass discard and thin keywords to remove '
+                           'burn-in samples and reduce autocorrelation.'),
+                          UserWarning)
+
+    else:
+        if chain.ndim > 2:
+            raise ValueError('Flatten chain by passing flat=True.')
+
+        if 'discard' in kwargs or 'thin' in kwargs:
+            raise ValueError('Please pass either a chain obtained with '
+                             'the get_chain() method or pass '
+                             'discard and thin keywords to parse '
+                             'the full chain. Do not pass both.')
+    return chain
 
 
 def load_data(filename, headers=1, ph_units='mrad'):
