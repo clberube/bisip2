@@ -1,7 +1,7 @@
 # @Author: charles
 # @Date:   2020-03-06T13:54:13-05:00
 # @Last modified by:   charles
-# @Last modified time: 2020-03-06T14:47:52-05:00
+# @Last modified time: 2020-03-06T15:36:27-05:00
 
 
 
@@ -33,7 +33,7 @@ release = '0.0.1'
 
 
 # -- General configuration ---------------------------------------------------
-
+master_doc = 'index'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
