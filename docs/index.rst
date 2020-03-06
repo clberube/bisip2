@@ -39,7 +39,7 @@ To perform Debye Decomposition of a SIP data file, you would use the following:
   filepath = '/Users/cberube/Repositories/bisip/data files/SIP-K389175_avg.dat'
   # Fit the model to this data file
   model.fit(filepath)
-    100%|██████████| 1000/1000 [00:01<00:00, 558.64it/s]
+  100%|██████████| 1000/1000 [00:01<00:00, 558.64it/s]
 
 
 A more detailed guide is available in the :ref:`quickstart` tutorial.
