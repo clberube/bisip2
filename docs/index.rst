@@ -27,7 +27,6 @@ and c-exponent equal to 1 (Debye). Set the simulation to run for 1000 steps
 with 32 MCMC walkers exploring the Debye Decomposition parameter space.
 
 .. code-block:: python
-  :linenos:
 
   from bisip import PolynomialDecomposition
 
@@ -44,9 +43,13 @@ with 32 MCMC walkers exploring the Debye Decomposition parameter space.
   model.fit(filepath)
   # Out: 100%|██████████| 1000/1000 [00:01<00:00, 558.64it/s]
 
+You can then plot the parameter space with:
+
+.. code-block:: python
+
   model.plot_traces()
 
-.. image:: https://raw.githubusercontent.com/clberube/bisip2/master/figures/traces.png
+.. image:: https://raw.githubusercontent.com/clberube/bisip2/master/figures/corner.png
 
 
 A more detailed guide is available in the :ref:`quickstart` tutorial.
