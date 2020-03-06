@@ -1,5 +1,6 @@
 BISIP
 =====
+**DOCUMENTATION IS UNDER CONSTRUCTION**
 
 **BISIP** is an MIT licensed Python package to perform Bayesian Inversion of
 Spectral Induced Polarization data with Markov-chain Monte Carlo simulation.
