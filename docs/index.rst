@@ -27,6 +27,7 @@ and c-exponent equal to 1 (Debye). Set the simulation to run for 1000 steps
 with 32 MCMC walkers exploring the Debye Decomposition parameter space.
 
 .. code-block:: python
+  :linenos:
 
   from bisip import PolynomialDecomposition
 
@@ -42,7 +43,7 @@ with 32 MCMC walkers exploring the Debye Decomposition parameter space.
   # Fit the model to this data file
   model.fit(filepath)
 
-  # Out:    100%|██████████| 1000/1000 [00:01<00:00, 563.92it/s]
+  #   Out:  100%|██████████| 1000/1000 [00:01<00:00, 563.92it/s]
 
   # Print out the optimal parameters and their uncertainties
   # discarding the first 200 steps (burn-in)
@@ -52,7 +53,7 @@ with 32 MCMC walkers exploring the Debye Decomposition parameter space.
   for n, v, u in zip(model.param_names, values, uncertainties):
       print(f'{n}: {v:.5f} +/- {u:.5f}')
 
-  # Out:    r0: 0.99822 +/- 0.00787
+  #   Out:  r0: 0.99822 +/- 0.00787
   #         a4: 0.00023 +/- 0.00005
   #         a3: 0.00082 +/- 0.00032
   #         a2: -0.00124 +/- 0.00048
