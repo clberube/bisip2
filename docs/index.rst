@@ -21,27 +21,27 @@ Basic Usage
 -----------
 
 To perform Debye Decomposition of a SIP data file, you would use the following:
+First, define a Polynomial Decomposition model with a 4th order approximation
+and c-exponent equal to 1 (Debye). Set the simulation to run for 1000 steps
+with 32 MCMC walkers exploring the Debye Decomposition parameter space.
 
 .. code-block:: python
+  :linenos:
 
   from bisip import PolynomialDecomposition
 
-
-  # Define a Polynomial Decomposition model with
-  # a 4th order approximation and c-exponent equal to 1 (Debye)
-  # The simulation will run for 1000 steps with 32 walkers
-  # exploring the Debye Decomposition parameter space
-  model = PolynomialDecomposition(nwalkers=32,  # number of walkers
+  model = PolynomialDecomposition(nwalkers=32,  # number of MCMC walkers
                                   nsteps=1000,  # number of MCMC steps
                                   poly_deg=4,  # 4th order polynomial
                                   c_exp=1.0,  # debye decomposition
                                   )
 
   # Define a data file to invert
-  filepath = '/Users/cberube/Repositories/bisip/data files/SIP-K389175_avg.dat'
+  filepath = '/path/to/bisip/data/K389175_avg.dat'
+
   # Fit the model to this data file
   model.fit(filepath)
-  # 100%|██████████| 1000/1000 [00:01<00:00, 558.64it/s]
+  # Out: 100%|██████████| 1000/1000 [00:01<00:00, 558.64it/s]
 
 
 A more detailed guide is available in the :ref:`quickstart` tutorial.
