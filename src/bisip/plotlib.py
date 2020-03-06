@@ -3,8 +3,8 @@
 # @Author: cberube
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
-# @Last modified by:   cberube
-# @Last modified time: 05-03-2020
+# @Last modified by:   charles
+# @Last modified time: 2020-03-06T09:40:24-05:00
 
 
 import numpy as np
@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 def parse_chain(model, chain, **kwargs):
     if chain is None:
         # if discard is not None and thin is not None:
+        kwargs['flat'] = True
         chain = model.get_chain(**kwargs)
 
     else:
@@ -60,22 +61,19 @@ def plot_histograms(model, chain=None, bins=25, **kwargs):
     return fig
 
 
-def plot_fit(model, chain=None, **kwargs):
+def plot_fit(model, chain=None, p=[2.5, 50, 97.5], **kwargs):
 
     chain = parse_chain(model, chain, **kwargs)
+    data = model.data
+    lines = model.get_model_percentile(chain, p)
 
     fig, ax = plt.subplots(2, 1, figsize=(4, 5), sharex=True)
-    data = model.data
-    best = model.forward(np.median(chain, axis=0), data['w'])
-    low = model.forward(np.percentile(chain, 2.5, axis=0), data['w'])
-    high = model.forward(np.percentile(chain, 97.5, axis=0), data['w'])
-
     for i in range(2):
-        ax[i].errorbar(data['freq'], data['zn'][i],
-                       yerr=data['zn_err'][i], fmt=".k", capsize=0)
-        ax[i].plot(data['freq'], best[i], c='C3')
-        ax[i].plot(data['freq'], low[i], ls=':', c='0.5')
-        ax[i].plot(data['freq'], high[i], ls=':', c='0.5')
+        ax[i].errorbar(data['freq'], data['zn'][i], yerr=data['zn_err'][i],
+                       markersize=3, fmt=".k", capsize=0)
+        ax[i].plot(data['freq'], lines[0][i], ls=':', c='0.5')
+        ax[i].plot(data['freq'], lines[1][i], c='C3')
+        ax[i].plot(data['freq'], lines[2][i], ls=':', c='0.5')
         ax[i].set_ylabel(r'$\rho${} (normalized)'.format((i+1)*"'"))
         ax[i].yaxis.set_label_coords(-0.2, 0.5)
 

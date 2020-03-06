@@ -3,8 +3,8 @@
 # @Author: cberube
 # @Date:   03-03-2020
 # @Email:  charles@goldspot.ca
-# @Last modified by:   cberube
-# @Last modified time: 05-03-2020
+# @Last modified by:   charles
+# @Last modified time: 2020-03-06T09:03:28-05:00
 
 
 try:
@@ -19,5 +19,6 @@ import numpy
 
 setup(
     ext_modules=cythonize("./src/bisip/cython_funcs.pyx"),
-    include_dirs=[numpy.get_include()]
+    include_dirs=[numpy.get_include()],
+    package_dir={'': 'src'},
 )

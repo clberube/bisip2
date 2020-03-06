@@ -3,8 +3,8 @@
 # @Author: cberube
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
-# @Last modified by:   cberube
-# @Last modified time: 05-03-2020
+# @Last modified by:   charles
+# @Last modified time: 2020-03-06T09:20:50-05:00
 
 
 import emcee
@@ -61,11 +61,17 @@ class Inversion(object):
     def get_chain(self, **kwargs):
         return self.sampler.get_chain(**kwargs)
 
+    def get_model_percentile(self, chain, p):
+        results = np.empty((chain.shape[0], 2, self.data['N']))
+        for i in range(chain.shape[0]):
+            results[i] = self.forward(chain[i], self.data['w'])
+        return np.percentile(results, p, axis=0)
+
 
 class PolynomialDecomposition(Inversion):
 
     def __init__(self, nwalkers=32, poly_deg=5, c_exp=1.0, nsteps=5000):
-        super(PolynomialDecomposition, self).__init__()
+        super().__init__()
         self.c_exp = c_exp
         self.nsteps = nsteps
         self.nwalkers = nwalkers
@@ -94,9 +100,5 @@ class PolynomialDecomposition(Inversion):
 
         self.bounds = np.array([params[x] for x in params.keys()]).T
         self.params = params
-
-        # self.bounds = np.array([[0.9, 0] + [-1 for i in deg_range],
-        #                         [1.1, 1] + [1 for i in deg_range],
-        #                         ])
 
         self._start_sampling(pool=self.pool, moves=self.moves)
