@@ -3,8 +3,8 @@
 # @Author: cberube
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
-# @Last modified by:   cberube
-# @Last modified time: 05-03-2020
+# @Last modified by:   charles
+# @Last modified time: 2020-03-06T13:49:26-05:00
 # -*- coding: utf-8 -*-
 """
 Created on Fri Sep 29 16:18:50 2017
@@ -60,7 +60,7 @@ setup(
   package_dir={"": SRC_DIR},
   version='0.0.1',
   license='MIT',
-  install_requires=['emcee', 'numpy', 'matplotlib'],
+  install_requires=['emcee', 'corner', 'numpy', 'matplotlib'],
   description='Bayesian inversion of SIP data',
   long_description='README.md',
   author='Charles L. Berube',

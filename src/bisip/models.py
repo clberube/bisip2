@@ -4,13 +4,13 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-06T12:31:21-05:00
+# @Last modified time: 2020-03-06T14:51:16-05:00
 
 
 import emcee
 import numpy as np
 
-from .cython_funcs import Decomp_cyth
+from .cython_funcs import Decomp_cyth, ColeCole_cyth
 from . import utils
 from . import plotlib
 
@@ -35,11 +35,26 @@ def log_probability(theta, model, bounds, x, y, yerr):
 
 
 class Inversion(object):
+    """The summary line for a class docstring should fit on one line.
 
+    If the class has public attributes, they may be documented here
+    in an ``Attributes`` section and follow the same formatting as a
+    function's ``Args`` section. Alternatively, attributes may be documented
+    inline with the attribute's declaration (see __init__ method below).
+
+    Properties created with the ``@property`` decorator should be documented
+    in the property's getter method.
+
+    Attributes:
+        attr1 (str): Description of `attr1`.
+        attr2 (:obj:`int`, optional): Description of `attr2`.
+
+    """
     # Public plotting methods
     plot_traces = plotlib.plot_traces
     plot_histograms = plotlib.plot_histograms
     plot_fit = plotlib.plot_fit
+    plot_corner = plotlib.plot_corner
 
     # Private utility methods
     _parse_chain = utils.parse_chain
@@ -96,6 +111,10 @@ class Inversion(object):
     def param_names(self):
         return list(self.params.keys())
 
+    @property
+    def param_bounds(self):
+        return self.bounds
+
 
 class PolynomialDecomposition(Inversion):
 
@@ -126,6 +145,34 @@ class PolynomialDecomposition(Inversion):
         # Add polynomial decomposition parameters to dict
         self.params.update({'r0': [0.9, 1.1]})
         self.params.update({f'a{x}': [-1, 1] for x in rev_deg_range})
+
+        self.bounds = np.array([self.params[x] for x in self.params.keys()]).T
+
+        self._start_sampling(pool=self.pool, moves=self.moves)
+
+
+class ColeCole(Inversion):
+
+    def __init__(self, n_modes=1, **kwargs):
+        super().__init__(**kwargs)
+        self.n_modes = n_modes
+
+    def forward(self, theta, w):
+        return ColeCole_cyth(w,
+                             R0=theta[0],
+                             m=theta[1:1+self.n_modes],
+                             lt=theta[1+self.n_modes:1+2*self.n_modes],
+                             c=theta[1+2*self.n_modes:])
+
+    def fit(self, filepath, **data_kwargs):
+        self.data = utils.load_data(filepath, **data_kwargs)
+
+        # Add polynomial decomposition parameters to dict
+        range_modes = list(range(self.n_modes))
+        self.params.update({'r0': [0.9, 1.1]})
+        self.params.update({f'm{i+1}': [0.0, 1.0] for i in range_modes})
+        self.params.update({f'log_tau{i+1}': [-20, 10] for i in range_modes})
+        self.params.update({f'c{i+1}': [0.0, 1.0] for i in range_modes})
 
         self.bounds = np.array([self.params[x] for x in self.params.keys()]).T
 

@@ -4,13 +4,21 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-06T12:34:51-05:00
+# @Last modified time: 2020-03-06T15:10:41-05:00
 
 
 import matplotlib.pyplot as plt
+from corner import corner
 
 
 def plot_traces(model, chain=None, **kwargs):
+    """
+    Return the most important thing about a person.
+    Parameters
+    ----------
+    your_name
+        A string indicating the name of the person.
+    """
     if chain is None:
         chain = model.get_chain(**kwargs)
     labels = model.param_names
@@ -55,4 +63,9 @@ def plot_fit(model, chain=None, p=[2.5, 50, 97.5], **kwargs):
     ax[-1].set_xscale('log')
     ax[-1].set_xlabel('$f$ (Hz)')
     fig.tight_layout()
+    return fig
+
+
+def plot_corner(model, chain, **kwargs):
+    fig = corner(chain, labels=model.param_names)
     return fig

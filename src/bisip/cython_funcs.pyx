@@ -58,7 +58,7 @@ cdef double complex C_Debye(double w_, double m_, double tau_, double c_):
     Z_i = m_*(1 - 1.0/(1 + ((jay*w_*(tau_))**c_)))
     return Z_i
 
-def ColeCole_cyth1(cnp.ndarray[DTYPE_t, ndim=1] w, DTYPE_t R0, cnp.ndarray[DTYPE_t, ndim=1] m, cnp.ndarray[DTYPE_t, ndim=1] lt, cnp.ndarray[DTYPE_t, ndim=1] c):
+def ColeCole_cyth(cnp.ndarray[DTYPE_t, ndim=1] w, DTYPE_t R0, cnp.ndarray[DTYPE_t, ndim=1] m, cnp.ndarray[DTYPE_t, ndim=1] lt, cnp.ndarray[DTYPE_t, ndim=1] c):
     cdef int N = w.shape[0]
     cdef int D = m.shape[0]
     cdef int i, j
@@ -69,22 +69,6 @@ def ColeCole_cyth1(cnp.ndarray[DTYPE_t, ndim=1] w, DTYPE_t R0, cnp.ndarray[DTYPE
         for i in range(D):
             z_ += C_ColeCole(w[j], m[i], lt[i], c[i])
         z_ = R0*(1 - z_)
-        Z[0,j] = z_.real
-        Z[1,j] = z_.imag
-    return Z
-
-def ColeCole_cyth2(double[:] w, double R0, double[:] m, double[:] lt, double[:] c):
-    cdef int N = w.shape[0]
-    cdef int D = m.shape[0]
-    cdef int i, j
-    cdef int rows = 2
-    cdef double complex z_
-    cdef double[:,:] Z = np.empty((rows,N), dtype=DTYPE)
-    for j in range(N):
-        z_ = 0
-        for i in range(D):
-            z_ += C_ColeCole(w[j], m[i], lt[i], c[i])
-        z_ = R0*(1.0 - z_)
         Z[0,j] = z_.real
         Z[1,j] = z_.imag
     return Z
