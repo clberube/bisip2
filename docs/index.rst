@@ -31,7 +31,7 @@ with 32 MCMC walkers exploring the Debye Decomposition parameter space.
   from bisip import PolynomialDecomposition
 
   model = PolynomialDecomposition(nwalkers=32,  # number of MCMC walkers
-                                  nsteps=600,  # number of MCMC steps
+                                  nsteps=1000,  # number of MCMC steps
                                   poly_deg=4,  # 4th order polynomial
                                   c_exp=1.0,  # debye decomposition
                                   )
@@ -41,15 +41,23 @@ with 32 MCMC walkers exploring the Debye Decomposition parameter space.
 
   # Fit the model to this data file
   model.fit(filepath)
-  # Out: 100%|██████████| 600/600 [00:01<00:00, 565.36it/s]
 
-You can then visualize the paths taken by each walker in the parameter space:
+  # Out:    100%|██████████| 1000/1000 [00:01<00:00, 563.92it/s]
 
-.. code-block:: python
+  # Print out the optimal parameters and their uncertainties
+  # discarding the first 200 steps (burn-in)
+  values = model.get_param_mean(discard=200)
+  uncertainties = model.get_param_std(discard=200)
 
-  model.plot_traces()
+  for n, v, u in zip(model.param_names, values, uncertainties):
+      print(f'{n}: {v:.5f} +/- {u:.5f}')
 
-.. image:: https://raw.githubusercontent.com/clberube/bisip2/master/figures/traces.png
+  # Out:    r0: 0.99822 +/- 0.00787
+  #         a4: 0.00023 +/- 0.00005
+  #         a3: 0.00082 +/- 0.00032
+  #         a2: -0.00124 +/- 0.00048
+  #         a1: -0.00405 +/- 0.00060
+  #         a0: 0.00677 +/- 0.00058
 
 
 A more detailed example is available in the :ref:`quickstart` tutorial.
