@@ -20,15 +20,29 @@ BISIP is being developed on `GitHub
 Basic Usage
 -----------
 
-If you wanted to draw samples from a 5 dimensional Gaussian, you would do
-something like:
+To perform Debye Decomposition of a SIP data file, you would use the following:
 
 .. code-block:: python
 
-    import numpy as np
+  from bisip import PolynomialDecomposition
+  # Define a Polynomial Decomposition model with
+  # a 4th order approximation and c-exponent equal to 1 (Debye)
+  # The simulation will run for 1000 steps with 32 walkers
+  # exploring the Debye Decomposition parameter space
+  model = PolynomialDecomposition(nwalkers=32,  # number of walkers
+                                  nsteps=1000,  # number of MCMC steps
+                                  poly_deg=4,  # 4th order polynomial
+                                  c_exp=1.0,  # debye decomposition
+                                  )
+
+  # Define a data file to invert
+  filepath = '/Users/cberube/Repositories/bisip/data files/SIP-K389175_avg.dat'
+  # Fit the model to this data file
+  model.fit(filepath)
+    100%|██████████| 1000/1000 [00:01<00:00, 558.64it/s]
 
 
-A more complete example is available in the :ref:`quickstart` tutorial.
+A more detailed guide is available in the :ref:`quickstart` tutorial.
 
 .. toctree::
    :maxdepth: 2
