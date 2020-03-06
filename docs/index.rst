@@ -37,12 +37,16 @@ with 32 MCMC walkers exploring the Debye Decomposition parameter space.
                                   c_exp=1.0,  # debye decomposition
                                   )
 
-  # Define a data file to invert
-  filepath = '/path/to/bisip/data/K389175_avg.dat'
+  # Use one of the example data files provided with BISIP
+  filepath = '/path/to/bisip/data/SIP-K389175.dat'
 
   # Fit the model to this data file
   model.fit(filepath)
   # Out: 100%|██████████| 1000/1000 [00:01<00:00, 558.64it/s]
+
+  model.plot_traces()
+
+.. image:: https://raw.githubusercontent.com/clberube/bisip2/master/figures/traces.png
 
 
 A more detailed guide is available in the :ref:`quickstart` tutorial.
