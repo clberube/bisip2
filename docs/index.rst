@@ -25,6 +25,8 @@ To perform Debye Decomposition of a SIP data file, you would use the following:
 .. code-block:: python
 
   from bisip import PolynomialDecomposition
+
+
   # Define a Polynomial Decomposition model with
   # a 4th order approximation and c-exponent equal to 1 (Debye)
   # The simulation will run for 1000 steps with 32 walkers
@@ -39,7 +41,7 @@ To perform Debye Decomposition of a SIP data file, you would use the following:
   filepath = '/Users/cberube/Repositories/bisip/data files/SIP-K389175_avg.dat'
   # Fit the model to this data file
   model.fit(filepath)
-  100%|██████████| 1000/1000 [00:01<00:00, 558.64it/s]
+  # 100%|██████████| 1000/1000 [00:01<00:00, 558.64it/s]
 
 
 A more detailed guide is available in the :ref:`quickstart` tutorial.
