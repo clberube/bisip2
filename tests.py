@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-06T16:32:20-05:00
+# @Last modified time: 2020-03-06T16:46:48-05:00
 
 
 from os.path import expanduser
@@ -17,7 +17,7 @@ from src.bisip.models import PolynomialDecomposition, ColeCole
 
 HOME = expanduser("~")
 
-model = PolynomialDecomposition(nwalkers=32, poly_deg=4, c_exp=1.0, nsteps=1000)
+model = PolynomialDecomposition(nwalkers=32, poly_deg=4, c_exp=1.0, nsteps=600)
 # model = ColeCole(nwalkers=32, n_modes=2, nsteps=1000)
 
 fp = f'{HOME}/Repositories/bisip/data files/SIP-K389175_avg.dat'
