@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-09T18:23:42-04:00
+# @Last modified time: 2020-03-09T18:29:06-04:00
 
 
 import warnings
@@ -78,7 +78,7 @@ class utils:
                 used and all walkers will be plotted. Defaults to None.
 
         Keyword Args:
-            See kwargs of the get_chain method.
+            **kwargs: See kwargs of the get_chain method.
 
         """
         chain = self.parse_chain(chain, **kwargs)
@@ -111,8 +111,6 @@ class utils:
 
         Args:
             filepath (:obj:`str`): The path to the data file.
-
-        Keyword Arguments:
             headers (:obj:`int`): The number of header lines in the file.
                 Defaults to 1.
             ph_units (:obj:`str`): The units of the phase shift measurements.
