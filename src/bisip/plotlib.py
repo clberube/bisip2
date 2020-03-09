@@ -11,158 +11,145 @@ import matplotlib.pyplot as plt
 from corner import corner
 
 
-def plot_traces(model, chain=None, **kwargs):
-    """
-    Plots the traces of the MCMC simulation.
+class plotlib:
+    def plot_traces(self, chain=None, **kwargs):
+        """
+        Plots the traces of the MCMC simulation.
 
-    Args:
-        model (:obj:`Inversion`): A fitted BISIP Inversion model.
-        chain (:obj:`ndarray`): A numpy array containing the MCMC chain to
-            plot. Should have a shape (nwalkers, nsteps, ndim) or
-            (nsteps, ndim). If None, the full, unflattened chain will be used
-            and all walkers will be plotted.
-            Defaults to None.
-        **kwargs: Additional keyword arguments for the get_chain function
-            (see below). Use these arguments only if not explicitly passing a
-            `chain` array.
+        Args:
+            chain (:obj:`ndarray`): A numpy array containing the MCMC chain to
+                plot. Should have a shape (nwalkers, nsteps, ndim) or
+                (nsteps, ndim). If None, the full, unflattened chain will be
+                used and all walkers will be plotted. Defaults to None.
+            **kwargs: Additional keyword arguments for the get_chain function
+                (see below). Use these arguments only if not explicitly passing
+                a `chain` array.
 
-    Keyword Args:
-        discard (:obj:`int`): The number of steps to discard.
-        thin (:obj:`int`): The thinning factor (keep every `thin` step).
-        flat (:obj:`bool`): Whether to flatten the walkers into a single chain
-            or not.
+        Keyword Args:
+            discard (:obj:`int`): The number of steps to discard.
+            thin (:obj:`int`): The thinning factor (keep every `thin` step).
+            flat (:obj:`bool`): Whether to flatten the walkers into a single
+                chain or not.
 
-    Returns:
-        `Figure`: A figure object that can be modified
-            or saved with the matplotlib API.
+        Returns:
+            :obj:`Figure`: A matplotlib figure.
 
-    """
-    if chain is None:
-        chain = model.get_chain(**kwargs)
-    labels = model.param_names
-    fig, axes = plt.subplots(model.ndim, figsize=(10, 7), sharex=True)
-    for i in range(model.ndim):
-        ax = axes[i]
-        ax.plot(chain[:, :, i], 'k', alpha=0.3)
-        ax.set_xlim(0, len(chain))
-        ax.set_ylim(model.bounds[0, i], model.bounds[1, i])
-        ax.set_ylabel(labels[i])
-        ax.yaxis.set_label_coords(-0.1, 0.5)
-    axes[-1].set_xlabel('Steps')
-    fig.tight_layout()
-    return fig
+        """
+        if chain is None:
+            chain = self.get_chain(**kwargs)
+        labels = self.param_names
+        fig, axes = plt.subplots(self.ndim, figsize=(10, 7), sharex=True)
+        for i in range(self.ndim):
+            ax = axes[i]
+            ax.plot(chain[:, :, i], 'k', alpha=0.3)
+            ax.set_xlim(0, len(chain))
+            ax.set_ylim(self.bounds[0, i], self.bounds[1, i])
+            ax.set_ylabel(labels[i])
+            ax.yaxis.set_label_coords(-0.1, 0.5)
+        axes[-1].set_xlabel('Steps')
+        fig.tight_layout()
+        return fig
 
+    def plot_histograms(self, chain=None, bins=25, **kwargs):
+        """
+        Plots histograms of the MCMC simulation chains.
 
-def plot_histograms(model, chain=None, bins=25, **kwargs):
-    """
-    Plots histograms of the MCMC simulation chains.
+        Args:
+            chain (:obj:`ndarray`): A numpy array containing the MCMC chain to
+                plot. Should have a shape (nwalkers, nsteps, ndim) or
+                (nsteps, ndim). If None, the full, unflattened chain will be
+                used and all walkers will be plotted. Defaults to None.
+            bins (:obj:`int`): The number of bins to use in the histograms.
+            **kwargs: Additional keyword arguments for the get_chain function
+                (see below). Use these arguments only if not explicitly passing
+                 a `chain` array.
 
-    Args:
-        model (:obj:`Inversion`): A fitted BISIP Inversion model.
-        chain (:obj:`ndarray`): A numpy array containing the MCMC chain to
-            plot. Should have a shape (nwalkers, nsteps, ndim) or
-            (nsteps, ndim). If None, the full, unflattened chain will be used
-            and all walkers will be plotted.
-            Defaults to None.
-        bins (:obj:`int`): The number of bins to use in the histograms.
-        **kwargs: Additional keyword arguments for the get_chain function
-            (see below). Use these arguments only if not explicitly passing a
-            `chain` array.
+        Keyword Args:
+            discard (:obj:`int`): The number of steps to discard.
+            thin (:obj:`int`): The thinning factor (keep every `thin` step).
+            flat (:obj:`bool`): Whether to flatten the walkers into a single
+                chain or not.
 
-    Keyword Args:
-        discard (:obj:`int`): The number of steps to discard.
-        thin (:obj:`int`): The thinning factor (keep every `thin` step).
-        flat (:obj:`bool`): Whether to flatten the walkers into a single chain
-            or not.
+        Returns:
+            :obj:`Figure`: A matplotlib figure.
 
-    Returns:
-        `Figure`: A figure object that can be modified
-            or saved with the matplotlib API.
+        """
+        chain = self.parse_chain(chain, **kwargs)
+        labels = self.param_names
+        fig, axes = plt.subplots(self.ndim, figsize=(5, 1.5*chain.shape[1]))
+        for i in range(self.ndim):
+            ax = axes[i]
+            ax.hist(chain[:, i], bins=bins, fc='w', ec='k')
+            ax.set_xlabel(labels[i])
+            ax.ticklabel_format(axis='x', scilimits=[-2, 2])
+        fig.tight_layout()
+        return fig
 
-    """
-    chain = model._parse_chain(chain, **kwargs)
-    labels = model.param_names
-    fig, axes = plt.subplots(model.ndim, figsize=(5, 1.5*chain.shape[1]))
-    for i in range(model.ndim):
-        ax = axes[i]
-        ax.hist(chain[:, i], bins=bins, fc='w', ec='k')
-        ax.set_xlabel(labels[i])
-        ax.ticklabel_format(axis='x', scilimits=[-2, 2])
-    fig.tight_layout()
-    return fig
+    def plot_fit(self, chain=None, p=[2.5, 50, 97.5], **kwargs):
+        """
+        Plots the input data, best fit and confidence interval of a model.
 
+        Args:
+            chain (:obj:`ndarray`): A numpy array containing the MCMC chain to
+                plot. Should have a shape (nwalkers, nsteps, ndim) or
+                (nsteps, ndim). If None, the full, unflattened chain will be
+                used and all walkers will be plotted. Defaults to None.
+            p (:obj:`int` or :obj:`list`): Percentile values for lower
+                confidence interval, best fit curve, and upper confidence
+                interval, in order. Defaults to [2.5, 50, 97.5] for the median
+                and 95% HPD.
+            **kwargs: Additional keyword arguments for the get_chain function
+                (see below). Use these arguments only if not explicitly passing
+                a `chain` array.
 
-def plot_fit(model, chain=None, p=[2.5, 50, 97.5], **kwargs):
-    """
-    Plots the input data, best fit and confidence interval of a fitted model.
+        Keyword Args:
+            discard (:obj:`int`): The number of steps to discard.
+            thin (:obj:`int`): The thinning factor (keep every `thin` step).
+            flat (:obj:`bool`): Whether to flatten the walkers into a single
+                chain or not.
 
-    Args:
-        model (:obj:`Inversion`): A fitted BISIP Inversion model.
-        chain (:obj:`ndarray`): A numpy array containing the MCMC chain to
-            plot. Should have a shape (nwalkers, nsteps, ndim) or
-            (nsteps, ndim). If None, the full, unflattened chain will be used
-            and all walkers will be plotted.
-            Defaults to None.
-        p (:obj:`int` or :obj:`list`): Percentile values for lower confidence
-            interval, best fit curve, and upper confidence interval, in order.
-            Defaults to [2.5, 50, 97.5] for the median and 95% HPD.
-        **kwargs: Additional keyword arguments for the get_chain function
-            (see below). Use these arguments only if not explicitly passing a
-            `chain` array.
+        Returns:
+            :obj:`Figure`: A matplotlib figure.
 
-    Keyword Args:
-        discard (:obj:`int`): The number of steps to discard.
-        thin (:obj:`int`): The thinning factor (keep every `thin` step).
-        flat (:obj:`bool`): Whether to flatten the walkers into a single chain
-            or not.
+        """
+        data = self.data
+        lines = self.get_model_percentile(p, chain, **kwargs)
+        fig, ax = plt.subplots(2, 1, figsize=(4, 5), sharex=True)
+        for i in range(2):
+            ax[i].errorbar(data['freq'], data['zn'][i], yerr=data['zn_err'][i],
+                           markersize=3, fmt=".k", capsize=0)
+            ax[i].plot(data['freq'], lines[0][i], ls=':', c='0.5')
+            ax[i].plot(data['freq'], lines[1][i], c='C3')
+            ax[i].plot(data['freq'], lines[2][i], ls=':', c='0.5')
+            ax[i].set_ylabel(r'$\rho${} (normalized)'.format((i+1)*"'"))
+            ax[i].yaxis.set_label_coords(-0.2, 0.5)
+        ax[-1].set_xscale('log')
+        ax[-1].set_xlabel('$f$ (Hz)')
+        fig.tight_layout()
+        return fig
 
-    Returns:
-        `Figure`: A figure object that can be modified
-            or saved with the matplotlib API.
+    def plot_corner(self, chain, **kwargs):
+        """
+        Plots the corner plot of the MCMC simulation.
 
-    """
-    data = model.data
-    lines = model.get_model_percentile(p, chain, **kwargs)
-    fig, ax = plt.subplots(2, 1, figsize=(4, 5), sharex=True)
-    for i in range(2):
-        ax[i].errorbar(data['freq'], data['zn'][i], yerr=data['zn_err'][i],
-                       markersize=3, fmt=".k", capsize=0)
-        ax[i].plot(data['freq'], lines[0][i], ls=':', c='0.5')
-        ax[i].plot(data['freq'], lines[1][i], c='C3')
-        ax[i].plot(data['freq'], lines[2][i], ls=':', c='0.5')
-        ax[i].set_ylabel(r'$\rho${} (normalized)'.format((i+1)*"'"))
-        ax[i].yaxis.set_label_coords(-0.2, 0.5)
-    ax[-1].set_xscale('log')
-    ax[-1].set_xlabel('$f$ (Hz)')
-    fig.tight_layout()
-    return fig
+        Args:
+            chain (:obj:`ndarray`): A numpy array containing the MCMC chain to
+                plot. Should have a shape (nwalkers, nsteps, ndim) or
+                (nsteps, ndim). If None, the full, unflattened chain will be
+                used and all walkers will be plotted. Defaults to None.
+            **kwargs: Additional keyword arguments for the get_chain function
+                (see below). Use these arguments only if not explicitly passing
+                a `chain` array.
 
+        Keyword Args:
+            discard (:obj:`int`): The number of steps to discard.
+            thin (:obj:`int`): The thinning factor (keep every `thin` step).
+            flat (:obj:`bool`): Whether to flatten the walkers into a single
+            chain or not.
 
-def plot_corner(model, chain, **kwargs):
-    """
-    Plots the corner plot of the MCMC simulation.
+        Returns:
+            :obj:`Figure`: A matplotlib figure.
 
-    Args:
-        model (:obj:`Inversion`): A fitted BISIP Inversion model.
-        chain (:obj:`ndarray`): A numpy array containing the MCMC chain to
-            plot. Should have a shape (nwalkers, nsteps, ndim) or
-            (nsteps, ndim). If None, the full, unflattened chain will be used
-            and all walkers will be plotted.
-            Defaults to None.
-        **kwargs: Additional keyword arguments for the get_chain function
-            (see below). Use these arguments only if not explicitly passing a
-            `chain` array.
-
-    Keyword Args:
-        discard (:obj:`int`): The number of steps to discard.
-        thin (:obj:`int`): The thinning factor (keep every `thin` step).
-        flat (:obj:`bool`): Whether to flatten the walkers into a single chain
-            or not.
-
-    Returns:
-        `Figure`: A figure object that can be modified
-            or saved with the matplotlib API.
-
-    """
-    fig = corner(chain, labels=model.param_names)
-    return fig
+        """
+        fig = corner(chain, labels=self.param_names)
+        return fig

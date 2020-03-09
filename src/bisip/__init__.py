@@ -3,21 +3,19 @@
 # @Author: cberube
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
-# @Last modified by:   charles
-# @Last modified time: 2020-03-06T15:59:40-05:00
+# @Last modified by:   cberube
+# @Last modified time: 09-03-2020
 
 
 from .models import Inversion
 from .models import PolynomialDecomposition
 from .models import ColeCole
-
-from .plotlib import plot_fit, plot_traces
+from .plotlib import plotlib
 
 
 __all__ = [
     'Inversion',
     'PolynomialDecomposition',
     'ColeCole',
-    'plot_fit',
-    'plot_traces',
+    'plotlib'
 ]

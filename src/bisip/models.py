@@ -36,7 +36,7 @@ def log_probability(theta, model, bounds, x, y, yerr):
     return lp + log_likelihood(theta, model, x, y, yerr)
 
 
-class Inversion(object):
+class Inversion(plotlib.plotlib, utils.utils):
     """The summary line for a class docstring should fit on one line.
 
     If the class has public attributes, they may be documented here
@@ -52,25 +52,13 @@ class Inversion(object):
         attr2 (:obj:`int`, optional): Description of `attr2`.
 
     """
-    # Public plotting methods
-    plot_traces = plotlib.plot_traces
-    plot_histograms = plotlib.plot_histograms
-    plot_fit = plotlib.plot_fit
-    plot_corner = plotlib.plot_corner
-
-    # Private utility methods
-    _parse_chain = utils.parse_chain
 
     def __init__(self, nwalkers=32, nsteps=5000, pool=None, moves=None):
         self.nsteps = nsteps
         self.nwalkers = nwalkers
         self.pool = pool
         self.moves = moves
-        # self.infer_obs_noise = infer_obs_noise
-
         self.params = {}
-        # if infer_obs_noise:
-        #     self.params.update({'log_noise': [0.0, 1.0]})
 
     def _start_sampling(self, **kwargs):
         self.ndim = self.bounds.shape[1]
@@ -91,22 +79,22 @@ class Inversion(object):
         return self.sampler.get_chain(**kwargs)
 
     def get_model_percentile(self, p, chain=None, **kwargs):
-        chain = self._parse_chain(chain, **kwargs)
+        chain = self.parse_chain(chain, **kwargs)
         results = np.empty((chain.shape[0], 2, self.data['N']))
         for i in range(chain.shape[0]):
             results[i] = self.forward(chain[i], self.data['w'])
         return np.percentile(results, p, axis=0)
 
     def get_param_percentile(self, p, chain=None, **kwargs):
-        chain = self._parse_chain(chain, **kwargs)
+        chain = self.parse_chain(chain, **kwargs)
         return np.percentile(chain, p, axis=0)
 
     def get_param_mean(self, chain=None, **kwargs):
-        chain = self._parse_chain(chain, **kwargs)
+        chain = self.parse_chain(chain, **kwargs)
         return np.mean(chain, axis=0)
 
     def get_param_std(self, chain=None, **kwargs):
-        chain = self._parse_chain(chain, **kwargs)
+        chain = self.parse_chain(chain, **kwargs)
         return np.std(chain, axis=0)
 
     @property
@@ -126,13 +114,11 @@ class PolynomialDecomposition(Inversion):
         self.poly_deg = poly_deg
 
     def forward(self, theta, w):
-        # rho, *a = theta
-        # a = np.array(a)
         return Decomp_cyth(w, self.taus, self.log_taus, self.c_exp,
                            R0=theta[0], a=theta[1:])
 
     def fit(self, filepath, **data_kwargs):
-        self.data = utils.load_data(filepath, **data_kwargs)
+        self.data = self.load_data(filepath, **data_kwargs)
 
         min_tau = np.floor(min(np.log10(1./self.data['w'])) - 1)
         max_tau = np.floor(max(np.log10(1./self.data['w'])) + 1)
@@ -167,7 +153,7 @@ class ColeCole(Inversion):
                              c=theta[1+2*self.n_modes:])
 
     def fit(self, filepath, **data_kwargs):
-        self.data = utils.load_data(filepath, **data_kwargs)
+        self.data = self.load_data(filepath, **data_kwargs)
 
         # Add polynomial decomposition parameters to dict
         range_modes = list(range(self.n_modes))
