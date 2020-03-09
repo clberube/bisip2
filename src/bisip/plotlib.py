@@ -3,8 +3,8 @@
 # @Author: cberube
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
-# @Last modified by:   cberube
-# @Last modified time: 09-03-2020
+# @Last modified by:   charles
+# @Last modified time: 2020-03-09T18:12:44-04:00
 
 
 import matplotlib.pyplot as plt
@@ -24,7 +24,7 @@ class plotlib:
                 used and all walkers will be plotted. Defaults to None.
             **kwargs: Additional keyword arguments for the get_chain function
                 (see below). Use these arguments only if not explicitly passing
-                a `chain` array.
+                the :obj:`chain` argument.
 
         Keyword Args:
             discard (:obj:`int`): The number of steps to discard.
@@ -64,7 +64,7 @@ class plotlib:
             bins (:obj:`int`): The number of bins to use in the histograms.
             **kwargs: Additional keyword arguments for the get_chain function
                 (see below). Use these arguments only if not explicitly passing
-                 a `chain` array.
+                the :obj:`chain` argument.
 
         Keyword Args:
             discard (:obj:`int`): The number of steps to discard.
@@ -103,7 +103,7 @@ class plotlib:
                 and 95% HPD.
             **kwargs: Additional keyword arguments for the get_chain function
                 (see below). Use these arguments only if not explicitly passing
-                a `chain` array.
+                the :obj:`chain` argument.
 
         Keyword Args:
             discard (:obj:`int`): The number of steps to discard.
@@ -143,7 +143,7 @@ class plotlib:
                 used and all walkers will be plotted. Defaults to None.
             **kwargs: Additional keyword arguments for the get_chain function
                 (see below). Use these arguments only if not explicitly passing
-                a `chain` array.
+                the :obj:`chain` argument.
 
         Keyword Args:
             discard (:obj:`int`): The number of steps to discard.
