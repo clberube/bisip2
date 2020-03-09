@@ -75,7 +75,8 @@ class Inversion(plotlib.plotlib, utils.utils):
         self.__fitted = True
 
     def get_chain(self, **kwargs):
-        """Filters a chain by discarding
+        """Filters a chain by discarding a burn-in period and using a thinning
+            factor. May also be used to flatten walkers into a single chain.
 
         Keyword Arguments:
             discard (:obj:`int`): Number of steps to discard (burn-in period).
@@ -168,6 +169,15 @@ class PolynomialDecomposition(Inversion):
                            R0=theta[0], a=theta[1:])
 
     def fit(self, filepath, **data_kwargs):
+        """Fits the model to a dataset
+
+        Args:
+            filepath (:obj:`str`): The path to the data file.
+
+        Keyword Arguments:
+            See kwargs of the load_data method.
+
+        """
         self.data = self.load_data(filepath, **data_kwargs)
 
         min_tau = np.floor(min(np.log10(1./self.data['w'])) - 1)
@@ -210,6 +220,15 @@ class ColeCole(Inversion):
                              c=theta[1+2*self.n_modes:])
 
     def fit(self, filepath, **data_kwargs):
+        """Fits the model to a dataset
+
+        Args:
+            filepath (:obj:`str`): The path to the data file.
+
+        Keyword Arguments:
+            See kwargs of the load_data method.
+
+        """
         self.data = self.load_data(filepath, **data_kwargs)
 
         # Add polynomial decomposition parameters to dict

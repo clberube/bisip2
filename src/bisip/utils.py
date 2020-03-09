@@ -42,9 +42,17 @@ class utils:
         return chain
 
     def load_data(self, filename, headers=1, ph_units='mrad'):
-        """
-        To import data
-        Arguments: file name, number of header lines to skip, phase units
+        """Imports a data file and prepares it for inversion.
+
+        Args:
+            filepath (:obj:`str`): The path to the data file.
+
+        Keyword Arguments:
+            headers (:obj:`int`): The number of header lines in the file.
+                Defaults to 1.
+            ph_units (:obj:`str`): The units of the phase shift measurements.
+                Choices: 'mrad', 'rad', 'deg'. Defaults to 'mrad'.
+
         """
         # Importation des données .DAT
         dat_file = np.loadtxt(f"{filename}", skiprows=headers, delimiter=',')
