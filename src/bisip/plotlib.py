@@ -12,6 +12,7 @@ from corner import corner
 
 
 class plotlib:
+
     def plot_traces(self, chain=None, **kwargs):
         """
         Plots the traces of the MCMC simulation.
@@ -35,6 +36,7 @@ class plotlib:
             :obj:`Figure`: A matplotlib figure.
 
         """
+        self.check_if_fitted()
         if chain is None:
             chain = self.get_chain(**kwargs)
         labels = self.param_names
@@ -74,6 +76,7 @@ class plotlib:
             :obj:`Figure`: A matplotlib figure.
 
         """
+        self.check_if_fitted()
         chain = self.parse_chain(chain, **kwargs)
         labels = self.param_names
         fig, axes = plt.subplots(self.ndim, figsize=(5, 1.5*chain.shape[1]))
@@ -112,6 +115,7 @@ class plotlib:
             :obj:`Figure`: A matplotlib figure.
 
         """
+        self.check_if_fitted()
         data = self.data
         lines = self.get_model_percentile(p, chain, **kwargs)
         fig, ax = plt.subplots(2, 1, figsize=(4, 5), sharex=True)
@@ -151,5 +155,6 @@ class plotlib:
             :obj:`Figure`: A matplotlib figure.
 
         """
+        self.check_if_fitted()
         fig = corner(chain, labels=self.param_names)
         return fig

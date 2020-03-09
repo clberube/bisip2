@@ -13,6 +13,12 @@ import numpy as np
 
 
 class utils:
+
+    def check_if_fitted(self):
+        if not self.fitted:
+            raise AssertionError('Model is not fitted! Fit the model to a '
+                                 'dataset before attempting to plot results.')
+
     def parse_chain(self, chain, **kwargs):
         if chain is None:
             # if discard is not None and thin is not None:

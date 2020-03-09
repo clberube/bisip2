@@ -59,6 +59,7 @@ class Inversion(plotlib.plotlib, utils.utils):
         self.pool = pool
         self.moves = moves
         self.params = {}
+        self.__fitted = False
 
     def _start_sampling(self, **kwargs):
         self.ndim = self.bounds.shape[1]
@@ -74,6 +75,7 @@ class Inversion(plotlib.plotlib, utils.utils):
                                              **kwargs,
                                              )
         self.sampler.run_mcmc(self.p0, self.nsteps, progress=True)
+        self.__fitted = True
 
     def get_chain(self, **kwargs):
         return self.sampler.get_chain(**kwargs)
@@ -96,6 +98,10 @@ class Inversion(plotlib.plotlib, utils.utils):
     def get_param_std(self, chain=None, **kwargs):
         chain = self.parse_chain(chain, **kwargs)
         return np.std(chain, axis=0)
+
+    @property
+    def fitted(self):
+        return self.__fitted
 
     @property
     def param_names(self):
