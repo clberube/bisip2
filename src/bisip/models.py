@@ -3,8 +3,8 @@
 # @Author: cberube
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
-# @Last modified by:   cberube
-# @Last modified time: 09-03-2020
+# @Last modified by:   charles
+# @Last modified time: 2020-03-09T18:23:58-04:00
 
 
 import emcee
@@ -77,62 +77,21 @@ class Inversion(plotlib.plotlib, utils.utils):
         self.sampler.run_mcmc(self.p0, self.nsteps, progress=True)
         self.__fitted = True
 
+    def _check_if_fitted(self):
+        """Checks if the model has been fitted. """
+        if not self.fitted:
+            raise AssertionError('Model is not fitted! Fit the model to a '
+                                 'dataset before attempting to plot results.')
+
     def get_chain(self, **kwargs):
         """Gets a MCMC chains from a fitted model.
 
-        Keyword Arguments:
+        Keyword Args:
             discard (:obj:`int`): Number of steps to discard (burn-in period).
             thin (:obj:`int`): Thinning factor.
             flat (:obj:`bool`): Whether or not to flatten the walkers.
         """
         return self.sampler.get_chain(**kwargs)
-
-    def get_model_percentile(self, p, chain=None, **kwargs):
-        """Gets percentiles of the model values for a MCMC chain.
-
-        Args:
-            p (:obj:`float` or :obj:`list` of :obj:`float`): percentiles values
-                to compute.
-
-        Keyword Arguments:
-            See kwargs of the get_chain method.
-        """
-        chain = self.parse_chain(chain, **kwargs)
-        results = np.empty((chain.shape[0], 2, self.data['N']))
-        for i in range(chain.shape[0]):
-            results[i] = self.forward(chain[i], self.data['w'])
-        return np.percentile(results, p, axis=0)
-
-    def get_param_percentile(self, p, chain=None, **kwargs):
-        """Gets percentiles of the parameter values for a MCMC chain.
-
-        Args:
-            p (:obj:`float` or :obj:`list` of :obj:`float`): percentiles values
-                to compute.
-
-        Keyword Arguments:
-            See kwargs of the get_chain method.
-        """
-        chain = self.parse_chain(chain, **kwargs)
-        return np.percentile(chain, p, axis=0)
-
-    def get_param_mean(self, chain=None, **kwargs):
-        """Gets the mean of the model parameters for a MCMC chain.
-
-        Keyword Arguments:
-            See kwargs of the get_chain method.
-        """
-        chain = self.parse_chain(chain, **kwargs)
-        return np.mean(chain, axis=0)
-
-    def get_param_std(self, chain=None, **kwargs):
-        """Gets the standard deviation of the model parameters.
-
-        Keyword Arguments:
-            See kwargs of the get_chain method.
-        """
-        chain = self.parse_chain(chain, **kwargs)
-        return np.std(chain, axis=0)
 
     @property
     def fitted(self):
@@ -176,7 +135,7 @@ class PolynomialDecomposition(Inversion):
             filepath (:obj:`str`): The path to the data file.
 
         Keyword Arguments:
-            See kwargs of the load_data method.
+            **kwargs: See kwargs of the load_data utility method.
 
         """
         self.data = self.load_data(filepath, **data_kwargs)
@@ -227,7 +186,7 @@ class ColeCole(Inversion):
             filepath (:obj:`str`): The path to the data file.
 
         Keyword Arguments:
-            See kwargs of the load_data method.
+            **kwargs: See kwargs of the load_data utility method.
 
         """
         self.data = self.load_data(filepath, **data_kwargs)

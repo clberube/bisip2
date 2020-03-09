@@ -3,8 +3,8 @@
 # @Author: cberube
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
-# @Last modified by:   cberube
-# @Last modified time: 09-03-2020
+# @Last modified by:   charles
+# @Last modified time: 2020-03-09T18:23:42-04:00
 
 
 import warnings
@@ -14,10 +14,75 @@ import numpy as np
 
 class utils:
 
-    def check_if_fitted(self):
-        if not self.fitted:
-            raise AssertionError('Model is not fitted! Fit the model to a '
-                                 'dataset before attempting to plot results.')
+    def get_model_percentile(self, p, chain=None, **kwargs):
+        """Gets percentiles of the model values for a MCMC chain.
+
+        Args:
+            p (:obj:`float` or :obj:`list` of :obj:`float`): percentiles values
+                to compute.
+            chain (:obj:`ndarray`): A numpy array containing the MCMC chain to
+                plot. Should have a shape (nwalkers, nsteps, ndim) or
+                (nsteps, ndim). If None, the full, unflattened chain will be
+                used and all walkers will be plotted. Defaults to None.
+
+        Keyword Args:
+            **kwargs: See kwargs of the get_chain method.
+        """
+        chain = self.parse_chain(chain, **kwargs)
+        results = np.empty((chain.shape[0], 2, self.data['N']))
+        for i in range(chain.shape[0]):
+            results[i] = self.forward(chain[i], self.data['w'])
+        return np.percentile(results, p, axis=0)
+
+    def get_param_percentile(self, p, chain=None, **kwargs):
+        """Gets percentiles of the parameter values for a MCMC chain.
+
+        Args:
+            p (:obj:`float` or :obj:`list` of :obj:`float`): percentiles values
+                to compute.
+            chain (:obj:`ndarray`): A numpy array containing the MCMC chain to
+                plot. Should have a shape (nwalkers, nsteps, ndim) or
+                (nsteps, ndim). If None, the full, unflattened chain will be
+                used and all walkers will be plotted. Defaults to None.
+
+        Keyword Args:
+            **kwargs: See kwargs of the get_chain method.
+
+        """
+        chain = self.parse_chain(chain, **kwargs)
+        return np.percentile(chain, p, axis=0)
+
+    def get_param_mean(self, chain=None, **kwargs):
+        """Gets the mean of the model parameters for a MCMC chain.
+
+        Args:
+            chain (:obj:`ndarray`): A numpy array containing the MCMC chain to
+                plot. Should have a shape (nwalkers, nsteps, ndim) or
+                (nsteps, ndim). If None, the full, unflattened chain will be
+                used and all walkers will be plotted. Defaults to None.
+
+        Keyword Args:
+            **kwargs: See kwargs of the get_chain method.
+
+        """
+        chain = self.parse_chain(chain, **kwargs)
+        return np.mean(chain, axis=0)
+
+    def get_param_std(self, chain=None, **kwargs):
+        """Gets the standard deviation of the model parameters.
+
+        Args:
+            chain (:obj:`ndarray`): A numpy array containing the MCMC chain to
+                plot. Should have a shape (nwalkers, nsteps, ndim) or
+                (nsteps, ndim). If None, the full, unflattened chain will be
+                used and all walkers will be plotted. Defaults to None.
+
+        Keyword Args:
+            See kwargs of the get_chain method.
+
+        """
+        chain = self.parse_chain(chain, **kwargs)
+        return np.std(chain, axis=0)
 
     def parse_chain(self, chain, **kwargs):
         if chain is None:

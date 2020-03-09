@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-09T18:14:23-04:00
+# @Last modified time: 2020-03-09T18:24:43-04:00
 
 
 import matplotlib.pyplot as plt
@@ -24,7 +24,7 @@ class plotlib:
                 used and all walkers will be plotted. Defaults to None.
             **kwargs: Additional keyword arguments for the get_chain function
                 (see below). Use these arguments only if not explicitly passing
-                the :obj:`chain` argument.
+                the `chain` argument.
 
         Keyword Args:
             discard (:obj:`int`): The number of steps to discard.
@@ -36,7 +36,7 @@ class plotlib:
             :obj:`Figure`: A matplotlib figure.
 
         """
-        self.check_if_fitted()
+        self._check_if_fitted()
         if chain is None:
             chain = self.get_chain(**kwargs)
         labels = self.param_names
@@ -64,7 +64,7 @@ class plotlib:
             bins (:obj:`int`): The number of bins to use in the histograms.
             **kwargs: Additional keyword arguments for the get_chain function
                 (see below). Use these arguments only if not explicitly passing
-                the :obj:`chain` argument.
+                the `chain` argument.
 
         Keyword Args:
             discard (:obj:`int`): The number of steps to discard.
@@ -76,7 +76,7 @@ class plotlib:
             :obj:`Figure`: A matplotlib figure.
 
         """
-        self.check_if_fitted()
+        self._check_if_fitted()
         chain = self.parse_chain(chain, **kwargs)
         labels = self.param_names
         fig, axes = plt.subplots(self.ndim, figsize=(5, 1.5*chain.shape[1]))
@@ -103,7 +103,7 @@ class plotlib:
                 median and 95% HPD.
             **kwargs: Additional keyword arguments for the get_chain function
                 (see below). Use these arguments only if not explicitly passing
-                the :obj:`chain` argument.
+                the `chain` argument.
 
         Keyword Args:
             discard (:obj:`int`): The number of steps to discard.
@@ -115,7 +115,7 @@ class plotlib:
             :obj:`Figure`: A matplotlib figure.
 
         """
-        self.check_if_fitted()
+        self._check_if_fitted()
         data = self.data
         lines = self.get_model_percentile(p, chain, **kwargs)
         fig, ax = plt.subplots(2, 1, figsize=(4, 5), sharex=True)
@@ -143,7 +143,7 @@ class plotlib:
                 used and all walkers will be plotted. Defaults to None.
             **kwargs: Additional keyword arguments for the get_chain function
                 (see below). Use these arguments only if not explicitly passing
-                the :obj:`chain` argument.
+                the `chain` argument.
 
         Keyword Args:
             discard (:obj:`int`): The number of steps to discard.
@@ -155,6 +155,6 @@ class plotlib:
             :obj:`Figure`: A matplotlib figure.
 
         """
-        self.check_if_fitted()
+        self._check_if_fitted()
         fig = corner(chain, labels=self.param_names)
         return fig
