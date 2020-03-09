@@ -3,8 +3,8 @@
 # @Author: cberube
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
-# @Last modified by:   charles
-# @Last modified time: 2020-03-06T17:44:36-05:00
+# @Last modified by:   cberube
+# @Last modified time: 09-03-2020
 
 
 import emcee
@@ -16,6 +16,8 @@ from . import plotlib
 
 
 def log_likelihood(theta, model, x, y, yerr):
+    """
+    """
     sigma2 = yerr**2
     return -0.5 * np.sum((y - model(theta, x))**2 / sigma2 + 2*np.log(sigma2))
 
