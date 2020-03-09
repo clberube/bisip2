@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-09T18:23:58-04:00
+# @Last modified time: 2020-03-09T18:27:46-04:00
 
 
 import emcee
@@ -16,13 +16,16 @@ from . import plotlib
 
 
 def log_likelihood(theta, model, x, y, yerr):
-    """
+    """Returns the log-likelihood of the observations knowing the model
+    parameters.
     """
     sigma2 = yerr**2
     return -0.5 * np.sum((y - model(theta, x))**2 / sigma2 + 2*np.log(sigma2))
 
 
 def log_prior(theta, bounds):
+    """Returns the prior log-probability of the model parameters.
+    """
     if not ((bounds[0] < theta).all() and (theta < bounds[1]).all()):
         return -np.inf
     else:
@@ -30,6 +33,8 @@ def log_prior(theta, bounds):
 
 
 def log_probability(theta, model, bounds, x, y, yerr):
+    """Returns the log-probability (Bayes numerator).
+    """
     lp = log_prior(theta, bounds)
     if not np.isfinite(lp):
         return -np.inf

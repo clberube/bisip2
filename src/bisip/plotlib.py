@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-09T18:24:43-04:00
+# @Last modified time: 2020-03-09T18:25:48-04:00
 
 
 import matplotlib.pyplot as plt
@@ -99,8 +99,8 @@ class plotlib:
                 used and all walkers will be plotted. Defaults to None.
             p (:obj:`list` of :obj:`int`): Percentile values for lower
                 confidence interval, best fit curve, and upper confidence
-                interval, **in that order**. Defaults to [2.5, 50, 97.5] for the
-                median and 95% HPD.
+                interval, **in that order**. Defaults to [2.5, 50, 97.5] for
+                the median and 95% HPD.
             **kwargs: Additional keyword arguments for the get_chain function
                 (see below). Use these arguments only if not explicitly passing
                 the `chain` argument.
