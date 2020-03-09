@@ -16,8 +16,8 @@ def plot_traces(model, chain=None, **kwargs):
     Plots the traces of the MCMC simulation.
 
     Args:
-        model (:obj:`Inversion`): A fitted Inversion model.
-        chain (array): An array containing the MCMC chain to plot.
+        model (:obj:`bisip.Inversion`): A fitted Inversion model.
+        chain (:obj:`numpy.ndarray`): A numpy array containing the MCMC chain to plot.
             Should have a shape (nwalkers, nsteps, ndim) or (nsteps, ndim).
             If None, the full, unflattened chain will be used.
             Defaults to None.
@@ -32,7 +32,7 @@ def plot_traces(model, chain=None, **kwargs):
             or not.
 
     Returns:
-        :obj:`Figure`: A matplotlib.figure.Figure object.
+        :obj:`Figure`: A `matplotlib.figure.Figure` object.
 
     """
     if chain is None:
