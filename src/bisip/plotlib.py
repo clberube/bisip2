@@ -17,7 +17,7 @@ def plot_traces(model, chain=None, **kwargs):
 
     Args:
         model (:obj:`Inversion`): A fitted Inversion model.
-        chain (:obj:`array`): An array containing the MCMC chain to plot.
+        chain (array): An array containing the MCMC chain to plot.
             Should have a shape (nwalkers, nsteps, ndim) or (nsteps, ndim).
             If None, the full, unflattened chain will be used.
             Defaults to None.
@@ -25,14 +25,14 @@ def plot_traces(model, chain=None, **kwargs):
             (see below). Use these arguments only if not explicitly passing a
             `chain` array.
 
-    kwargs:
+    Keyword Args:
         discard (:obj:`int`): The number of steps to discard.
         thin (:obj:`int`): The thinning factor (keep every `thin` step).
         flat (:obj:`bool`): Whether to flatten the walkers into a single chain
             or not.
 
     Returns:
-        Figure: A matplotlib.figure.Figure object.
+        :obj:`Figure`: A matplotlib.figure.Figure object.
 
     """
     if chain is None:
