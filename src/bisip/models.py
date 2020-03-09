@@ -96,7 +96,7 @@ class Inversion(plotlib.plotlib, utils.utils):
                 to compute.
 
         Keyword Arguments:
-            See kwargs of the `get_chain()` method.
+            See kwargs of the get_chain method.
         """
         chain = self.parse_chain(chain, **kwargs)
         results = np.empty((chain.shape[0], 2, self.data['N']))
@@ -112,7 +112,7 @@ class Inversion(plotlib.plotlib, utils.utils):
                 to compute.
 
         Keyword Arguments:
-            See kwargs of the `get_chain()` method.
+            See kwargs of the get_chain method.
         """
         chain = self.parse_chain(chain, **kwargs)
         return np.percentile(chain, p, axis=0)
@@ -121,7 +121,7 @@ class Inversion(plotlib.plotlib, utils.utils):
         """Gets the mean of the model parameters for a MCMC chain.
 
         Keyword Arguments:
-            See kwargs of the `get_chain()` method.
+            See kwargs of the get_chain method.
         """
         chain = self.parse_chain(chain, **kwargs)
         return np.mean(chain, axis=0)
@@ -131,7 +131,7 @@ class Inversion(plotlib.plotlib, utils.utils):
             chain.
 
         Keyword Arguments:
-            See kwargs of the `get_chain()` method.
+            See kwargs of the get_chain method.
         """
         chain = self.parse_chain(chain, **kwargs)
         return np.std(chain, axis=0)
