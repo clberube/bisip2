@@ -33,7 +33,7 @@ def plot_traces(model, chain=None, **kwargs):
             or not.
 
     Returns:
-        :obj:`Figure`: A figure object that can be modified
+        `Figure`: A figure object that can be modified
             or saved with the matplotlib API.
 
     """
@@ -76,7 +76,7 @@ def plot_histograms(model, chain=None, bins=25, **kwargs):
             or not.
 
     Returns:
-        :obj:`Figure`: A figure object that can be modified
+        `Figure`: A figure object that can be modified
             or saved with the matplotlib API.
 
     """
@@ -117,7 +117,7 @@ def plot_fit(model, chain=None, p=[2.5, 50, 97.5], **kwargs):
             or not.
 
     Returns:
-        :obj:`Figure`: A figure object that can be modified
+        `Figure`: A figure object that can be modified
             or saved with the matplotlib API.
 
     """
@@ -160,7 +160,7 @@ def plot_corner(model, chain, **kwargs):
             or not.
 
     Returns:
-        :obj:`Figure`: A figure object that can be modified
+        `Figure`: A figure object that can be modified
             or saved with the matplotlib API.
 
     """
