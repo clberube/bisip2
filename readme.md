@@ -1,6 +1,5 @@
 # BISIP
-## This is the development repository for BISIP2, the successor of BISIP: https://github.com/clberube/BISIP
-### BISIP is being re-written with a powerful ensemble MCMC sampler, better code practice and improved documentation.
+### This is the development repository for BISIP2, the successor of BISIP: https://github.com/clberube/BISIP. BISIP is being re-written with a powerful ensemble MCMC sampler, better code practice and improved documentation.
 
 
 ### Requirements
@@ -9,6 +8,9 @@
 - numpy (https://numpy.org/)
 - matplotlib (https://matplotlib.org/)
 
+
+### Documentation
+Visit https://bisip.readthedocs.io/en/latest/ to consult the full documentation including API docs, tutorials and examples.
 
 ### Installation
 Clone this repository to your computer. Then navigate to the bisip directory. Finally run the setup.py script with Python.

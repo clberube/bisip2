@@ -3,8 +3,8 @@
 # @Author: cberube
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
-# @Last modified by:   charles
-# @Last modified time: 2020-03-06T15:10:41-05:00
+# @Last modified by:   cberube
+# @Last modified time: 09-03-2020
 
 
 import matplotlib.pyplot as plt
@@ -13,11 +13,27 @@ from corner import corner
 
 def plot_traces(model, chain=None, **kwargs):
     """
-    Return the most important thing about a person.
-    Parameters
-    ----------
-    your_name
-        A string indicating the name of the person.
+    Plots the traces of the MCMC simulation.
+
+    Args:
+        model (:obj:`Inversion`): A fitted Inversion model.
+        chain (:obj:`array`): An array containing the MCMC chain to plot.
+            Should have a shape (nwalkers, nsteps, ndim) or (nsteps, ndim).
+            If None, the full, unflattened chain will be used.
+            Defaults to None.
+        **kwargs: Additional keyword arguments for the get_chain function
+            (see below). Use these arguments only if not explicitly passing a
+            `chain` array.
+
+    kwargs:
+        discard (:obj:`int`): The number of steps to discard.
+        thin (:obj:`int`): The thinning factor (keep every `thin` step).
+        flat (:obj:`bool`): Whether to flatten the walkers into a single chain
+            or not.
+
+    Returns:
+        Figure: A matplotlib.figure.Figure object.
+
     """
     if chain is None:
         chain = model.get_chain(**kwargs)
