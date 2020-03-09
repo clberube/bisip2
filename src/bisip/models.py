@@ -37,20 +37,23 @@ def log_probability(theta, model, bounds, x, y, yerr):
 
 
 class Inversion(plotlib.plotlib, utils.utils):
+    """An abstract class to perform inversion of SIP data.
+
+    This class is the base constructor for the PolynomialDecomposition and
+    ColeCole classes.
+
+    Args:
+        nwalkers (:obj:`str`): Number of walkers to use to explore the
+            parameter space. Defaults to 32.
+        nsteps (:obj:`int`): Number of steps to perform in the MCMC
+            simulation. Defaults to 5000.
+
+    Attributes:
+        TODO
+
+    """
 
     def __init__(self, nwalkers=32, nsteps=5000, pool=None, moves=None):
-        """An abstract class to perform inversion of SIP data.
-
-        This class is the base constructor for the PolynomialDecomposition and
-        ColeCole classes.
-
-        Args:
-            nwalkers (:obj:`str`): Number of walkers to use to explore the
-                parameter space. Defaults to 32.
-            nsteps (:obj:`int`): Number of steps to perform in the MCMC
-                simulation. Defaults to 5000.
-
-        """
         self.nsteps = nsteps
         self.nwalkers = nwalkers
         self.pool = pool
@@ -149,17 +152,17 @@ class Inversion(plotlib.plotlib, utils.utils):
 
 
 class PolynomialDecomposition(Inversion):
+    """A polynomial decomposition inversion scheme for SIP data.
+
+    Args:
+        poly_deg (:obj:`int`): The polynomial degree to use for the
+            decomposition. Defaults to 5.
+        c_exp (:obj:`float`): The c-exponent to use for the decomposition
+            scheme. 0.5 -> Warburg, 1.0 -> Debye. Defaults to 1.0.
+
+    """
 
     def __init__(self, poly_deg=5, c_exp=1.0, **kwargs):
-        """A polynomial decomposition inversion scheme for SIP data.
-
-        Args:
-            poly_deg (:obj:`int`): The polynomial degree to use for the
-                decomposition. Defaults to 5.
-            c_exp (:obj:`float`): The c-exponent to use for the decomposition
-                scheme. 0.5 -> Warburg, 1.0 -> Debye. Defaults to 1.0.
-
-        """
         super().__init__(**kwargs)
         self.c_exp = c_exp
         self.poly_deg = poly_deg
@@ -200,15 +203,15 @@ class PolynomialDecomposition(Inversion):
 
 
 class ColeCole(Inversion):
+    """A generalized ColeCole inversion scheme for SIP data.
+
+    Args:
+        n_modes (:obj:`int`): The number of ColeCole modes to use for the
+            inversion. Defaults to 1.
+
+    """
 
     def __init__(self, n_modes=1, **kwargs):
-        """A generalized ColeCole inversion scheme for SIP data.
-
-        Args:
-            n_modes (:obj:`int`): The number of ColeCole modes to use for the
-                inversion. Defaults to 1.
-
-        """
         super().__init__(**kwargs)
         self.n_modes = n_modes
 
