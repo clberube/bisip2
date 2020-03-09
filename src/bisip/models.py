@@ -78,8 +78,7 @@ class Inversion(plotlib.plotlib, utils.utils):
         self.__fitted = True
 
     def get_chain(self, **kwargs):
-        """Filters a chain by discarding a burn-in period and using a thinning
-            factor. May also be used to flatten walkers into a single chain.
+        """Gets a MCMC chains from a fitted model.
 
         Keyword Arguments:
             discard (:obj:`int`): Number of steps to discard (burn-in period).
@@ -127,8 +126,7 @@ class Inversion(plotlib.plotlib, utils.utils):
         return np.mean(chain, axis=0)
 
     def get_param_std(self, chain=None, **kwargs):
-        """Gets the standard deviation of the model parameters for a MCMC
-            chain.
+        """Gets the standard deviation of the model parameters.
 
         Keyword Arguments:
             See kwargs of the get_chain method.
