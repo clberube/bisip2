@@ -37,23 +37,20 @@ def log_probability(theta, model, bounds, x, y, yerr):
 
 
 class Inversion(plotlib.plotlib, utils.utils):
-    """The summary line for a class docstring should fit on one line.
-
-    If the class has public attributes, they may be documented here
-    in an ``Attributes`` section and follow the same formatting as a
-    function's ``Args`` section. Alternatively, attributes may be documented
-    inline with the attribute's declaration (see __init__ method below).
-
-    Properties created with the ``@property`` decorator should be documented
-    in the property's getter method.
-
-    Attributes:
-        attr1 (str): Description of `attr1`.
-        attr2 (:obj:`int`, optional): Description of `attr2`.
-
-    """
 
     def __init__(self, nwalkers=32, nsteps=5000, pool=None, moves=None):
+        """An abstract class to perform inversion of SIP data.
+
+        This class is the base constructor for the PolynomialDecomposition and
+        ColeCole classes.
+
+        Args:
+            nwalkers (:obj:`str`): Number of walkers to use to explore the
+                parameter space. Defaults to 32.
+            nsteps (:obj:`int`): Number of steps to perform in the MCMC
+                simulation. Defaults to 5000.
+
+        """
         self.nsteps = nsteps
         self.nwalkers = nwalkers
         self.pool = pool
@@ -78,9 +75,25 @@ class Inversion(plotlib.plotlib, utils.utils):
         self.__fitted = True
 
     def get_chain(self, **kwargs):
+        """Filters a chain by discarding
+
+        Keyword Arguments:
+            discard (:obj:`int`): Number of steps to discard (burn-in period).
+            thin (:obj:`int`): Thinning factor.
+            flat (:obj:`bool`): Whether or not to flatten the walkers.
+        """
         return self.sampler.get_chain(**kwargs)
 
     def get_model_percentile(self, p, chain=None, **kwargs):
+        """Gets percentiles of the model values for a MCMC chain.
+
+        Args:
+            p (:obj:`float` or :obj:`list` of :obj:`float`): percentiles values
+                to compute.
+
+        Keyword Arguments:
+            See kwargs of the `get_chain()` method.
+        """
         chain = self.parse_chain(chain, **kwargs)
         results = np.empty((chain.shape[0], 2, self.data['N']))
         for i in range(chain.shape[0]):
@@ -88,14 +101,34 @@ class Inversion(plotlib.plotlib, utils.utils):
         return np.percentile(results, p, axis=0)
 
     def get_param_percentile(self, p, chain=None, **kwargs):
+        """Gets percentiles of the parameter values for a MCMC chain.
+
+        Args:
+            p (:obj:`float` or :obj:`list` of :obj:`float`): percentiles values
+                to compute.
+
+        Keyword Arguments:
+            See kwargs of the `get_chain()` method.
+        """
         chain = self.parse_chain(chain, **kwargs)
         return np.percentile(chain, p, axis=0)
 
     def get_param_mean(self, chain=None, **kwargs):
+        """Gets the mean of the model parameters for a MCMC chain.
+
+        Keyword Arguments:
+            See kwargs of the `get_chain()` method.
+        """
         chain = self.parse_chain(chain, **kwargs)
         return np.mean(chain, axis=0)
 
     def get_param_std(self, chain=None, **kwargs):
+        """Gets the standard deviation of the model parameters for a MCMC
+            chain.
+
+        Keyword Arguments:
+            See kwargs of the `get_chain()` method.
+        """
         chain = self.parse_chain(chain, **kwargs)
         return np.std(chain, axis=0)
 
@@ -105,16 +138,27 @@ class Inversion(plotlib.plotlib, utils.utils):
 
     @property
     def param_names(self):
+        """:obj:`list` of :obj:`str`: Ordered names of the parameters."""
         return list(self.params.keys())
 
     @property
     def param_bounds(self):
+        """:obj:`list` of :obj:`float`: Ordered bounds of the parameters."""
         return self.bounds
 
 
 class PolynomialDecomposition(Inversion):
 
     def __init__(self, poly_deg=5, c_exp=1.0, **kwargs):
+        """A polynomial decomposition inversion scheme for SIP data.
+
+        Args:
+            poly_deg (:obj:`int`): The polynomial degree to use for the
+                decomposition. Defaults to 5.
+            c_exp (:obj:`float`): The c-exponent to use for the decomposition
+                scheme. 0.5 -> Warburg, 1.0 -> Debye. Defaults to 1.0.
+
+        """
         super().__init__(**kwargs)
         self.c_exp = c_exp
         self.poly_deg = poly_deg
@@ -148,6 +192,13 @@ class PolynomialDecomposition(Inversion):
 class ColeCole(Inversion):
 
     def __init__(self, n_modes=1, **kwargs):
+        """A generalized ColeCole inversion scheme for SIP data.
+
+        Args:
+            n_modes (:obj:`int`): The number of ColeCole modes to use for the
+                inversion. Defaults to 1.
+
+        """
         super().__init__(**kwargs)
         self.n_modes = n_modes
 
