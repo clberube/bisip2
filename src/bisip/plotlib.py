@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-09T18:12:44-04:00
+# @Last modified time: 2020-03-09T18:14:23-04:00
 
 
 import matplotlib.pyplot as plt
@@ -97,10 +97,10 @@ class plotlib:
                 plot. Should have a shape (nwalkers, nsteps, ndim) or
                 (nsteps, ndim). If None, the full, unflattened chain will be
                 used and all walkers will be plotted. Defaults to None.
-            p (:obj:`int` or :obj:`list`): Percentile values for lower
+            p (:obj:`list` of :obj:`int`): Percentile values for lower
                 confidence interval, best fit curve, and upper confidence
-                interval, in order. Defaults to [2.5, 50, 97.5] for the median
-                and 95% HPD.
+                interval, **in that order**. Defaults to [2.5, 50, 97.5] for the
+                median and 95% HPD.
             **kwargs: Additional keyword arguments for the get_chain function
                 (see below). Use these arguments only if not explicitly passing
                 the :obj:`chain` argument.
@@ -149,7 +149,7 @@ class plotlib:
             discard (:obj:`int`): The number of steps to discard.
             thin (:obj:`int`): The thinning factor (keep every `thin` step).
             flat (:obj:`bool`): Whether to flatten the walkers into a single
-            chain or not.
+                chain or not.
 
         Returns:
             :obj:`Figure`: A matplotlib figure.
