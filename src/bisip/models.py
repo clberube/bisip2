@@ -76,11 +76,6 @@ class Inversion(plotlib.plotlib, utils.utils):
             **kwargs: Additional keyword arguments passed to the
                 EnsembleSampler class. See
                 https://emcee.readthedocs.io/en/stable/user/sampler/
-            thin (:obj:`int`): Thinning factor.
-            flat (:obj:`bool`): Whether or not to flatten the walkers. If flat
-                is False, the output chain will have shape (nsteps, nwalkers,
-                ndim). If flat is True, the output chain will have shape
-                (nsteps*nwalkers, ndim).
 
         Returns:
             :obj:`None`: None
