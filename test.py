@@ -17,8 +17,8 @@ if __name__ == '__main__':
     fp = f'./data/SIP-K389175.dat'
 
     print('Testing ColeCole fits with nsteps=1000')
-    model = ColeCole(nwalkers=32, n_modes=2, nsteps=1000)
-    model.fit(fp)
+    model = ColeCole(fp, nwalkers=32, n_modes=2, nsteps=1000)
+    model.fit()
 
     # Get the mean parameter values and their std
     # discarding the first 1000 steps (burn-in)
@@ -29,8 +29,10 @@ if __name__ == '__main__':
         print(f'{n}: {v:.5f} +/- {u:.5f}')
 
     print('Testing Debye Decomposition with nsteps=2000')
-    model = PolynomialDecomposition(nwalkers=32, poly_deg=4, nsteps=2000)
-    model.fit(fp)
+    model = PolynomialDecomposition(fp, nwalkers=32, poly_deg=4, nsteps=2000)
+    # Update parameter boundaries inplace
+    model.params.update(a0=[-2, 2])
+    model.fit()
 
     chain = model.get_chain(discard=1000, thin=1, flat=True)
 
@@ -58,7 +60,7 @@ if __name__ == '__main__':
     try:
         fig = model.plot_corner(chain)
         plt.close()
-        # fig.savefig('./figures/corner_plot.png', dpi=144, bbox_inches='tight')
+        # fig.savefig('./figures/corner.png', dpi=144, bbox_inches='tight')
     except ImportError:
         warnings.warn('The `corner` package was not found. Install it with '
                       '`conda install corner`')

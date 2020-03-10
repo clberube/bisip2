@@ -63,12 +63,25 @@ class Inversion(plotlib.plotlib, utils.utils):
             return -np.inf
         return lp + self._log_likelihood(theta, model, x, y, yerr)
 
-    def _start_sampling(self, **kwargs):
-        """Samples the posterior distribution. """
-        self.ndim = self.bounds.shape[1]
-        self.p0 = np.random.uniform(*self.bounds, (self.nwalkers, self.ndim))
+    def _check_if_fitted(self):
+        """Checks if the model has been fitted. """
+        if not self.fitted:
+            raise AssertionError('Model is not fitted! Fit the model to a '
+                                 'dataset before attempting to plot results.')
 
-        model_args = (self.forward, self.bounds, self.data['w'],
+    def fit(self, **kwargs):
+        """Samples the posterior distribution to fit the model to the data.
+
+        Keyword Args:
+            **kwargs: Additional keyword arguments passed to the `emcee.
+                EnsembleSampler` class. See
+                https://emcee.readthedocs.io/en/stable/user/sampler/.
+
+        """
+        self.ndim = self._bounds.shape[1]
+        self.p0 = np.random.uniform(*self._bounds, (self.nwalkers, self.ndim))
+
+        model_args = (self.forward, self._bounds, self.data['w'],
                       self.data['zn'], self.data['zn_err'])
 
         self.sampler = emcee.EnsembleSampler(self.nwalkers,
@@ -79,12 +92,6 @@ class Inversion(plotlib.plotlib, utils.utils):
                                              )
         self.sampler.run_mcmc(self.p0, self.nsteps, progress=True)
         self.__fitted = True
-
-    def _check_if_fitted(self):
-        """Checks if the model has been fitted. """
-        if not self.fitted:
-            raise AssertionError('Model is not fitted! Fit the model to a '
-                                 'dataset before attempting to plot results.')
 
     def get_chain(self, **kwargs):
         """Gets the MCMC chains from a fitted model.
@@ -124,7 +131,7 @@ class Inversion(plotlib.plotlib, utils.utils):
     @property
     def param_bounds(self):
         """:obj:`list` of :obj:`float`: Ordered bounds of the parameters."""
-        return self.bounds
+        return list(self.params.values())
 
 
 class PolynomialDecomposition(Inversion):
@@ -138,36 +145,14 @@ class PolynomialDecomposition(Inversion):
 
     """
 
-    def __init__(self, poly_deg=5, c_exp=1.0, **kwargs):
+    def __init__(self, filepath, poly_deg=5, c_exp=1.0, headers=1,
+                 ph_units='mrad', **kwargs):
         super().__init__(**kwargs)
         self.c_exp = c_exp
         self.poly_deg = poly_deg
 
-    def forward(self, theta, w):
-        """Returns a Polynomial Decomposition impedance.
-
-        Args:
-            theta (:obj:`ndarray`): Ordered array of R0, a_{poly_deg},
-                a_{poly_deg-1}, ..., a_{0}. See
-                https://doi.org/10.1016/j.cageo.2017.05.001.
-            w (:obj:`ndarray`): Array of angular frequencies to compute the
-                impedance for (w = 2*pi*f).
-
-        """
-        return Decomp_cyth(w, self.taus, self.log_taus, self.c_exp,
-                           R0=theta[0], a=theta[1:])
-
-    def fit(self, filepath, **data_kwargs):
-        """Fits the model to a dataset
-
-        Args:
-            filepath (:obj:`str`): The path to the data file.
-
-        Keyword Arguments:
-            **kwargs: See kwargs of the load_data utility method.
-
-        """
-        self.data = self.load_data(filepath, **data_kwargs)
+        # Load data
+        self.data = self.load_data(filepath, headers, ph_units)
 
         # Define a range of relaxation time values for the RTD
         min_tau = np.floor(min(np.log10(1./self.data['w'])) - 1)
@@ -184,9 +169,21 @@ class PolynomialDecomposition(Inversion):
         self.params.update({'r0': [0.9, 1.1]})
         self.params.update({f'a{x}': [-1, 1] for x in deg_range})
 
-        self.bounds = np.array([self.params[x] for x in self.params.keys()]).T
+        self._bounds = np.array(self.param_bounds).T
 
-        self._start_sampling(pool=self.pool, moves=self.moves)
+    def forward(self, theta, w):
+        """Returns a Polynomial Decomposition impedance.
+
+        Args:
+            theta (:obj:`ndarray`): Ordered array of R0, a_{poly_deg},
+                a_{poly_deg-1}, ..., a_{0}. See
+                https://doi.org/10.1016/j.cageo.2017.05.001.
+            w (:obj:`ndarray`): Array of angular frequencies to compute the
+                impedance for (w = 2*pi*f).
+
+        """
+        return Decomp_cyth(w, self.taus, self.log_taus, self.c_exp,
+                           R0=theta[0], a=theta[1:])
 
 
 class ColeCole(Inversion):
@@ -198,9 +195,22 @@ class ColeCole(Inversion):
 
     """
 
-    def __init__(self, n_modes=1, **kwargs):
+    def __init__(self, filepath, n_modes=1, headers=1, ph_units='mrad',
+                 **kwargs):
         super().__init__(**kwargs)
         self.n_modes = n_modes
+
+        # Load data
+        self.data = self.load_data(filepath, headers, ph_units)
+
+        # Add multi-mode ColeCole parameters to dict
+        range_modes = list(range(self.n_modes))
+        self.params.update({'r0': [0.9, 1.1]})
+        self.params.update({f'm{i+1}': [0.0, 1.0] for i in range_modes})
+        self.params.update({f'log_tau{i+1}': [-20, 10] for i in range_modes})
+        self.params.update({f'c{i+1}': [0.0, 1.0] for i in range_modes})
+
+        self._bounds = np.array(self.param_bounds).T
 
     def forward(self, theta, w):
         """Returns a ColeCole impedance.
@@ -218,26 +228,3 @@ class ColeCole(Inversion):
                              m=theta[1:1+self.n_modes],
                              lt=theta[1+self.n_modes:1+2*self.n_modes],
                              c=theta[1+2*self.n_modes:])
-
-    def fit(self, filepath, **data_kwargs):
-        """Fits the model to a dataset
-
-        Args:
-            filepath (:obj:`str`): The path to the data file.
-
-        Keyword Arguments:
-            **kwargs: See kwargs of the load_data utility method.
-
-        """
-        self.data = self.load_data(filepath, **data_kwargs)
-
-        # Add polynomial decomposition parameters to dict
-        range_modes = list(range(self.n_modes))
-        self.params.update({'r0': [0.9, 1.1]})
-        self.params.update({f'm{i+1}': [0.0, 1.0] for i in range_modes})
-        self.params.update({f'log_tau{i+1}': [-20, 10] for i in range_modes})
-        self.params.update({f'c{i+1}': [0.0, 1.0] for i in range_modes})
-
-        self.bounds = np.array([self.params[x] for x in self.params.keys()]).T
-
-        self._start_sampling(pool=self.pool, moves=self.moves)

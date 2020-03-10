@@ -45,7 +45,7 @@ class plotlib:
             ax = axes[i]
             ax.plot(chain[:, :, i], 'k', alpha=0.3)
             ax.set_xlim(0, len(chain))
-            ax.set_ylim(self.bounds[0, i], self.bounds[1, i])
+            ax.set_ylim(self.param_bounds[i])
             ax.set_ylabel(labels[i])
             ax.yaxis.set_label_coords(-0.1, 0.5)
         axes[-1].set_xlabel('Steps')
