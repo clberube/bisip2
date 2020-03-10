@@ -78,7 +78,7 @@ class Inversion(plotlib.plotlib, utils.utils):
             test: yep
         Returns:
             None
-            
+
         """
         self.ndim = self._bounds.shape[1]
         self.p0 = np.random.uniform(*self._bounds, (self.nwalkers, self.ndim))
