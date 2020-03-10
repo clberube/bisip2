@@ -76,6 +76,9 @@ class Inversion(plotlib.plotlib, utils.utils):
             discard (:obj:`int`): Number of steps to discard (burn-in period).
             thin (:obj:`int`): Thinning factor.
 
+        Returns:
+            :obj:`None`
+
         """
         self.ndim = self._bounds.shape[1]
         self.p0 = np.random.uniform(*self._bounds, (self.nwalkers, self.ndim))
