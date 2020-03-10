@@ -198,6 +198,7 @@ class ColeCole(Inversion):
         Args:
             theta (:obj:`ndarray`): Ordered array of R0, m_{i}, m_{i+1}, ...
                 log_tau_{i}, log_tau_{i+1}, ..., c_{i}, c_{i+1}, ...
+                See https://doi.org/10.1016/j.cageo.2017.05.001.
             w (:obj:`ndarray`): Array of angular frequencies to compute the
                 impedance for (w = 2*pi*f).
 
