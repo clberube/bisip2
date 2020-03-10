@@ -75,6 +75,7 @@ class Inversion(plotlib.plotlib, utils.utils):
         Keyword Args:
             **kwargs: Additional keyword arguments for the `EnsembleSampler`
                 class.
+            test: yep
 
         """
         self.ndim = self._bounds.shape[1]
