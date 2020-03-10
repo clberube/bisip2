@@ -74,8 +74,7 @@ class Inversion(plotlib.plotlib, utils.utils):
 
         Keyword Args:
             **kwargs: Additional keyword arguments passed to the
-                EnsembleSampler class. See
-                https://emcee.readthedocs.io/en/stable/user/sampler/
+                EnsembleSampler class.
 
         Returns:
             :obj:`None`: None
