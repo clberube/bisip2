@@ -73,7 +73,9 @@ class Inversion(plotlib.plotlib, utils.utils):
         """Samples the posterior distribution to fit the model to the data.
 
         Keyword Args:
-            discard (:obj:`int`): Number of steps to discard (burn-in period).
+            **kwargs (:obj:`int`): Additional keyword arguments passed to the
+                EnsembleSampler class. See
+                https://emcee.readthedocs.io/en/stable/user/sampler/
             thin (:obj:`int`): Thinning factor.
             flat (:obj:`bool`): Whether or not to flatten the walkers. If flat
                 is False, the output chain will have shape (nsteps, nwalkers,
