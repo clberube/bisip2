@@ -92,7 +92,14 @@ class Inversion(plotlib.plotlib, utils.utils):
         Keyword Args:
             discard (:obj:`int`): Number of steps to discard (burn-in period).
             thin (:obj:`int`): Thinning factor.
-            flat (:obj:`bool`): Whether or not to flatten the walkers.
+            flat (:obj:`bool`): Whether or not to flatten the walkers. If flat
+                is False, the output chain will have shape (nsteps, nwalkers,
+                ndim). If flat is True, the output chain will have shape
+                (nsteps*nwalkers, ndim).
+
+        Returns:
+            :obj:`ndarray`: The MCMC chain(s).
+
         """
         return self.sampler.get_chain(**kwargs)
 
