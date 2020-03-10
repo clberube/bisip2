@@ -76,7 +76,7 @@ class Inversion(plotlib.plotlib, utils.utils):
             discard (:obj:`int`): Number of steps to discard (burn-in period).
             thin (:obj:`int`): Thinning factor.
 
-         """
+        """
         self.ndim = self._bounds.shape[1]
         self.p0 = np.random.uniform(*self._bounds, (self.nwalkers, self.ndim))
 
@@ -91,6 +91,7 @@ class Inversion(plotlib.plotlib, utils.utils):
                                              )
         self.sampler.run_mcmc(self.p0, self.nsteps, progress=True)
         self.__fitted = True
+        return None
 
     def get_chain(self, **kwargs):
         """Gets the MCMC chains from a fitted model.
