@@ -26,9 +26,11 @@ class Inversion(plotlib.plotlib, utils.utils):
             parameter space. Defaults to 32.
         nsteps (:obj:`int`): Number of steps to perform in the MCMC
             simulation. Defaults to 5000.
-
-    Attributes:
-        TODO
+        pool (:obj:`pool`, optional): A pool object from the multiprocessing
+            library. Defaults to None.
+        moves (:obj:`moves`, optional): A `emcee` Moves class (see
+            https://emcee.readthedocs.io/en/stable/user/moves/). If None,
+            the emcee algorithm `StretchMove` is used. Defaults to None.
 
     """
 
@@ -37,7 +39,7 @@ class Inversion(plotlib.plotlib, utils.utils):
         self.nwalkers = nwalkers
         self.pool = pool
         self.moves = moves
-        self.params = {}
+        self._params = {}
         self.__fitted = False
 
     def _log_likelihood(self, theta, f, x, y, yerr):
@@ -83,7 +85,7 @@ class Inversion(plotlib.plotlib, utils.utils):
                                  'dataset before attempting to plot results.')
 
     def get_chain(self, **kwargs):
-        """Gets a MCMC chains from a fitted model.
+        """Gets the MCMC chains from a fitted model.
 
         Keyword Args:
             discard (:obj:`int`): Number of steps to discard (burn-in period).
@@ -91,6 +93,15 @@ class Inversion(plotlib.plotlib, utils.utils):
             flat (:obj:`bool`): Whether or not to flatten the walkers.
         """
         return self.sampler.get_chain(**kwargs)
+
+    @property
+    def params(self):
+        """:obj:`dict`: Parameter names and their bounds."""
+        return self._params
+
+    @params.setter
+    def params(self, var):
+        self._params = var
 
     @property
     def fitted(self):
