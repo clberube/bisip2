@@ -70,14 +70,18 @@ class Inversion(plotlib.plotlib, utils.utils):
                                  'dataset before attempting to plot results.')
 
     def fit(self, **kwargs):
-        """Samples the posterior distruto fit the model with the data.
+        """Gets the MCMC chains from a fitted model.
 
         Keyword Args:
             discard (:obj:`int`): Number of steps to discard (burn-in period).
             thin (:obj:`int`): Thinning factor.
+            flat (:obj:`bool`): Whether or not to flatten the walkers. If flat
+                is False, the output chain will have shape (nsteps, nwalkers,
+                ndim). If flat is True, the output chain will have shape
+                (nsteps*nwalkers, ndim).
 
         Returns:
-            :obj:`None`
+            :obj:`ndarray`: The MCMC chain(s).
 
         """
         self.ndim = self._bounds.shape[1]
