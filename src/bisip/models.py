@@ -73,7 +73,7 @@ class Inversion(plotlib.plotlib, utils.utils):
         """Samples the posterior distribution to fit the model to the data.
 
         Keyword Args:
-            **kwargs: Additional keyword arguments for the `EnsembleSampler`
+            kwargs: Additional keyword arguments for the `EnsembleSampler`
                 class.
             test: yep
         Returns:
