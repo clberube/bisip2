@@ -169,19 +169,20 @@ class PolynomialDecomposition(Inversion):
         """
         self.data = self.load_data(filepath, **data_kwargs)
 
+        # Define a range of relaxation time values for the RTD
         min_tau = np.floor(min(np.log10(1./self.data['w'])) - 1)
         max_tau = np.floor(max(np.log10(1./self.data['w'])) + 1)
         n_tau = 2*self.data['N']
         self.log_tau = np.linspace(min_tau, max_tau, n_tau)
 
+        # Precompute the log_tau_i**i values for the polynomial approximation
         deg_range = list(range(self.poly_deg+1))
-        rev_deg_range = list(reversed(deg_range))
-        self.log_taus = np.array([self.log_tau**i for i in rev_deg_range])
+        self.log_taus = np.array([self.log_tau**i for i in deg_range])
         self.taus = 10**self.log_tau  # Accelerates sampling
 
         # Add polynomial decomposition parameters to dict
         self.params.update({'r0': [0.9, 1.1]})
-        self.params.update({f'a{x}': [-1, 1] for x in rev_deg_range})
+        self.params.update({f'a{x}': [-1, 1] for x in deg_range})
 
         self.bounds = np.array([self.params[x] for x in self.params.keys()]).T
 
@@ -205,9 +206,9 @@ class ColeCole(Inversion):
         """Returns a ColeCole impedance.
 
         Args:
-            theta (:obj:`ndarray`): Ordered array of R0, m_{i}, m_{i+1}, ...
-                log_tau_{i}, log_tau_{i+1}, ..., c_{i}, c_{i+1}, ... See
-                https://doi.org/10.1016/j.cageo.2017.05.001.
+            theta (:obj:`ndarray`): Ordered array of R0, m_{1}, ...,
+                m_{n_modes}, log_tau_{1}, ..., log_tau_{n_modes}, c_{1}, ...,
+                c_{n_modes}. See https://doi.org/10.1016/j.cageo.2017.05.001.
             w (:obj:`ndarray`): Array of angular frequencies to compute the
                 impedance for (w = 2*pi*f).
 
