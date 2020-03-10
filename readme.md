@@ -1,4 +1,6 @@
 # BISIP
+[![Documentation Status](https://readthedocs.org/projects/bisip/badge/?version=latest)](https://bisip.readthedocs.io/en/latest/?badge=latest)
+
 ### This is the development repository for BISIP2, the successor of BISIP: https://github.com/clberube/BISIP. BISIP is being re-written with a powerful ensemble MCMC sampler, better code practice and improved documentation.
 
 
