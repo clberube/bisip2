@@ -70,15 +70,11 @@ class Inversion(plotlib.plotlib, utils.utils):
                                  'dataset before attempting to plot results.')
 
     def fit(self, **kwargs):
-        """Samples the posterior distribution to fit the model with the data.
+        """Samples the posterior distruto fit the model with the data.
 
         Keyword Args:
-            **kwargs: Additional keyword arguments for the `EnsembleSampler`
-                class.
-                See https://emcee.readthedocs.io/en/stable/user/sampler/.
-
-        Returns:
-            :obj:`None`
+            discard (:obj:`int`): Number of steps to discard (burn-in period).
+            thin (:obj:`int`): Thinning factor.
 
         """
         self.ndim = self._bounds.shape[1]
