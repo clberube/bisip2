@@ -1,7 +1,7 @@
 The Inversion Class
 ===================
 
-Standard usage of :package:`bisip` involves instantiating an
+Standard usage of :module:`bisip` involves instantiating an
 :class:`Inversion` object. This is normally done by invoking one of the
 inversion model classes described in the SIP models section below.
 
