@@ -83,7 +83,7 @@ class Inversion(plotlib.plotlib, utils.utils):
                 (nsteps*nwalkers, ndim).
 
         Returns:
-            :obj:`None`
+            :obj:`None`: None
 
         """
         self.ndim = self._bounds.shape[1]
