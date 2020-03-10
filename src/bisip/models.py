@@ -22,7 +22,7 @@ class Inversion(plotlib.plotlib, utils.utils):
     ColeCole classes.
 
     Args:
-        nwalkers (:obj:`str`): Number of walkers to use to explore the
+        nwalkers (:obj:`int`): Number of walkers to use to explore the
             parameter space. Defaults to 32.
         nsteps (:obj:`int`): Number of steps to perform in the MCMC
             simulation. Defaults to 5000.
