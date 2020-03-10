@@ -3,8 +3,8 @@
 # @Author: cberube
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
-# @Last modified by:   charles
-# @Last modified time: 2020-03-09T18:27:46-04:00
+# @Last modified by:   cberube
+# @Last modified time: 10-03-2020
 
 
 import emcee
@@ -13,32 +13,6 @@ import numpy as np
 from .cython_funcs import Decomp_cyth, ColeCole_cyth
 from . import utils
 from . import plotlib
-
-
-def log_likelihood(theta, model, x, y, yerr):
-    """Returns the log-likelihood of the observations knowing the model
-    parameters.
-    """
-    sigma2 = yerr**2
-    return -0.5 * np.sum((y - model(theta, x))**2 / sigma2 + 2*np.log(sigma2))
-
-
-def log_prior(theta, bounds):
-    """Returns the prior log-probability of the model parameters.
-    """
-    if not ((bounds[0] < theta).all() and (theta < bounds[1]).all()):
-        return -np.inf
-    else:
-        return 0.0
-
-
-def log_probability(theta, model, bounds, x, y, yerr):
-    """Returns the log-probability (Bayes numerator).
-    """
-    lp = log_prior(theta, bounds)
-    if not np.isfinite(lp):
-        return -np.inf
-    return lp + log_likelihood(theta, model, x, y, yerr)
 
 
 class Inversion(plotlib.plotlib, utils.utils):
@@ -66,7 +40,27 @@ class Inversion(plotlib.plotlib, utils.utils):
         self.params = {}
         self.__fitted = False
 
+    def _log_likelihood(self, theta, f, x, y, yerr):
+        """Returns the conditional log-likelihood of the observations. """
+        sigma2 = yerr**2
+        return -0.5*np.sum((y - f(theta, x))**2 / sigma2 + 2*np.log(sigma2))
+
+    def _log_prior(self, theta, bounds):
+        """Returns the prior log-probability of the model parameters. """
+        if not ((bounds[0] < theta).all() and (theta < bounds[1]).all()):
+            return -np.inf
+        else:
+            return 0.0
+
+    def _log_probability(self, theta, model, bounds, x, y, yerr):
+        """Returns the Bayes numerator log-probability. """
+        lp = self._log_prior(theta, bounds)
+        if not np.isfinite(lp):
+            return -np.inf
+        return lp + self._log_likelihood(theta, model, x, y, yerr)
+
     def _start_sampling(self, **kwargs):
+        """Samples the posterior distribution. """
         self.ndim = self.bounds.shape[1]
         self.p0 = np.random.uniform(*self.bounds, (self.nwalkers, self.ndim))
 
@@ -75,7 +69,7 @@ class Inversion(plotlib.plotlib, utils.utils):
 
         self.sampler = emcee.EnsembleSampler(self.nwalkers,
                                              self.ndim,
-                                             log_probability,
+                                             self._log_probability,
                                              args=model_args,
                                              **kwargs,
                                              )
