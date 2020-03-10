@@ -76,7 +76,9 @@ class Inversion(plotlib.plotlib, utils.utils):
             **kwargs: Additional keyword arguments for the `EnsembleSampler`
                 class.
             test: yep
-
+        Returns:
+            None
+            
         """
         self.ndim = self._bounds.shape[1]
         self.p0 = np.random.uniform(*self._bounds, (self.nwalkers, self.ndim))
