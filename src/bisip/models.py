@@ -70,7 +70,7 @@ class Inversion(plotlib.plotlib, utils.utils):
                                  'dataset before attempting to plot results.')
 
     def fit(self, **kwargs):
-        """Gets the MCMC chains from a fitted model.
+        """Samples the posterior distribution to fit the model to the data.
 
         Keyword Args:
             discard (:obj:`int`): Number of steps to discard (burn-in period).
