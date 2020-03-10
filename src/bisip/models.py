@@ -135,6 +135,16 @@ class PolynomialDecomposition(Inversion):
         self.poly_deg = poly_deg
 
     def forward(self, theta, w):
+        """Returns a Polynomial Decomposition impedance.
+
+        Args:
+            theta (:obj:`ndarray`): Ordered array of R0, a_{poly_deg},
+                a_{poly_deg-1}, ..., a_{0}.
+                See https://doi.org/10.1016/j.cageo.2017.05.001.
+            w (:obj:`ndarray`): Array of angular frequencies to compute the
+                impedance for (w = 2*pi*f).
+
+        """
         return Decomp_cyth(w, self.taus, self.log_taus, self.c_exp,
                            R0=theta[0], a=theta[1:])
 
@@ -183,6 +193,15 @@ class ColeCole(Inversion):
         self.n_modes = n_modes
 
     def forward(self, theta, w):
+        """Returns a ColeCole impedance.
+
+        Args:
+            theta (:obj:`ndarray`): Ordered array of R0, m_{i}, m_{i+1}, ...
+                log_tau_{i}, log_tau_{i+1}, ..., c_{i}, c_{i+1}, ...
+            w (:obj:`ndarray`): Array of angular frequencies to compute the
+                impedance for (w = 2*pi*f).
+
+        """
         return ColeCole_cyth(w,
                              R0=theta[0],
                              m=theta[1:1+self.n_modes],
