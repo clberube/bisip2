@@ -27,7 +27,9 @@ class Inversion(plotlib.plotlib, utils.utils):
         nsteps (:obj:`int`): Number of steps to perform in the MCMC
             simulation. Defaults to 5000.
         pool (:obj:`pool`, optional): A pool object from the multiprocessing
-            library. Defaults to None.
+            library. See
+            https://emcee.readthedocs.io/en/stable/tutorials/parallel/.
+            Defaults to None.
         moves (:obj:`moves`, optional): A `emcee` Moves class (see
             https://emcee.readthedocs.io/en/stable/user/moves/). If None,
             the emcee algorithm `StretchMove` is used. Defaults to None.
@@ -139,8 +141,8 @@ class PolynomialDecomposition(Inversion):
 
         Args:
             theta (:obj:`ndarray`): Ordered array of R0, a_{poly_deg},
-                a_{poly_deg-1}, ..., a_{0}.
-                See https://doi.org/10.1016/j.cageo.2017.05.001.
+                a_{poly_deg-1}, ..., a_{0}. See
+                https://doi.org/10.1016/j.cageo.2017.05.001.
             w (:obj:`ndarray`): Array of angular frequencies to compute the
                 impedance for (w = 2*pi*f).
 
@@ -197,8 +199,8 @@ class ColeCole(Inversion):
 
         Args:
             theta (:obj:`ndarray`): Ordered array of R0, m_{i}, m_{i+1}, ...
-                log_tau_{i}, log_tau_{i+1}, ..., c_{i}, c_{i+1}, ...
-                See https://doi.org/10.1016/j.cageo.2017.05.001.
+                log_tau_{i}, log_tau_{i+1}, ..., c_{i}, c_{i+1}, ... See
+                https://doi.org/10.1016/j.cageo.2017.05.001.
             w (:obj:`ndarray`): Array of angular frequencies to compute the
                 impedance for (w = 2*pi*f).
 
