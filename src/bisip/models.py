@@ -83,7 +83,7 @@ class Inversion(plotlib.plotlib, utils.utils):
                 (nsteps*nwalkers, ndim).
 
         Returns:
-            :obj:`ndarray`: The MCMC chain(s).
+            :obj:`None`
 
         """
         self.ndim = self._bounds.shape[1]
