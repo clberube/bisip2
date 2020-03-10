@@ -69,32 +69,6 @@ class Inversion(plotlib.plotlib, utils.utils):
             raise AssertionError('Model is not fitted! Fit the model to a '
                                  'dataset before attempting to plot results.')
 
-    def fit(self, **kwargs):
-        """Samples the posterior distribution to fit the model to the data.
-
-        Keyword Args:
-            **kwargs: Additional keyword arguments passed to the
-                EnsembleSampler class.
-
-        Returns:
-            :obj:`None`: None
-
-        """
-        self.ndim = self._bounds.shape[1]
-        self.p0 = np.random.uniform(*self._bounds, (self.nwalkers, self.ndim))
-
-        model_args = (self.forward, self._bounds, self.data['w'],
-                      self.data['zn'], self.data['zn_err'])
-
-        self.sampler = emcee.EnsembleSampler(self.nwalkers,
-                                             self.ndim,
-                                             self._log_probability,
-                                             args=model_args,
-                                             **kwargs,
-                                             )
-        self.sampler.run_mcmc(self.p0, self.nsteps, progress=True)
-        self.__fitted = True
-
     def get_chain(self, **kwargs):
         """Gets the MCMC chains from a fitted model.
 
@@ -111,6 +85,30 @@ class Inversion(plotlib.plotlib, utils.utils):
 
         """
         return self.sampler.get_chain(**kwargs)
+
+    def fit(self, **kwargs):
+        """Samples the posterior distribution to fit the model to the data.
+
+        Keyword Args:
+            **kwargs: Additional keyword arguments passed to the
+                EnsembleSampler class (see
+                https://emcee.readthedocs.io/en/stable/user/sampler/).
+
+        """
+        self.ndim = self._bounds.shape[1]
+        self.p0 = np.random.uniform(*self._bounds, (self.nwalkers, self.ndim))
+
+        model_args = (self.forward, self._bounds, self.data['w'],
+                      self.data['zn'], self.data['zn_err'])
+
+        self.sampler = emcee.EnsembleSampler(self.nwalkers,
+                                             self.ndim,
+                                             self._log_probability,
+                                             args=model_args,
+                                             **kwargs,
+                                             )
+        self.sampler.run_mcmc(self.p0, self.nsteps, progress=True)
+        self.__fitted = True
 
     @property
     def params(self):
