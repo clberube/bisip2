@@ -73,7 +73,7 @@ class Inversion(plotlib.plotlib, utils.utils):
         """Samples the posterior distribution to fit the model to the data.
 
         Keyword Args:
-            **kwargs (:obj:`int`): Additional keyword arguments passed to the
+            **kwargs: Additional keyword arguments passed to the
                 EnsembleSampler class. See
                 https://emcee.readthedocs.io/en/stable/user/sampler/
             thin (:obj:`int`): Thinning factor.
