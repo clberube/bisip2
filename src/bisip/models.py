@@ -26,21 +26,16 @@ class Inversion(plotlib.plotlib, utils.utils):
             parameter space. Defaults to 32.
         nsteps (:obj:`int`): Number of steps to perform in the MCMC
             simulation. Defaults to 5000.
-        pool (:obj:`pool`, optional): A pool object from the multiprocessing
-            library. See
-            https://emcee.readthedocs.io/en/stable/tutorials/parallel/.
-            Defaults to None.
-        moves (:obj:`moves`, optional): A `emcee` Moves class (see
-            https://emcee.readthedocs.io/en/stable/user/moves/). If None,
-            the emcee algorithm `StretchMove` is used. Defaults to None.
+
+    Attributes:
+        sampler (:obj:`EnsembleSampler`): A `emcee` sampler object (see
+            https://emcee.readthedocs.io/en/stable/user/sampler/).
 
     """
 
-    def __init__(self, nwalkers=32, nsteps=5000, pool=None, moves=None):
+    def __init__(self, nwalkers=32, nsteps=5000):
         self.nsteps = nsteps
         self.nwalkers = nwalkers
-        self.pool = pool
-        self.moves = moves
         self._params = {}
         self.__fitted = False
 
@@ -69,6 +64,35 @@ class Inversion(plotlib.plotlib, utils.utils):
             raise AssertionError('Model is not fitted! Fit the model to a '
                                  'dataset before attempting to plot results.')
 
+    def fit(self, pool=None, moves=None):
+        """Samples the posterior distribution to fit the model to the data.
+
+        Args:
+            pool (:obj:`pool`, optional): A pool object from the
+                Python multiprocessing library. See
+                https://emcee.readthedocs.io/en/stable/tutorials/parallel/.
+                Defaults to None.
+            moves (:obj:`moves`, optional): A `emcee` Moves class (see
+                https://emcee.readthedocs.io/en/stable/user/moves/). If None,
+                the emcee algorithm `StretchMove` is used. Defaults to None.
+
+        """
+        self.ndim = self._bounds.shape[1]
+        self.p0 = np.random.uniform(*self._bounds, (self.nwalkers, self.ndim))
+
+        model_args = (self.forward, self._bounds, self.data['w'],
+                      self.data['zn'], self.data['zn_err'])
+
+        self.sampler = emcee.EnsembleSampler(self.nwalkers,
+                                             self.ndim,
+                                             self._log_probability,
+                                             args=model_args,
+                                             pool=pool,
+                                             moves=moves,
+                                             )
+        self.sampler.run_mcmc(self.p0, self.nsteps, progress=True)
+        self.__fitted = True
+
     def get_chain(self, **kwargs):
         """Gets the MCMC chains from a fitted model.
 
@@ -84,31 +108,8 @@ class Inversion(plotlib.plotlib, utils.utils):
             :obj:`ndarray`: The MCMC chain(s).
 
         """
+        self._check_if_fitted()
         return self.sampler.get_chain(**kwargs)
-
-    def fit(self, **kwargs):
-        """Samples the posterior distribution to fit the model to the data.
-
-        Keyword Args:
-            **kwargs: Additional keyword arguments passed to the
-                EnsembleSampler class (see
-                https://emcee.readthedocs.io/en/stable/user/sampler/).
-
-        """
-        self.ndim = self._bounds.shape[1]
-        self.p0 = np.random.uniform(*self._bounds, (self.nwalkers, self.ndim))
-
-        model_args = (self.forward, self._bounds, self.data['w'],
-                      self.data['zn'], self.data['zn_err'])
-
-        self.sampler = emcee.EnsembleSampler(self.nwalkers,
-                                             self.ndim,
-                                             self._log_probability,
-                                             args=model_args,
-                                             **kwargs,
-                                             )
-        self.sampler.run_mcmc(self.p0, self.nsteps, progress=True)
-        self.__fitted = True
 
     @property
     def params(self):

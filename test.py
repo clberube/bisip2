@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 
 from src.bisip import PolynomialDecomposition, ColeCole
 
+
 if __name__ == '__main__':
     fp = f'./data/SIP-K389175.dat'
 
