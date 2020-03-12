@@ -13,17 +13,17 @@ import warnings
 import matplotlib.pyplot as plt
 
 import bisip
-from bisip import PolynomialDecomposition, ColeCole, Dias
+from bisip import PolynomialDecomposition, PeltonColeCole, Dias2000
 
 
-def run_test(dias=True, colecole=False, debye=False):
+def run_test(dias=True, colecole=True, debye=True):
 
     fp = f'data/SIP-K389175.dat'
     fp = os.path.join(os.path.dirname(bisip.__file__), fp)
 
     if colecole:
-        print('Testing ColeCole fits with nsteps=1000')
-        model = ColeCole(fp, nwalkers=32, n_modes=2, nsteps=1000)
+        print('Testing ColeCole model')
+        model = PeltonColeCole(fp, nwalkers=32, n_modes=2, nsteps=1000)
         model.fit()
 
         # Get the mean parameter values and their std
@@ -35,7 +35,7 @@ def run_test(dias=True, colecole=False, debye=False):
             print(f'{n}: {v:.5f} +/- {u:.5f}')
 
     if debye:
-        print('Testing Debye Decomposition with nsteps=2000')
+        print('Testing Debye Decomposition')
         model = PolynomialDecomposition(fp, nwalkers=32, poly_deg=4, nsteps=2000)
         # Update parameter boundaries inplace
         # model.params.update(a0=[-2, 2])
@@ -52,13 +52,13 @@ def run_test(dias=True, colecole=False, debye=False):
             print(f'{n}: {v:.5f} +/- {u:.5f}')
 
     if dias:
-        print('Testing Dias model with nsteps=10000')
-        model = Dias(fp, headers=5, nwalkers=32, nsteps=2000)
+        print('Testing Dias model')
+        model = Dias2000(fp, nwalkers=32, nsteps=5000)
         # Update parameter boundaries inplace
         # model.params.update(a0=[-2, 2])
         model.fit()
 
-        chain = model.get_chain(discard=1000, thin=1, flat=True)
+        chain = model.get_chain(discard=3000, thin=1, flat=True)
         # Get the mean parameter values and their std
         # discarding the first 1000 steps (burn-in)
         values = model.get_param_mean(chain)

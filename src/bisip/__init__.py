@@ -9,8 +9,8 @@
 
 from .models import Inversion
 from .models import PolynomialDecomposition
-from .models import ColeCole
-from .models import Dias
+from .models import PeltonColeCole
+from .models import Dias2000
 from .plotlib import plotlib
 from .tests import run_test
 
@@ -18,8 +18,8 @@ from .tests import run_test
 __all__ = (
     'Inversion',
     'PolynomialDecomposition',
-    'ColeCole',
-    'Dias',
+    'PeltonColeCole',
+    'Dias2000',
     'plotlib',
     'run_test',
 )

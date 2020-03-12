@@ -12,7 +12,7 @@ inversion model classes described in the SIP models section below.
 SIP models
 ----------
 
-.. autoclass:: bisip.models.ColeCole
+.. autoclass:: bisip.models.PeltonColeCole
     :members:
     :show-inheritance:
 
@@ -20,7 +20,7 @@ SIP models
     :members:
     :show-inheritance:
 
-.. autoclass:: bisip.models.Dias
+.. autoclass:: bisip.models.Dias2000
     :members:
     :show-inheritance:
 

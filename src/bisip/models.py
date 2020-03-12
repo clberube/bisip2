@@ -121,7 +121,7 @@ class Inversion(plotlib.plotlib, utils.utils):
 
     @property
     def sampler(self):
-        """(:obj:`EnsembleSampler`): A `emcee` sampler object (see
+        """:obj:`EnsembleSampler`: A `emcee` sampler object (see
             https://emcee.readthedocs.io/en/stable/user/sampler/)."""
         self._check_if_fitted()
         return self._sampler
@@ -213,7 +213,7 @@ class PolynomialDecomposition(Inversion):
                            R0=theta[0], a=theta[1:])
 
 
-class ColeCole(Inversion):
+class PeltonColeCole(Inversion):
     """A generalized ColeCole inversion scheme for SIP data.
 
     Args:
@@ -258,7 +258,7 @@ class ColeCole(Inversion):
                              c=theta[1+2*self.n_modes:])
 
 
-class Dias(Inversion):
+class Dias2000(Inversion):
     """A generalized ColeCole inversion scheme for SIP data.
 
     Args:
@@ -276,7 +276,7 @@ class Dias(Inversion):
         # Add Dias parameters to dict
         self.params.update({'r0': [0.9, 1.1],
                             'm': [0, 1],
-                            'log_tau': [-10, 10],
+                            'log_tau': [-20, 0],
                             'eta': [0, 150],
                             'delta': [0, 1]})
 
