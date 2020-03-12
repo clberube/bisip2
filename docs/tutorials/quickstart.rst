@@ -39,6 +39,7 @@ Visualizing the parameter traces
 Let's inspect the parameter traces to see how long the burn-in period was.
 
 .. code-block:: python
+
     # Plot the parameter traces
     model.plot_traces()
 
