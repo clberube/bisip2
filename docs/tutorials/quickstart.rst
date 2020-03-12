@@ -4,7 +4,7 @@ Quickstart
 In this first tutorial we load a data file, perform Debye decomposition on it,
 visualize the fit quality and posterior distribution and save results to a csv
 file. A more in-depth look at the Debye Decomposition results is available in
-the :ref:`Decomp tutorial> tutorial.
+the :ref:`Decomp tutorial` tutorial.
 
 Running your first inversion
 ----------------------------
