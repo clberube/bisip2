@@ -121,6 +121,15 @@ class Inversion(plotlib.plotlib, utils.utils):
         return self.sampler.get_chain(**kwargs)
 
     @property
+    def data(self):
+        """:obj:`dict`: Parameter names and their bounds."""
+        return self.data
+
+    @data.setter
+    def data(self, var):
+        self.data = var
+
+    @property
     def params(self):
         """:obj:`dict`: Parameter names and their bounds."""
         return self._params
@@ -131,6 +140,7 @@ class Inversion(plotlib.plotlib, utils.utils):
 
     @property
     def fitted(self):
+        """:obj:`bool`: Whether the model has been fitted or not."""
         return self.__fitted
 
     @property
