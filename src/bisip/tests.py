@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Author: cberube
-# @Date:   05-03-2020
+# @Date:   12-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   cberube
 # @Last modified time: 12-03-2020
@@ -11,10 +11,11 @@ import warnings
 
 import matplotlib.pyplot as plt
 
-from src.bisip import PolynomialDecomposition, ColeCole
+from bisip import PolynomialDecomposition, ColeCole
 
 
-if __name__ == '__main__':
+def run_test():
+
     fp = f'./data/SIP-K389175.dat'
 
     print('Testing ColeCole fits with nsteps=1000')
@@ -47,7 +48,7 @@ if __name__ == '__main__':
 
     print('Testing plotlib')
     fig = model.plot_traces()
-    fig.savefig('./docs/tutorials/figures/ex1_traces.png', dpi=144, bbox_inches='tight')
+    # fig.savefig('./docs/tutorials/figures/ex1_traces.png', dpi=144, bbox_inches='tight')
     plt.show(block=False)
 
     fig = model.plot_histograms(chain)

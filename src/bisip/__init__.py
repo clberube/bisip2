@@ -4,18 +4,20 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   cberube
-# @Last modified time: 09-03-2020
+# @Last modified time: 12-03-2020
 
 
 from .models import Inversion
 from .models import PolynomialDecomposition
 from .models import ColeCole
 from .plotlib import plotlib
+from .tests import run_test
 
 
-__all__ = [
+__all__ = (
     'Inversion',
     'PolynomialDecomposition',
     'ColeCole',
     'plotlib'
-]
+    'run_test'
+)
