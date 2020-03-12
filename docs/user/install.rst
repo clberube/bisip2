@@ -5,6 +5,9 @@ Installation
 
 BISIP is compatible with Python 3.6+.
 
+Requirements
+----------------
+
 The following packages are required and should be installed automatically on setup:
 
 - `numpy <https://numpy.org/>`_
@@ -17,13 +20,13 @@ These optional packages are used for progress bars and corner plots:
 - `tqdm <https://tqdm.github.io/>`_
 - `corner <https://corner.readthedocs.io/en/latest/>`_
 
-Package managers
-----------------
+Installing with package managers
+--------------------------------
 
 TODO
 
-From source
------------
+Installing from source
+----------------------
 
 BISIP is developed on `GitHub <https://github.com/clberube/bisip2>`_.
 Clone the repository to your computer.
