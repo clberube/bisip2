@@ -55,6 +55,6 @@ and Debye decomposition of a data file, then print the best parameters and
 plot traces and fit quality for the decomposition approach. Then you should
 see the following line:
 
-.. code-block::
+.. code-block:: text
 
     All tests passed. Press ctrl+C or close figure windows to exit.
