@@ -3,8 +3,8 @@
 # @Author: cberube
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
-# @Last modified by:   charles
-# @Last modified time: 2020-03-12T09:18:45-04:00
+# @Last modified by:   cberube
+# @Last modified time: 12-03-2020
 
 
 import emcee
@@ -22,6 +22,7 @@ class Inversion(plotlib.plotlib, utils.utils):
     ColeCole classes.
 
     Args:
+        filepath (:obj:`str`): The path to the file to perform inversion on.
         nwalkers (:obj:`int`): Number of walkers to use to explore the
             parameter space. Defaults to 32.
         nsteps (:obj:`int`): Number of steps to perform in the MCMC
@@ -33,9 +34,13 @@ class Inversion(plotlib.plotlib, utils.utils):
 
     """
 
-    def __init__(self, nwalkers=32, nsteps=5000):
-        self.nsteps = nsteps
+    def __init__(self, filepath, nwalkers=32, nsteps=5000, headers=1,
+                 ph_units='mrad',):
+        self.filepath = filepath
         self.nwalkers = nwalkers
+        self.nsteps = nsteps
+        self.headers = headers
+        self.ph_units = ph_units
         self._params = {}
         self.__fitted = False
 
@@ -146,14 +151,13 @@ class PolynomialDecomposition(Inversion):
 
     """
 
-    def __init__(self, filepath, poly_deg=5, c_exp=1.0, headers=1,
-                 ph_units='mrad', **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, *args, poly_deg=5, c_exp=1.0, **kwargs):
+        super().__init__(*args, **kwargs)
         self.c_exp = c_exp
         self.poly_deg = poly_deg
 
         # Load data
-        self.data = self.load_data(filepath, headers, ph_units)
+        self.data = self.load_data(self.filepath, self.headers, self.ph_units)
 
         # Define a range of relaxation time values for the RTD
         min_tau = np.floor(min(np.log10(1./self.data['w'])) - 1)
@@ -196,13 +200,12 @@ class ColeCole(Inversion):
 
     """
 
-    def __init__(self, filepath, n_modes=1, headers=1, ph_units='mrad',
-                 **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, *args, n_modes=1, **kwargs):
+        super().__init__(*args, **kwargs)
         self.n_modes = n_modes
 
         # Load data
-        self.data = self.load_data(filepath, headers, ph_units)
+        self.data = self.load_data(self.filepath, self.headers, self.ph_units)
 
         # Add multi-mode ColeCole parameters to dict
         range_modes = list(range(self.n_modes))
