@@ -71,7 +71,7 @@ if __name__ == '__main__':
     plt.show()
 
     # Get the lower, median and higher percentiles
-    results = model.get_param_percentile([2.5, 50, 97.5], chain)
+    results = model.get_param_percentile(chain=chain, p=[2.5, 50, 97.5])
     # Join the list of parameter names into a comma separated string
     headers = ','.join(model.param_names)
     # Save to csv with numpy

@@ -60,8 +60,8 @@ Accessing results from the Inversion object
 
   chain = model.get_chain(discard=500, flat=True)
 
-  values = model.get_param_mean(chain)
-  uncertainties = model.get_param_std(chain)
+  values = model.get_param_mean(chain=chain)
+  uncertainties = model.get_param_std(chain=chain)
 
   for n, v, u in zip(model.param_names, values, uncertainties):
       print(f'{n}: {v:.5f} +/- {u:.5f}')
@@ -83,13 +83,13 @@ Accessing results from the Inversion object
 Plotting fit quality
 --------------------
 
-Let's visualize the fit quality with using the 2.5th percentile as the lower
+Let's visualize the fit quality by using the 2.5th percentile as the lower
 confidence limit, the 50th percentile (median) as the best value and the
 97.5th percentile as the upper confidence limit (97.5 - 2.5 = 95% HPD).
 
 .. code-block:: python
 
-    model.plot_fit(chain, p=[2.5, 50, 97.5])
+    model.plot_fit(chain=chain, p=[2.5, 50, 97.5])
 
 .. figure:: ./figures/ex1_fitted.png
   :width: 50%
@@ -106,7 +106,7 @@ corner plot (from the corner Python package).
 
 .. code-block:: python
 
-    model.plot_corner(chain)
+    model.plot_corner(chain=chain)
 
 .. figure:: ./figures/ex1_corner.png
   :width: 100%
@@ -122,7 +122,7 @@ Finally let's save the best parameters and their statistics as a csv file.
 .. code-block:: python
 
     # Get the lower, median and higher percentiles
-    results = model.get_param_percentile([2.5, 50, 97.5], chain)
+    results = model.get_param_percentile(chain=chain, p=[2.5, 50, 97.5])
     # Join the list of parameter names into a comma separated string
     headers = ','.join(model.param_names)
     # Save to csv with numpy
