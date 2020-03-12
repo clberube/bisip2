@@ -75,7 +75,8 @@ Accessing results from the Inversion object
 
 .. note::
     It is important to note that for every inversion scheme the amplitude
-    values have been normalized. You may access this normalization factor with
+    values (and therefore the :code:`r0` parameter) have been normalized.
+    You may access this normalization factor with
     :code:`model.data['norm_factor']`. Therefore the real :math:`\rho_0` value
     of the Debye decomposition is :code:`r0*model.data['norm_factor']`.
 
