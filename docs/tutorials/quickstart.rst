@@ -76,6 +76,9 @@ confidence limit, the 50th percentile (median) as the best value and the
   :width: 50%
   :align: center
 
+  The dashed lines represent the 95% highest probability density interval. The
+  red line represents the median model.
+
 Let's now visualize the posterior distribution of all parameters using a
 corner plot (from the corner Python package).
 
@@ -88,3 +91,17 @@ corner plot (from the corner Python package).
   :align: center
 
 The chains have indeed reached a normal state.
+
+Finally let's save the best parameters and their statistics as a csv file.
+
+.. code-block:: python
+
+    # Get the lower, median and higher percentiles
+    results = model.get_param_percentile([2.5, 50, 97.5], chain)
+    # Join the list of parameter names into a comma separated string
+    headers = ','.join(model.param_names)
+    # Save to csv with numpy
+    # The first row is the 2.5th percentile, 2nd the 50th, 3rd the 97.5th.
+    # Parameter names will be listed in the csv file header.
+    np.savetxt('quickstart_results.csv', results, header=headers,
+               delimiter=',', comments='')

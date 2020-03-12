@@ -5,6 +5,7 @@ It is important to respect this format when preparing your data files. We use
 the format output of the SIP-Fuchs-III instrument and software.
 
 .. code-block:: text
+
     Frequency, Amplitude,   Phase shift,  Amplit error, Phase error
     6.000e+03, 1.17152e+05, -2.36226e+02, 1.171527e+01, 9.948376e-02
     3.000e+03, 1.22177e+05, -1.46221e+02, 1.392825e+01, 1.134464e-01
@@ -19,7 +20,7 @@ the format output of the SIP-Fuchs-III instrument and software.
 .. note::
     - Save your data in .csv, .txt, .dat or any other format. The extension is not important as long as it is a ASCII file.
     - Comma separation between columns is mandatory.
-    - Column order is **very** important:
+    - Column order is very important:
         Frequency, Amplitude, Phase, Error of Amplitude, Error of Phase
     - Phase units may be milliradians, radians or degrees
     - Units are specified as an initialization argument (e.g. ph_units='mrad').

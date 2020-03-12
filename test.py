@@ -10,6 +10,7 @@
 import warnings
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 from src.bisip import PolynomialDecomposition, ColeCole
 
@@ -68,3 +69,13 @@ if __name__ == '__main__':
 
     print('All tests passed. Press ctrl+C or close figure windows to exit.')
     plt.show()
+
+    # Get the lower, median and higher percentiles
+    results = model.get_param_percentile([2.5, 50, 97.5], chain)
+    # Join the list of parameter names into a comma separated string
+    headers = ','.join(model.param_names)
+    # Save to csv with numpy
+    # The first row is the 2.5th percentile, 2nd the 50th, 3rd the 97.5th.
+    # Parameter names will be listed in the csv file header.
+    np.savetxt('quickstart_results.csv', results, header=headers,
+               delimiter=',', comments='')
