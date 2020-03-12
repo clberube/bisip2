@@ -21,10 +21,15 @@ BISIP is being developed on `GitHub
 Basic Usage
 -----------
 
-To perform Debye Decomposition of a SIP data file, you would use the following:
-First, define a Polynomial Decomposition model with a 4th order approximation
-and c-exponent equal to 1 (Debye). Set the simulation to run for 1000 steps
-with 32 MCMC walkers exploring the Debye Decomposition parameter space.
+To perform Inversion of a SIP data file, you would use the following approach:
+
+1. Import the base :code:`Polynomial Decomposition` model.
+2. Pass :code:`filepath` to instantiate the model with a specific data file.
+3. Pass the :code:`poly_deg=4` argument to specify a 4th order approximation.
+4. Pass the :code:`c_exp=1.0` argument to specifiy a Debye decomposition model.
+5. Set the simulation to run for 1000 steps by passing :code:`nsteps=1000`.
+6. Set the simulation to explore the Debye decomposition parameter space with
+:code:`nwalkers=32`.
 
 .. code-block:: python
   :linenos:
