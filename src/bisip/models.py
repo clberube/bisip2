@@ -27,6 +27,10 @@ class Inversion(plotlib.plotlib, utils.utils):
             parameter space. Defaults to 32.
         nsteps (:obj:`int`): Number of steps to perform in the MCMC
             simulation. Defaults to 5000.
+        headers (:obj:`int`): The number of header lines in the file.
+            Defaults to 1.
+        ph_units (:obj:`str`): The units of the phase shift measurements.
+            Choices: 'mrad', 'rad', 'deg'. Defaults to 'mrad'.
 
     Attributes:
         sampler (:obj:`EnsembleSampler`): A `emcee` sampler object (see
@@ -35,7 +39,7 @@ class Inversion(plotlib.plotlib, utils.utils):
     """
 
     def __init__(self, filepath, nwalkers=32, nsteps=5000, headers=1,
-                 ph_units='mrad',):
+                 ph_units='mrad'):
         self.filepath = filepath
         self.nwalkers = nwalkers
         self.nsteps = nsteps
