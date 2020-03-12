@@ -43,8 +43,8 @@ default parameters, you would use the following code:
   model.plot_fit(discard=200)
 
 .. figure:: ../figures/fitted.png
-:width: 50%
-:align: center
+    :width: 50%
+    :align: center
 
 A more detailed example is available in the :ref:`Quickstart` tutorial.
 
