@@ -5,8 +5,8 @@ In this first tutorial we load a data file, perform Debye decomposition on it,
 visualize the fit quality and posterior distribution and save results to a csv
 file.
 
-Analyzing inversion results
----------------------------
+Running your first inversion
+----------------------------
 
 To perform Debye Decomposition of a SIP data file, you would use the following:
 First, define a Polynomial Decomposition model with a 4th order approximation
@@ -33,16 +33,25 @@ with 32 MCMC walkers exploring the Debye Decomposition parameter space.
 
   #   Out:  100%|██████████| 1000/1000 [00:01<00:00, 563.92it/s]
 
-  # Let's inspect the parameter traces to see how long the burn-in period was
-  model.plot_traces()
+Visualizing the parameter traces
+--------------------------------
+
+Let's inspect the parameter traces to see how long the burn-in period was.
+
+.. code-block:: python
+    # Plot the parameter traces
+    model.plot_traces()
 
 .. figure:: ./figures/ex1_traces.png
-  :width: 100%
-  :align: center
+    :width: 100%
+    :align: center
 
 The chains reach a stationary state after at least 500 iterations. We should
 therefore keep only the values after the 500th step to estimate the best
 values for our parameters.
+
+Accessing results from the Inversion object
+--------------------------–--–––-----------
 
 .. code-block:: python
 
@@ -64,6 +73,9 @@ values for our parameters.
   #         a1: -0.00405 +/- 0.00060
   #         a0: 0.00677 +/- 0.00058
 
+Plotting fit quality
+--------------------
+
 Let's visualize the fit quality with using the 2.5th percentile as the lower
 confidence limit, the 50th percentile (median) as the best value and the
 97.5th percentile as the upper confidence limit (97.5 - 2.5 = 95% HPD).
@@ -79,6 +91,9 @@ confidence limit, the 50th percentile (median) as the best value and the
   The dashed lines represent the 95% highest probability density interval. The
   red line represents the median model.
 
+Inspecting the posterior distribution
+--------------------––---------------
+
 Let's now visualize the posterior distribution of all parameters using a
 corner plot (from the corner Python package).
 
@@ -91,6 +106,9 @@ corner plot (from the corner Python package).
   :align: center
 
 The chains have indeed reached a normal state.
+
+Saving results to csv files
+---------------------------
 
 Finally let's save the best parameters and their statistics as a csv file.
 
