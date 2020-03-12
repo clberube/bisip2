@@ -13,13 +13,15 @@ Running your first inversion
 
 To perform Inversion of a SIP data file, you would use the following approach:
 
-- Import the base :code:`Polynomial Decomposition` model.
-- Pass :code:`filepath` to instantiate the model with a specific data file.
-- Pass the :code:`poly_deg=4` argument to specify a 4th order approximation.
-- Pass the :code:`c_exp=1.0` argument to specifiy a Debye decomposition model.
-- Set the simulation to run for 1000 steps by passing :code:`nsteps=2000`.
-- Set the simulation to explore the Debye decomposition parameter space with
-    :code:`nwalkers=32`.
+    - Import the base :code:`Polynomial Decomposition` model.
+    - Pass :code:`filepath` to instantiate the model with a specific data file.
+    - Pass the :code:`poly_deg=4` argument to specify a 4th order
+      approximation.
+    - Pass the :code:`c_exp=1.0` argument to specifiy a Debye decomposition
+      model.
+    - Set the simulation to run for 1000 steps by passing :code:`nsteps=2000`.
+    - Set the simulation to explore the Debye decomposition parameter space
+      with :code:`nwalkers=32`.
 
 .. code-block:: python
 
