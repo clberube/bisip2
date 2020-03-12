@@ -51,8 +51,8 @@ Let's inspect the parameter traces to see how long the burn-in period was.
 We should therefore keep only the values after the 500th step to estimate the best
 values for our parameters.
 
-Extracting values
------------------
+Extracting values from the Inversion object
+-------------------------------------------
 
 .. code-block:: python
 
@@ -99,8 +99,9 @@ confidence limit, the 50th percentile (median) as the best value and the
   The dashed lines represent the 95% highest probability density interval. The
   red line represents the median model.
 
-Inspecting the posterior
---------------------––--
+
+Inspecting the posterior distribution
+--------------------––---------------
 
 Let's now visualize the posterior distribution of all parameters using a
 corner plot (from the corner Python package).
