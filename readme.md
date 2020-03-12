@@ -29,20 +29,22 @@ Import BISIP in your Python scripts as follows:
 ```python
 from bisip import PolynomialDecomposition
 
+# Define a data file to invert
+filepath = '/bisip/data/SIP-K389175.dat'
+
 # Define a Polynomial Decomposition model with
 # a 4th order approximation and c-exponent equal to 1 (Debye)
 # The simulation will run for 500 steps with 32 walkers
 # exploring the Debye Decomposition parameter space
-model = PolynomialDecomposition(nwalkers=32,  # number of walkers
+model = PolynomialDecomposition(filepath=filepath,
+                                nwalkers=32,  # number of walkers
                                 nsteps=500,  # number of MCMC steps
                                 poly_deg=4,  # 4th order polynomial
                                 c_exp=1.0,  # debye decomposition
                                 )
 
-# Define a data file to invert
-filepath = '/Users/cberube/Repositories/bisip/data files/SIP-K389175_avg.dat'
 # Fit the model to this data file
-model.fit(filepath)
+model.fit()
 ```
 ```
 Out:
