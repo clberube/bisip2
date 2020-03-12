@@ -3,15 +3,17 @@
 Installation
 ============
 
-BISIP is compatible with Python 3.7.
-You will also need the following packages:
+BISIP is compatible with Python 3.7+
+Installing BISIP will also install the following required packages:
 
 - `numpy <https://numpy.org/>`_
+- `cython <https://cython.org/>`_
 - `matplotlib <https://matplotlib.org/>`_
 - `emcee <https://emcee.readthedocs.io/en/stable/>`_
 
-And optionally the corner package to draw corner plots:
+And optionally the `tqdm` and `corner` packages for progress bars and corner plots.
 
+- `tqdm <https://tqdm.github.io/>`_
 - `corner <https://corner.readthedocs.io/en/latest/>`_
 
 Package managers
