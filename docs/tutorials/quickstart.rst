@@ -99,8 +99,8 @@ confidence limit, the 50th percentile (median) as the best value and the
   The dashed lines represent the 95% highest probability density interval. The
   red line represents the median model.
 
-Plotting fit quality
---------------------
+Inspecting the posterior
+------------------------
 
 Let's now visualize the posterior distribution of all parameters using a
 corner plot (from the corner Python package).
