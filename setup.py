@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-12T19:03:13-04:00
+# @Last modified time: 2020-03-12T19:11:30-04:00
 # -*- coding: utf-8 -*-
 """
 Created on Fri Sep 29 16:18:50 2017
@@ -15,7 +15,7 @@ Created on Fri Sep 29 16:18:50 2017
 from setuptools import setup, find_packages
 
 from distutils.extension import Extension
-
+import numpy
 
 SRC_DIR = 'src'
 PACKAGES = find_packages(where=SRC_DIR)
