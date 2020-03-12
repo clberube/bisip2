@@ -4,7 +4,7 @@ Data format
 It is important to respect this format when preparing your data files. We use
 the format output of the SIP-Fuchs-III instrument and software.
 
-.. code-block::
+.. code-block:: text
     Frequency, Amplitude,   Phase shift,  Amplit error, Phase error
     6.000e+03, 1.17152e+05, -2.36226e+02, 1.171527e+01, 9.948376e-02
     3.000e+03, 1.22177e+05, -1.46221e+02, 1.392825e+01, 1.134464e-01
