@@ -125,7 +125,7 @@ class Inversion(plotlib.plotlib, utils.utils):
 
     @property
     def data(self):
-        """:obj:`dict`: Parameter names and their bounds."""
+        """:obj:`dict`: The input data dictionary."""
         return self.data
 
     @data.setter
@@ -161,10 +161,12 @@ class PolynomialDecomposition(Inversion):
     """A polynomial decomposition inversion scheme for SIP data.
 
     Args:
+        *args: Arguments passed to the Inversion class.
         poly_deg (:obj:`int`): The polynomial degree to use for the
             decomposition. Defaults to 5.
         c_exp (:obj:`float`): The c-exponent to use for the decomposition
             scheme. 0.5 -> Warburg, 1.0 -> Debye. Defaults to 1.0.
+        **kwargs: Additional keyword arguments passed to the Inversion class.
 
     """
 
@@ -212,8 +214,10 @@ class ColeCole(Inversion):
     """A generalized ColeCole inversion scheme for SIP data.
 
     Args:
+        *args: Arguments passed to the Inversion class.
         n_modes (:obj:`int`): The number of ColeCole modes to use for the
             inversion. Defaults to 1.
+        **kwargs: Additional keyword arguments passed to the Inversion class.
 
     """
 
