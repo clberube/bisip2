@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-12T19:11:44-04:00
+# @Last modified time: 2020-03-12T19:25:39-04:00
 # -*- coding: utf-8 -*-
 """
 Created on Fri Sep 29 16:18:50 2017
@@ -13,14 +13,18 @@ Created on Fri Sep 29 16:18:50 2017
 """
 
 from setuptools import setup, find_packages
-
 from distutils.extension import Extension
-import numpy
+try:
+    import numpy
+except ImportError:
+    from setuptools import dist
+    dist.Distribution().fetch_build_eggs(['numpy'])
+    import numpy
 
 
 SRC_DIR = 'src'
 PACKAGES = find_packages(where=SRC_DIR)
-PREREQ = ['setuptools>=18.0', 'cython', 'numpy']
+PREREQ = ['setuptools>=18.0', 'cython']
 REQUIRES = ['emcee', 'corner', 'matplotlib', 'tqdm']
 
 cmdclass = {}
