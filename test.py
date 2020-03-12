@@ -37,7 +37,6 @@ if __name__ == '__main__':
     model.fit()
 
     chain = model.get_chain(discard=500, thin=1, flat=True)
-
     # Get the mean parameter values and their std
     # discarding the first 1000 steps (burn-in)
     values = model.get_param_mean(chain)

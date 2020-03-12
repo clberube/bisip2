@@ -55,12 +55,22 @@ values for our parameters.
 Extracting results
 ------------------
 
+Use the `get_chain` method of the Inversion object to extract the traces of
+all walkers. Here :code:`ndim` is the number of parameters (6 for this Debye
+decomposition).
+
 .. code-block:: python
+
+  all_chains = model.get_chain()
+  print(all_chains.shape)  # (nsteps, nwalkers, ndim)
+  #   Out:  (2000, 32, 6)
 
   # Print out the optimal parameters and their uncertainties
   # discarding the first 500 steps (burn-in) and flattening the 32 walkers
-
   chain = model.get_chain(discard=500, flat=True)
+
+  print(chain.shape)  # (nsteps*nwalkers, ndim)
+  #   Out:  (48000, 6)
 
   values = model.get_param_mean(chain=chain)
   uncertainties = model.get_param_std(chain=chain)
