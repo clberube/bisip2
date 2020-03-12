@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   cberube
-# @Last modified time: 10-03-2020
+# @Last modified time: 12-03-2020
 
 
 import warnings
@@ -133,8 +133,8 @@ class utils:
         ER = np.sqrt(((data["amp"]*np.sin(data["pha"])*data["pha_err"])**2)+(np.cos(data["pha"])*data["amp_err"])**2)
         data["Z_err"] = ER + 1j*EI
         # Normalization of amplitude
-        data["Z_max"] = max(abs(data["Z"]))  # Maximum amplitude
-        zn, zn_e = data["Z"]/data["Z_max"], data["Z_err"]/data["Z_max"]  # Normalization of impedance by max amplitude
+        data["norm_factor"] = max(abs(data["Z"]))  # Maximum amplitude
+        zn, zn_e = data["Z"]/data["norm_factor"], data["Z_err"]/data["norm_factor"]  # Normalization of impedance by max amplitude
         data["zn"] = np.array([zn.real, zn.imag])  # 2D array with first column = real values, second column = imag values
         data["zn_err"] = np.array([zn_e.real, zn_e.imag])  # 2D array with first column = real values, second column = imag values
         data['N'] = len(data['freq'])

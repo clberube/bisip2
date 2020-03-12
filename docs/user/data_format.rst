@@ -20,9 +20,8 @@ the format output of the SIP-Fuchs-III instrument and software.
 .. note::
     - Save your data in .csv, .txt, .dat or any other format. The extension is not important as long as it is a ASCII file.
     - Comma separation between columns is mandatory.
-    - Column order is very important:
-        Frequency, Amplitude, Phase, Error of Amplitude, Error of Phase
-    - Phase units may be milliradians, radians or degrees
+    - The order of the columns is very important (Frequency, Amplitude, Phase shift, Amplitude error, Phase error).
+    - Phase units may be milliradians, radians or degrees.
     - Units are specified as an initialization argument (e.g. ph_units='mrad').
     - Amplitude units may be Ohm-m or Ohm, the data will be normalized.
     - A number of header lines may be skipped function argument (e.g. in this case headers=1).

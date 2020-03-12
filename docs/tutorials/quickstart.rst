@@ -73,6 +73,12 @@ Accessing results from the Inversion object
   #         a1: -0.00405 +/- 0.00060
   #         a0: 0.00677 +/- 0.00058
 
+.. note::
+    It is important to note that for every inversion scheme the amplitude
+    values have been normalized. You may access this normalization factor with
+    `model.data['norm_factor']`. Therefore the real :math:`\rho_0` value of the Debye
+    decomposition is `r0 * model.data['norm_factor']`.
+
 Plotting fit quality
 --------------------
 
