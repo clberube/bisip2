@@ -31,17 +31,18 @@ with 32 MCMC walkers exploring the Debye Decomposition parameter space.
 
   from bisip import PolynomialDecomposition
 
-  model = PolynomialDecomposition(nwalkers=32,  # number of MCMC walkers
+  # Use one of the example data files provided with BISIP
+  filepath = '/path/to/bisip/data/SIP-K389175.dat'
+
+  model = PolynomialDecomposition(filepath=filepath,
+                                  nwalkers=32,  # number of MCMC walkers
                                   nsteps=1000,  # number of MCMC steps
                                   poly_deg=4,  # 4th order polynomial
                                   c_exp=1.0,  # debye decomposition
                                   )
 
-  # Use one of the example data files provided with BISIP
-  filepath = '/path/to/bisip/data/SIP-K389175.dat'
-
   # Fit the model to this data file
-  model.fit(filepath)
+  model.fit()
 
   #   Out:  100%|██████████| 1000/1000 [00:01<00:00, 563.92it/s]
 

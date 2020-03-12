@@ -3,8 +3,8 @@
 # @Author: cberube
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
-# @Last modified by:   cberube
-# @Last modified time: 10-03-2020
+# @Last modified by:   charles
+# @Last modified time: 2020-03-12T09:18:45-04:00
 
 
 import emcee
