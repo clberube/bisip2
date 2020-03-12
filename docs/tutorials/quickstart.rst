@@ -56,8 +56,7 @@ Extracting results
 ------------------
 
 Use the `get_chain` method of the Inversion object to extract the traces of
-all walkers. Here :code:`ndim` is the number of parameters (6 for this Debye
-decomposition).
+all walkers.
 
 .. code-block:: python
 
@@ -86,11 +85,15 @@ decomposition).
   #         a0: 0.00677 +/- 0.00058
 
 .. note::
+    Here :code:`ndim` is the number of parameters (6 for this Debye
+    decomposition).
+
+.. note::
     It is important to note that for every inversion scheme the amplitude
-    values (and the :code:`r0` parameter) have been normalized.
-    You may access this normalization factor with
+    values (and the :code:`r0` parameter) have been normalized by the maximum
+    amplitude. You may access this normalization factor with
     :code:`model.data['norm_factor']`. Therefore the real :math:`\rho_0` value
-    of the Debye decomposition is :code:`r0*model.data['norm_factor']`.
+    is :code:`r0 * model.data['norm_factor']`.
 
 Plotting fit quality
 --------------------
