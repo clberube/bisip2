@@ -46,12 +46,13 @@ Let's inspect the parameter traces to see how long the burn-in period was.
     :width: 100%
     :align: center
 
-The chains reach a stationary state after at least 500 iterations. We should
-therefore keep only the values after the 500th step to estimate the best
+    The chains reach a stationary state after at least 500 iterations.
+
+We should therefore keep only the values after the 500th step to estimate the best
 values for our parameters.
 
-Accessing results from the Inversion object
---------------------------–--–––-----------
+Extracting values
+-----------------
 
 .. code-block:: python
 
@@ -98,8 +99,8 @@ confidence limit, the 50th percentile (median) as the best value and the
   The dashed lines represent the 95% highest probability density interval. The
   red line represents the median model.
 
-Inspecting the posterior distribution
---------------------––---------------
+Inspecting the posterior
+--------------------––--
 
 Let's now visualize the posterior distribution of all parameters using a
 corner plot (from the corner Python package).
@@ -112,7 +113,7 @@ corner plot (from the corner Python package).
   :width: 100%
   :align: center
 
-The chains have indeed reached a normal state.
+  The chains have indeed reached a normal state.
 
 Saving results to csv files
 ---------------------------
