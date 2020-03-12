@@ -37,7 +37,7 @@ with 32 MCMC walkers exploring the Debye Decomposition parameter space.
   model.plot_traces()
 
 .. figure:: ./figures/ex1_traces.png
-  :width: 400px
+  :width: 100%
   :align: center
 
 The chains reach a stationary state after at least 500 iterations. We should
@@ -73,7 +73,7 @@ confidence limit, the 50th percentile (median) as the best value and the
     model.plot_fit(chain, p=[2.5, 50, 97.5])
 
 .. figure:: ./figures/ex1_fitted.png
-  :width: 400px
+  :width: 50%
   :align: center
 
 Let's now visualize the posterior distribution of all parameters using a
@@ -84,7 +84,7 @@ corner plot (from the corner Python package).
     model.plot_corner(chain)
 
 .. figure:: ./figures/ex1_corner.png
-  :width: 400px
+  :width: 100%
   :align: center
 
 The chains have indeed reached a normal state.
