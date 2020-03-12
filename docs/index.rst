@@ -62,7 +62,7 @@ with 32 MCMC walkers exploring the Debye Decomposition parameter space.
   #         a0: 0.00677 +/- 0.00058
 
 
-A more detailed example is available in the :ref:`quickstart` tutorial.
+A more detailed example is available in the :ref:`Quickstart` tutorial.
 
 .. toctree::
    :maxdepth: 2
@@ -78,3 +78,4 @@ A more detailed example is available in the :ref:`quickstart` tutorial.
    :caption: Tutorials
 
    tutorials/quickstart
+   tutorials/decomposition

@@ -1,4 +1,4 @@
-.. _Decomp tutorial:
+.. _Decomposition:
 
 Polynomial Decomposition
 ========================
