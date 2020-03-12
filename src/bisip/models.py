@@ -32,10 +32,6 @@ class Inversion(plotlib.plotlib, utils.utils):
         ph_units (:obj:`str`): The units of the phase shift measurements.
             Choices: 'mrad', 'rad', 'deg'. Defaults to 'mrad'.
 
-    Attributes:
-        sampler (:obj:`EnsembleSampler`): A `emcee` sampler object (see
-            https://emcee.readthedocs.io/en/stable/user/sampler/).
-
     """
 
     def __init__(self, filepath, nwalkers=32, nsteps=5000, headers=1,
@@ -119,6 +115,13 @@ class Inversion(plotlib.plotlib, utils.utils):
         """
         self._check_if_fitted()
         return self.sampler.get_chain(**kwargs)
+
+    @property
+    def sampler(self):
+        """(:obj:`EnsembleSampler`): A `emcee` sampler object (see
+            https://emcee.readthedocs.io/en/stable/user/sampler/)."""
+        self._check_if_fitted()
+        return self.sampler
 
     @property
     def data(self):
