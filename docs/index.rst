@@ -42,9 +42,9 @@ default parameters, you would use the following code:
   # Plot the fit on top of the input data, discarding the burn-in period
   model.plot_fit(discard=200)
 
-  .. figure:: ./figures/fitted.png
-    :width: 50%
-    :align: center
+.. figure:: ./figures/fitted.png
+:width: 50%
+:align: center
 
 A more detailed example is available in the :ref:`Quickstart` tutorial.
 
