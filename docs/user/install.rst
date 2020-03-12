@@ -3,8 +3,9 @@
 Installation
 ============
 
-BISIP is compatible with Python 3.7+. The following packages are required
-and should be installed automatically:
+BISIP is compatible with Python 3.6+.
+
+The following packages are required and should be installed automatically on setup:
 
 - `numpy <https://numpy.org/>`_
 - `cython <https://cython.org/>`_
