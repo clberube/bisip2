@@ -1,22 +1,8 @@
-BISIP
-=====
-**DOCUMENTATION IS UNDER CONSTRUCTION**
+In this first tutorial we load a data file, perform Debye decomposition on it,
+visualize the fit quality and posterior distribution and save results to a csv
+file.
 
-**BISIP** is an MIT licensed Python package to perform Bayesian Inversion of
-Spectral Induced Polarization data with Markov-chain Monte Carlo simulation.
-See our original
-`paper <https://ui.adsabs.harvard.edu/abs/2017CG....105...51B/abstract>`_ in
-Computers & Geosciences for more details. BISIP uses `Goodman & Weare's Affine
-Invariant Ensemble sampler
-<https://projecteuclid.org/euclid.camcos/1513731992>`_ as
-implemented in `emcee <https://emcee.readthedocs.io/en/stable/>`_ to explore
-the SIP models' parameter spaces with multiple walkers. You can read the paper
-by Foreman-Mackey et al. explaining the emcee algorithm in detail
-`here <https://arxiv.org/abs/1202.3665>`_.
-
-BISIP is being developed on `GitHub
-<https://github.com/clberube/bisip2>`_.
-
+====
 
 Basic Usage
 -----------
@@ -60,21 +46,3 @@ with 32 MCMC walkers exploring the Debye Decomposition parameter space.
   #         a2: -0.00124 +/- 0.00048
   #         a1: -0.00405 +/- 0.00060
   #         a0: 0.00677 +/- 0.00058
-
-
-A more detailed example is available in the :ref:`quickstart` tutorial.
-
-.. toctree::
-   :maxdepth: 2
-   :caption: User Guide
-
-   user/install
-   user/models
-   user/data_format
-
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Tutorials
-
-   tutorials/quickstart
