@@ -51,8 +51,8 @@ Let's inspect the parameter traces to see how long the burn-in period was.
 We should therefore keep only the values after the 500th step to estimate the best
 values for our parameters.
 
-Extracting values from the Inversion object
--------------------------------------------
+Extracting results
+------------------
 
 .. code-block:: python
 
