@@ -40,12 +40,19 @@ with 32 MCMC walkers exploring the Debye Decomposition parameter space.
   :width: 400px
   :align: center
 
-  Caption.
+The chains reach a stationary state after at least 500 iterations. We should
+therefore keep only the values after the 500th step to estimate the best
+values for our parameters.
+
+.. code-block:: python
 
   # Print out the optimal parameters and their uncertainties
-  # discarding the first 200 steps (burn-in)
-  values = model.get_param_mean(discard=200)
-  uncertainties = model.get_param_std(discard=200)
+  # discarding the first 500 steps (burn-in) and flattening the 32 walkers
+
+  chain = model.get_chain(discard=500, flat=True)
+
+  values = model.get_param_mean(chain)
+  uncertainties = model.get_param_std(chain)
 
   for n, v, u in zip(model.param_names, values, uncertainties):
       print(f'{n}: {v:.5f} +/- {u:.5f}')
@@ -56,3 +63,28 @@ with 32 MCMC walkers exploring the Debye Decomposition parameter space.
   #         a2: -0.00124 +/- 0.00048
   #         a1: -0.00405 +/- 0.00060
   #         a0: 0.00677 +/- 0.00058
+
+Let's visualize the fit quality with using the 2.5th percentile as the lower
+confidence limit, the 50th percentile (median) as the best value and the
+97.5th percentile as the upper confidence limit (97.5 - 2.5 = 95% HPD).
+
+.. code-block:: python
+
+    model.plot_fit(chain, p=[2.5, 50, 97.5])
+
+.. figure:: ./figures/ex1_fitted.png
+  :width: 400px
+  :align: center
+
+Let's now visualize the posterior distribution of all parameters using a
+corner plot (from the corner Python package).
+
+.. code-block:: python
+
+    model.plot_corner(chain)
+
+.. figure:: ./figures/ex1_corner.png
+  :width: 400px
+  :align: center
+
+The chains have indeed reached a normal state.

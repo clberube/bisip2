@@ -32,3 +32,23 @@ Finally run the setup.py script with Python.
   git clone https://github.com/clberube/bisip2
   cd bisip2
   python setup.py install -f
+
+Testing
+-----------
+
+To test if everything was installed correctly, do the following:
+
+.. code-block:: python
+
+  # Last tested on Python 3.7.3 (default, Mar 27 2019, 16:54:48)
+  import bisip
+  bisip.run_test()
+
+If everything is OK the code will load a data file and perform ColeCole
+and Debye decomposition of a data file, then print the best parameters and
+plot traces and fit quality for the decomposition approach. Then you should
+see the following line:
+
+.. code-block::
+
+    All tests passed. Press ctrl+C or close figure windows to exit.

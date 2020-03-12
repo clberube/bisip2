@@ -7,16 +7,19 @@
 # @Last modified time: 12-03-2020
 
 
+import os
 import warnings
 
 import matplotlib.pyplot as plt
 
+import bisip
 from bisip import PolynomialDecomposition, ColeCole
 
 
 def run_test():
 
-    fp = f'./data/SIP-K389175.dat'
+    fp = f'data/SIP-K389175.dat'
+    fp = os.path.join(os.path.dirname(bisip.__file__), fp)
 
     print('Testing ColeCole fits with nsteps=1000')
     model = ColeCole(fp, nwalkers=32, n_modes=2, nsteps=1000)

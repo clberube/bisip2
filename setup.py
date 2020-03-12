@@ -3,8 +3,8 @@
 # @Author: cberube
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
-# @Last modified by:   charles
-# @Last modified time: 2020-03-06T13:49:26-05:00
+# @Last modified by:   cberube
+# @Last modified time: 12-03-2020
 # -*- coding: utf-8 -*-
 """
 Created on Fri Sep 29 16:18:50 2017
@@ -71,4 +71,5 @@ setup(
   cmdclass=cmdclass,
   ext_modules=ext_modules,
   include_dirs=[numpy.get_include()],
+  include_package_data=True,
 )
