@@ -10,7 +10,10 @@
 import emcee
 import numpy as np
 
-from .cython_funcs import Decomp_cyth, ColeCole_cyth
+from .cython_funcs import Decomp_cyth
+from .cython_funcs import ColeCole_cyth
+from .cython_funcs import Dias_cyth
+
 from . import utils
 from . import plotlib
 
@@ -85,17 +88,17 @@ class Inversion(plotlib.plotlib, utils.utils):
         self.ndim = self._bounds.shape[1]
         self.p0 = np.random.uniform(*self._bounds, (self.nwalkers, self.ndim))
 
-        model_args = (self.forward, self._bounds, self.data['w'],
-                      self.data['zn'], self.data['zn_err'])
+        model_args = (self.forward, self._bounds, self._data['w'],
+                      self._data['zn'], self._data['zn_err'])
 
-        self.sampler = emcee.EnsembleSampler(self.nwalkers,
-                                             self.ndim,
-                                             self._log_probability,
-                                             args=model_args,
-                                             pool=pool,
-                                             moves=moves,
-                                             )
-        self.sampler.run_mcmc(self.p0, self.nsteps, progress=True)
+        self._sampler = emcee.EnsembleSampler(self.nwalkers,
+                                              self.ndim,
+                                              self._log_probability,
+                                              args=model_args,
+                                              pool=pool,
+                                              moves=moves,
+                                              )
+        self._sampler.run_mcmc(self.p0, self.nsteps, progress=True)
         self.__fitted = True
 
     def get_chain(self, **kwargs):
@@ -114,23 +117,23 @@ class Inversion(plotlib.plotlib, utils.utils):
 
         """
         self._check_if_fitted()
-        return self.sampler.get_chain(**kwargs)
+        return self._sampler.get_chain(**kwargs)
 
     @property
     def sampler(self):
         """(:obj:`EnsembleSampler`): A `emcee` sampler object (see
             https://emcee.readthedocs.io/en/stable/user/sampler/)."""
         self._check_if_fitted()
-        return self.sampler
+        return self._sampler
 
     @property
     def data(self):
         """:obj:`dict`: The input data dictionary."""
-        return self.data
+        return self._data
 
     @data.setter
     def data(self, var):
-        self.data = var
+        self._data = var
 
     @property
     def params(self):
@@ -176,12 +179,12 @@ class PolynomialDecomposition(Inversion):
         self.poly_deg = poly_deg
 
         # Load data
-        self.data = self.load_data(self.filepath, self.headers, self.ph_units)
+        self._data = self.load_data(self.filepath, self.headers, self.ph_units)
 
         # Define a range of relaxation time values for the RTD
-        min_tau = np.floor(min(np.log10(1./self.data['w'])) - 1)
-        max_tau = np.floor(max(np.log10(1./self.data['w'])) + 1)
-        n_tau = 2*self.data['N']
+        min_tau = np.floor(min(np.log10(1./self._data['w'])) - 1)
+        max_tau = np.floor(max(np.log10(1./self._data['w'])) + 1)
+        n_tau = 2*self._data['N']
         self.log_tau = np.linspace(min_tau, max_tau, n_tau)
 
         # Precompute the log_tau_i**i values for the polynomial approximation
@@ -226,7 +229,7 @@ class ColeCole(Inversion):
         self.n_modes = n_modes
 
         # Load data
-        self.data = self.load_data(self.filepath, self.headers, self.ph_units)
+        self._data = self.load_data(self.filepath, self.headers, self.ph_units)
 
         # Add multi-mode ColeCole parameters to dict
         range_modes = list(range(self.n_modes))
@@ -253,3 +256,40 @@ class ColeCole(Inversion):
                              m=theta[1:1+self.n_modes],
                              lt=theta[1+self.n_modes:1+2*self.n_modes],
                              c=theta[1+2*self.n_modes:])
+
+
+class Dias(Inversion):
+    """A generalized ColeCole inversion scheme for SIP data.
+
+    Args:
+        *args: Arguments passed to the Inversion class.
+        **kwargs: Additional keyword arguments passed to the Inversion class.
+
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Load data
+        self._data = self.load_data(self.filepath, self.headers, self.ph_units)
+
+        # Add Dias parameters to dict
+        self.params.update({'r0': [0.9, 1.1],
+                            'm': [0, 1],
+                            'log_tau': [-10, 10],
+                            'eta': [0, 150],
+                            'delta': [0, 1]})
+
+        self._bounds = np.array(self.param_bounds).T
+
+    def forward(self, theta, w):
+        """Returns a Dias impedance.
+
+        Args:
+            theta (:obj:`ndarray`): Ordered array of R0, m, log_tau, log_eta,
+                delta. See https://doi.org/10.1016/j.cageo.2017.05.001.
+            w (:obj:`ndarray`): Array of angular frequencies to compute the
+                impedance for (w = 2*pi*f).
+
+        """
+        return Dias_cyth(w, *theta)

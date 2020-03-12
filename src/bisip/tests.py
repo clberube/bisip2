@@ -13,41 +13,59 @@ import warnings
 import matplotlib.pyplot as plt
 
 import bisip
-from bisip import PolynomialDecomposition, ColeCole
+from bisip import PolynomialDecomposition, ColeCole, Dias
 
 
-def run_test():
+def run_test(dias=True, colecole=False, debye=False):
 
     fp = f'data/SIP-K389175.dat'
     fp = os.path.join(os.path.dirname(bisip.__file__), fp)
 
-    print('Testing ColeCole fits with nsteps=1000')
-    model = ColeCole(fp, nwalkers=32, n_modes=2, nsteps=1000)
-    model.fit()
+    if colecole:
+        print('Testing ColeCole fits with nsteps=1000')
+        model = ColeCole(fp, nwalkers=32, n_modes=2, nsteps=1000)
+        model.fit()
 
-    # Get the mean parameter values and their std
-    # discarding the first 1000 steps (burn-in)
-    values = model.get_param_mean(discard=800)
-    uncertainties = model.get_param_std(discard=800)
+        # Get the mean parameter values and their std
+        # discarding the first 1000 steps (burn-in)
+        values = model.get_param_mean(discard=800)
+        uncertainties = model.get_param_std(discard=800)
 
-    for n, v, u in zip(model.param_names, values, uncertainties):
-        print(f'{n}: {v:.5f} +/- {u:.5f}')
+        for n, v, u in zip(model.param_names, values, uncertainties):
+            print(f'{n}: {v:.5f} +/- {u:.5f}')
 
-    print('Testing Debye Decomposition with nsteps=2000')
-    model = PolynomialDecomposition(fp, nwalkers=32, poly_deg=4, nsteps=2000)
-    # Update parameter boundaries inplace
-    # model.params.update(a0=[-2, 2])
-    model.fit()
+    if debye:
+        print('Testing Debye Decomposition with nsteps=2000')
+        model = PolynomialDecomposition(fp, nwalkers=32, poly_deg=4, nsteps=2000)
+        # Update parameter boundaries inplace
+        # model.params.update(a0=[-2, 2])
+        model.fit()
 
-    chain = model.get_chain(discard=1000, thin=1, flat=True)
+        chain = model.get_chain(discard=1000, thin=1, flat=True)
 
-    # Get the mean parameter values and their std
-    # discarding the first 1000 steps (burn-in)
-    values = model.get_param_mean(chain)
-    uncertainties = model.get_param_std(chain)
+        # Get the mean parameter values and their std
+        # discarding the first 1000 steps (burn-in)
+        values = model.get_param_mean(chain)
+        uncertainties = model.get_param_std(chain)
 
-    for n, v, u in zip(model.param_names, values, uncertainties):
-        print(f'{n}: {v:.5f} +/- {u:.5f}')
+        for n, v, u in zip(model.param_names, values, uncertainties):
+            print(f'{n}: {v:.5f} +/- {u:.5f}')
+
+    if dias:
+        print('Testing Dias model with nsteps=10000')
+        model = Dias(fp, headers=5, nwalkers=32, nsteps=2000)
+        # Update parameter boundaries inplace
+        # model.params.update(a0=[-2, 2])
+        model.fit()
+
+        chain = model.get_chain(discard=1000, thin=1, flat=True)
+        # Get the mean parameter values and their std
+        # discarding the first 1000 steps (burn-in)
+        values = model.get_param_mean(chain)
+        uncertainties = model.get_param_std(chain)
+
+        for n, v, u in zip(model.param_names, values, uncertainties):
+            print(f'{n}: {v:.5f} +/- {u:.5f}')
 
     print('Testing plotlib')
     fig = model.plot_traces()

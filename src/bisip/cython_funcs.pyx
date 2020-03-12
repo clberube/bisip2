@@ -39,7 +39,7 @@ cdef double complex C_Dias(double w_, double R0_, double m_, double log_tau_, do
     cdef double complex jay
     jay.real = 0.0
     jay.imag = 1.0
-    Z_i = R0_*(1 - (m_*(1 - 1.0/(1 + (jay*w_*(((10**log_tau_)/delta_)*(1 - delta_)/(1 - m_)))*(1 + 1.0/(jay*w_*(10**log_tau_) + eta_*(10**log_tau_)*(jay*w_**0.5)))))))
+    Z_i = R0_*(1 - (m_*(1 - 1.0/(1 + (jay*w_*((exp(log_tau_)/delta_)*(1 - delta_)/(1 - m_)))*(1 + 1.0/(jay*w_*exp(log_tau_) + eta_*exp(log_tau_)*(jay*w_**0.5)))))))
     return Z_i
 
 cdef double complex C_Shin(double w_, double R_, double log_Q_, double n_):

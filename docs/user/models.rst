@@ -20,6 +20,10 @@ SIP models
     :members:
     :show-inheritance:
 
+.. autoclass:: bisip.models.Dias
+    :members:
+    :show-inheritance:
+
 Plotting methods
 ----------------
 These functions may be called as methods of the :class:`Inversion` class
