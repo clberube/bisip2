@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-12T18:52:48-04:00
+# @Last modified time: 2020-03-12T19:03:13-04:00
 # -*- coding: utf-8 -*-
 """
 Created on Fri Sep 29 16:18:50 2017
@@ -19,8 +19,8 @@ from distutils.extension import Extension
 
 SRC_DIR = 'src'
 PACKAGES = find_packages(where=SRC_DIR)
-PREREQ = ['setuptools>=18.0', 'cython']
-REQUIRES = ['emcee', 'corner', 'numpy', 'matplotlib', 'tqdm']
+PREREQ = ['setuptools>=18.0', 'cython', 'numpy']
+REQUIRES = ['emcee', 'corner', 'matplotlib', 'tqdm']
 
 cmdclass = {}
 EXT_MODULES = [Extension("bisip.cython_funcs",
@@ -43,7 +43,7 @@ setup(
     classifiers=[],
     cmdclass=cmdclass,
     ext_modules=EXT_MODULES,
-    # include_dirs=[numpy.get_include()],
+    include_dirs=[numpy.get_include()],
     include_package_data=True,
     package_data={'': ['data/*.dat']},
 )
