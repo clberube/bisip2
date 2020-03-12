@@ -22,6 +22,7 @@ To perform Inversion of a SIP data file, you would use the following approach:
     - Set the simulation to run for 1000 steps by passing :code:`nsteps=2000`.
     - Set the simulation to explore the Debye decomposition parameter space
       with :code:`nwalkers=32`.
+    - Fit the model to the data by calling the :code:`fit()` method.
 
 .. code-block:: python
 

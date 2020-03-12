@@ -21,17 +21,8 @@ BISIP is being developed on `GitHub
 Basic Usage
 -----------
 
-To perform Inversion of a SIP data file, you would use the following approach:
-
-    - Import the base :code:`Polynomial Decomposition` model.
-    - Pass :code:`filepath` to instantiate the model with a specific data file.
-    - Pass the :code:`poly_deg=4` argument to specify a 4th order
-      approximation.
-    - Pass the :code:`c_exp=1.0` argument to specifiy a Debye decomposition
-      model.
-    - Set the simulation to run for 1000 steps by passing :code:`nsteps=1000`.
-    - Set the simulation to explore the Debye decomposition parameter space
-      with :code:`nwalkers=32`.
+To perform a Debye decomposition inversion of a SIP data file using all
+default parameters, you would use the following code:
 
 .. code-block:: python
   :linenos:
@@ -41,33 +32,19 @@ To perform Inversion of a SIP data file, you would use the following approach:
   # Use one of the example data files provided with BISIP
   filepath = '/path/to/bisip/data/SIP-K389175.dat'
 
-  model = PolynomialDecomposition(filepath=filepath,
-                                  nwalkers=32,  # number of MCMC walkers
-                                  nsteps=1000,  # number of MCMC steps
-                                  poly_deg=4,  # 4th order polynomial
-                                  c_exp=1.0,  # debye decomposition
-                                  )
+  model = PolynomialDecomposition(filepath)
 
   # Fit the model to this data file
   model.fit()
 
   #   Out:  100%|██████████| 1000/1000 [00:01<00:00, 563.92it/s]
 
-  # Print out the optimal parameters and their uncertainties
-  # discarding the first 200 steps (burn-in)
-  values = model.get_param_mean(discard=200)
-  uncertainties = model.get_param_std(discard=200)
+  # Plot the fit on top of the input data, discarding the burn-in period
+  model.plot_fit(discard=200)
 
-  for n, v, u in zip(model.param_names, values, uncertainties):
-      print(f'{n}: {v:.5f} +/- {u:.5f}')
-
-  #   Out:  r0: 0.99822 +/- 0.00787
-  #         a4: 0.00023 +/- 0.00005
-  #         a3: 0.00082 +/- 0.00032
-  #         a2: -0.00124 +/- 0.00048
-  #         a1: -0.00405 +/- 0.00060
-  #         a0: 0.00677 +/- 0.00058
-
+  .. figure:: ./figures/fitted.png
+    :width: 50%
+    :align: center
 
 A more detailed example is available in the :ref:`Quickstart` tutorial.
 
@@ -78,7 +55,6 @@ A more detailed example is available in the :ref:`Quickstart` tutorial.
    user/install
    user/models
    user/data_format
-
 
 .. toctree::
    :maxdepth: 1
