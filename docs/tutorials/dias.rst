@@ -114,7 +114,7 @@ we will set new boundaries for :math:`\eta` and :math:`\log \tau`.
     It is important to reset the starting values after changing the boundaries,
     otherwise the chains will start in areas of 0 probability and fail to reach
     a stationary state.
-    
+
 .. todo::
     Automatically detect if parameters were updated and reset initial values.
 
@@ -144,7 +144,7 @@ distribution of the Dias model with the `plot_corner` method.
 
 .. code-block:: python
 
-    # Plot the fit by discarding the first 500 steps
+    # Plot the posterior by discarding the first 500 steps
     model.plot_corner(discard=500)
 
 .. figure:: ./figures/dias/dias_corner.png
