@@ -135,8 +135,7 @@ With these improved parameter chains the fit quality should be improved.
     The adjustment is satisfying, and the 95% HPD reasonable if we consider the
     measurement error bars.
 
-Finally, these stationary chains can be used to visualize the posterior
-distribution of the Dias model with the `plot_corner` method.
+We will now visualize the posterior distribution of the Dias model with the `plot_corner` method.
 
 .. code-block:: python
 
@@ -148,6 +147,23 @@ distribution of the Dias model with the `plot_corner` method.
     :align: center
 
     The corner plot shows interesting correlations between various parameters.
+
+Finally let's look at the optimal parameters and their uncertainties.
+
+.. code-block:: python
+
+    # Print the mean and std of the parameters after discarding burn-in samples
+    values = model.get_param_mean(discard=500)
+    uncertainties = model.get_param_std(discard=500)
+
+    for n, v, u in zip(model.param_names, values, uncertainties):
+        print(f'{n}: {v:.3f} +/- {u:.3f}')
+
+- :math:`\rho_0 = 1.008 \pm 0.052`
+- :math:`m = 0.424 \pm 0.218`
+- :math:`\tau = -9.038 \pm 6.046`
+- :math:`\eta = 84.133 \pm 47.866`
+- :math:`\delta = 0.480 \pm 0.263`
 
 Conclusion
 ----------

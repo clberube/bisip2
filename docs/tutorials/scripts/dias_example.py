@@ -1,7 +1,7 @@
 # @Author: charles
 # @Date:   2020-03-13T10:32:45-04:00
 # @Last modified by:   charles
-# @Last modified time: 2020-03-13T12:06:54-04:00
+# @Last modified time: 2020-03-13T12:38:58-04:00
 
 
 import os
@@ -59,8 +59,9 @@ if __name__ == '__main__':
     # chain = model.get_chain(discard=1000, thin=1, flat=True)
     # # Get the mean parameter values and their std
     # # discarding the first 1000 steps (burn-in)
-    # values = model.get_param_mean(chain)
-    # uncertainties = model.get_param_std(chain)
-    #
-    # for n, v, u in zip(model.param_names, values, uncertainties):
-    #     print(f'{n}: {v:.5f} +/- {u:.5f}')
+
+    values = model.get_param_mean(discard=500)
+    uncertainties = model.get_param_std(discard=500)
+
+    for n, v, u in zip(model.param_names, values, uncertainties):
+        print(f'{n}: {v:.5f} +/- {u:.5f}')
