@@ -23,9 +23,9 @@ Here, :math:`\rho^*` depends on 5 parameters:
 
 - :math:`\rho_0 \in [0, \infty(`, the direct current resistivity :math:`\rho_0 = \rho (\omega\to 0` ).
 - :math:`m \in [0, 1)`, the chargeability :math:`m=(\rho_0 - \rho_\infty)/\rho_0`.
-- :math:`\tau \in [0, \infty(`, the relaxation time of the electrical double layer zone, related to
+- :math:`\tau \in [0, \infty(`, the relaxation time, related to
   average polarizable particle size.
-- :math:`\eta \in [0, 150]`, the electrochemical parameter, characteristic of the
+- :math:`\eta \in [0, 150]`, characteristic of the
   electrochemical environment producing polarization.
 - :math:`\delta \in [0, 1)`, the pore length fraction of the electrical double
   layer zone in the material.
