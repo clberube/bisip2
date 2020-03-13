@@ -1,7 +1,7 @@
 # @Author: charles
 # @Date:   2020-03-13T10:32:45-04:00
 # @Last modified by:   charles
-# @Last modified time: 2020-03-13T11:28:25-04:00
+# @Last modified time: 2020-03-13T12:06:54-04:00
 
 
 import os
@@ -27,7 +27,11 @@ if __name__ == '__main__':
 
     fig = model.plot_traces()
     dst_p = os.path.join(cfp, 'figures/')
-    # fig.savefig(dst_p+'dias_wide_traces.png', dpi=144, bbox_inches='tight')
+    # fig.savefig(dst_p+'dias/dias_wide_traces.png', dpi=144, bbox_inches='tight')
+    plt.close()
+
+    fig = model.plot_fit(discard=500)
+    fig.savefig(dst_p+'dias/dias_fit_before.png', dpi=144, bbox_inches='tight')
     plt.close()
 
     model.params.update(eta=[0, 25], log_tau=[-15, -5])
@@ -35,11 +39,15 @@ if __name__ == '__main__':
 
     model.fit()
     fig = model.plot_traces()
-    # fig.savefig(dst_p+'dias_bounds_updated.png', dpi=144, bbox_inches='tight')
+    # fig.savefig(dst_p+'dias/dias_bounds_updated.png', dpi=144, bbox_inches='tight')
     plt.close()
 
     fig = model.plot_fit(discard=500)
-    # fig.savefig(dst_p+'dias_fit.png', dpi=144, bbox_inches='tight')
+    # fig.savefig(dst_p+'dias/dias_fit_after.png', dpi=144, bbox_inches='tight')
+    plt.close()
+
+    fig = model.plot_corner(discard=500)
+    fig.savefig(dst_p+'dias/dias_corner.png', dpi=144, bbox_inches='tight')
     plt.close()
 
     # start = np.vstack([[1.0, 0.25, -10, 5, 0.5] for _ in range(32)])

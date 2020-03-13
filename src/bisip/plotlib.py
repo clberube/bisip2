@@ -3,8 +3,8 @@
 # @Author: cberube
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
-# @Last modified by:   cberube
-# @Last modified time: 12-03-2020
+# @Last modified by:   charles
+# @Last modified time: 2020-03-13T12:05:12-04:00
 
 
 import matplotlib.pyplot as plt
@@ -132,7 +132,7 @@ class plotlib:
         fig.tight_layout()
         return fig
 
-    def plot_corner(self, chain, **kwargs):
+    def plot_corner(self, chain=None, **kwargs):
         """
         Plots the corner plot of the MCMC simulation.
 
@@ -156,5 +156,6 @@ class plotlib:
 
         """
         self._check_if_fitted()
+        chain = self.parse_chain(chain, **kwargs)
         fig = corner(chain, labels=self.param_names)
         return fig

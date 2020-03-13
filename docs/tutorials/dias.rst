@@ -68,11 +68,11 @@ First let's look at the parameter traces
 
     model.plot_traces()
 
-.. figure:: ./figures/dias_wide_traces.png
+.. figure:: ./figures/dias/dias_wide_traces.png
     :width: 100%
     :align: center
 
-    Some walkers get stuck in local minima because the priors are really wide. 
+    Some walkers get stuck in local minima because the priors are really wide.
 
 Nevertheless, we can see that the median solution of all these chains gives a
 satisfying result.
@@ -82,12 +82,12 @@ satisfying result.
     # Plot the fit by discarding the first 500 steps
     model.plot_fit(discard=500)
 
-.. figure:: ./figures/dias_fit.png
+.. figure:: ./figures/dias/dias_fit_before.png
     :width: 50%
     :align: center
 
-    The adjustment is satisfying, the 95% HPD is representative of the
-    repetition error on the measurements.
+    The adjustment is satisfying, but the 95% HPD is very wide because some of
+    the walkers were stuck in local minima far from the solution.
 
 A good strategy to reduce the chance that walkers get stuck in local minima
 would be to tighten the priors are the values we think give a good result. Here
@@ -102,15 +102,50 @@ we will set new boundaries for :math:`\eta` and :math:`\log \tau`.
     model.fit()
     model.plot_traces()
 
-.. figure:: ./figures/dias_bounds_updated.png
+.. warning::
+    It is important to reset the starting values after changing the boundaries,
+    otherwise the chains will start in areas of 0 probability and fail to reach
+    a stationary state.
+.. todo::
+    Automatically detect if parameters were updated and reset initial values.
+
+.. figure:: ./figures/dias/dias_bounds_updated.png
     :width: 100%
     :align: center
 
     We can see that the stricter priors have allowed all walkers to find the
     same parameter values that maximize the likelihood.
 
-.. note::
-    It is important to reset the starting values after changing the boundaries,
-    otherwise the chains will start in areas of 0 probability and fail to reach
-    a stationary state.
-    TODO: automatically detect if parameters were updated and reset initial values.
+With these improved parameter chains the fit quality should be improved.
+
+.. code-block:: python
+
+    # Plot the fit by discarding the first 500 steps
+    model.plot_fit(discard=500)
+
+.. figure:: ./figures/dias/dias_fit_after.png
+    :width: 50%
+    :align: center
+
+    The adjustment is satisfying, and the 95% HPD reasonable if we consider the
+    measurement error bars.
+
+Finally, these stationary chains can be used to visualize the posterior
+distribution of the Dias model with the `plot_corner` method.
+
+.. code-block:: python
+
+    # Plot the fit by discarding the first 500 steps
+    model.plot_corner(discard=500)
+
+.. figure:: ./figures/dias/dias_corner.png
+    :width: 50%
+    :align: center
+
+    The corner plot shows interesting correlations between various parameters.
+
+From this experiment, we conclude that the :math:`\rho_0` parameter is relatively
+independent from the others. We also note that :math:`m` and :math:`\tau` are
+characterized by a strong correlation coefficient. Most importantly, we find that
+this correlation makes the range of 'best' values for these parameters quite large,
+indicating that these parameters are not well resolved for this particular data file.

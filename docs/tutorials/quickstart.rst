@@ -54,7 +54,7 @@ Let's inspect the parameter traces to see how long the burn-in period was.
     # Plot the parameter traces
     model.plot_traces()
 
-.. figure:: ./figures/ex1_traces.png
+.. figure:: ./figures/quickstart/ex1_traces.png
     :width: 100%
     :align: center
 
@@ -117,7 +117,7 @@ confidence limit, the 50th percentile (median) as the best value and the
 
     model.plot_fit(chain=chain, p=[2.5, 50, 97.5])
 
-.. figure:: ./figures/ex1_fitted.png
+.. figure:: ./figures/quickstart/ex1_fitted.png
   :width: 50%
   :align: center
 
@@ -134,7 +134,7 @@ corner plot (from the corner Python package).
 
     model.plot_corner(chain=chain)
 
-.. figure:: ./figures/ex1_corner.png
+.. figure:: ./figures/quickstart/ex1_corner.png
   :width: 100%
   :align: center
 
