@@ -167,6 +167,9 @@ Finally let's look at the optimal parameters and their uncertainties.
 :math:`\eta = 84.133 \pm 47.866`
 :math:`\delta = 0.480 \pm 0.263`
 
+The relatively large error bars on the data have correctly been propagated
+in the inversion process, and we observe that several parameters are weakly defined.
+
 Conclusion
 ----------
 From this experiment, we conclude that the :math:`\rho_0` parameter is relatively
