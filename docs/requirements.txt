@@ -3,3 +3,4 @@ matplotlib
 emcee
 corner
 cython
+nbsphinx
