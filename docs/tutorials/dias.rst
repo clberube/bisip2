@@ -3,12 +3,14 @@
 The Dias (2000) model
 =====================
 
-This semi-empirical model describes the petrophysical
-properties of rocks through measurements of their electrical polarization
-(`Dias, 1972 <https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/JB077i026p04945>`_).
-We refer to `Dias (2000) <https://library.seg.org/doi/10.1190/1.1444738>`_ for this
-implementation of the complex resistivity formula. This model predicts that the
-complex resistivity :math:`\rho^*` of a polarizable rock sample can be described by
+In this tutorial we will explore the parameter space of the SIP model proposed by
+`Dias (1972) <https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/JB077i026p04945>`_.
+This semi-empirical model describes the petrophysical properties of rocks through
+measurements of their electrical polarization in a frequency range typically from
+1 mHz to 100 kHz. We refer to `Dias (2000) <https://library.seg.org/doi/10.1190/1.1444738>`_
+for the implementation of the complex resistivity formula in BISIP. This model
+predicts that the complex resistivity :math:`\rho^*` of a polarizable rock sample
+can be described by
 
 .. math::
   \rho^* = \rho_0 \left[ 1-m\left(1-\frac{1}{1+i\omega\tau'(1+\frac{1}{\mu})} \right) \right],
@@ -24,6 +26,6 @@ Here, :math:`\rho^*` depends on 5 parameters:
 - :math:`\tau \in [0, \infty(`, the relaxation time of the electrical double layer zone, related to
   average polarizable particle size.
 - :math:`\eta \in [0, 150]`, the electrochemical parameter, characteristic of the
-electrochemical environment producing polarization.
+  electrochemical environment producing polarization.
 - :math:`\delta \in [0, 1)`, the pore length fraction of the electrical double
   layer zone in the material.
