@@ -114,6 +114,7 @@ we will set new boundaries for :math:`\eta` and :math:`\log \tau`.
     It is important to reset the starting values after changing the boundaries,
     otherwise the chains will start in areas of 0 probability and fail to reach
     a stationary state.
+    
 .. todo::
     Automatically detect if parameters were updated and reset initial values.
 
