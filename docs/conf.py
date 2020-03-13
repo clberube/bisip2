@@ -1,7 +1,7 @@
 # @Author: charles
 # @Date:   2020-03-06T13:54:13-05:00
 # @Last modified by:   charles
-# @Last modified time: 2020-03-13T12:23:59-04:00
+# @Last modified time: 2020-03-13T16:39:56-04:00
 
 
 
@@ -41,6 +41,8 @@ extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.coverage',
               'sphinx.ext.napoleon',
               'sphinx.ext.todo',
+              'nbsphinx',
+              'sphinx.ext.mathjax',
               ]
 
 todo_include_todos = True
@@ -51,7 +53,7 @@ templates_path = ['_templates']
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '**.ipynb_checkpoints']
 
 
 # -- Options for HTML output -------------------------------------------------

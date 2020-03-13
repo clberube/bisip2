@@ -65,4 +65,5 @@ A more detailed example is available in the :ref:`Quickstart` tutorial.
    tutorials/decomposition
    tutorials/pelton
    tutorials/dias
+   tutorials/dias_tutorial
    tutorials/shin
