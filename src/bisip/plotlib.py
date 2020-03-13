@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-13T12:05:12-04:00
+# @Last modified time: 2020-03-13T18:53:23-04:00
 
 
 import matplotlib.pyplot as plt
@@ -40,7 +40,7 @@ class plotlib:
         if chain is None:
             chain = self.get_chain(**kwargs)
         labels = self.param_names
-        fig, axes = plt.subplots(self.ndim, figsize=(10, 7), sharex=True)
+        fig, axes = plt.subplots(self.ndim, figsize=(8, 6), sharex=True)
         for i in range(self.ndim):
             ax = axes[i]
             ax.plot(chain[:, :, i], 'k', alpha=0.3)
@@ -118,7 +118,7 @@ class plotlib:
         self._check_if_fitted()
         data = self.data
         lines = self.get_model_percentile(p, chain, **kwargs)
-        fig, ax = plt.subplots(2, 1, figsize=(4, 5), sharex=True)
+        fig, ax = plt.subplots(1, 2, figsize=(8, 3))
         for i in range(2):
             ax[i].errorbar(data['freq'], data['zn'][i], yerr=data['zn_err'][i],
                            markersize=3, fmt=".k", capsize=0)
@@ -126,9 +126,9 @@ class plotlib:
             ax[i].plot(data['freq'], lines[1][i], c='C3')
             ax[i].plot(data['freq'], lines[2][i], ls=':', c='0.5')
             ax[i].set_ylabel(r'$\rho${} (normalized)'.format((i+1)*"'"))
-            ax[i].yaxis.set_label_coords(-0.2, 0.5)
-        ax[-1].set_xscale('log')
-        ax[-1].set_xlabel('$f$ (Hz)')
+            # ax[i].yaxis.set_label_coords(-0.2, 0.5)
+            ax[i].set_xscale('log')
+            ax[i].set_xlabel('$f$ (Hz)')
         fig.tight_layout()
         return fig
 
