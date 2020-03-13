@@ -7,8 +7,8 @@ In this tutorial we will show that the parameter space of the generalized
 Cole-Cole model can be quite complex for some data sets.
 
 `Pelton (1978) <https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/JB077i026p04945>`_
-noted that the complex resistivity of rocks could be interpreted using Cole-Cole
-relaxation models:
+noted that the complex resistivity spectra of rocks :math:`\boldsymbol{\rho^*}`
+could be interpreted using Cole-Cole relaxation models:
 
 .. math::
   \boldsymbol{\rho^*} = \rho_0 \left[ 1-m\left(1-\frac{1}{1+(i\boldsymbol{\omega}\tau)^c} \right) \right],

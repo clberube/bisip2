@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-12T22:43:07-04:00
+# @Last modified time: 2020-03-13T11:16:54-04:00
 
 
 import emcee
@@ -38,7 +38,7 @@ class Inversion(plotlib.plotlib, utils.utils):
     """
 
     def __init__(self, filepath, nwalkers=32, nsteps=5000, headers=1,
-                 ph_units='mrad'):
+                 ph_units='mrad', p0=None):
 
         # Get arguments
         self.filepath = filepath
@@ -46,9 +46,9 @@ class Inversion(plotlib.plotlib, utils.utils):
         self.nsteps = nsteps
         self.headers = headers
         self.ph_units = ph_units
+        self.p0 = p0
 
         # Set default attributes
-        self._p0 = None
         self._params = {}
         self.__fitted = False
 
@@ -93,7 +93,9 @@ class Inversion(plotlib.plotlib, utils.utils):
                 the emcee algorithm `StretchMove` is used. Defaults to None.
 
         """
+        self._bounds = np.array(self.param_bounds).T
         self.ndim = self._bounds.shape[1]
+
         if self._p0 is None:
             self._p0 = np.random.uniform(*self._bounds,
                                          (self.nwalkers, self.ndim))
