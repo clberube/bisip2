@@ -1,7 +1,7 @@
 # @Author: charles
 # @Date:   2020-03-06T13:54:13-05:00
 # @Last modified by:   charles
-# @Last modified time: 2020-03-13T16:39:56-04:00
+# @Last modified time: 2020-03-13T17:16:48-04:00
 
 
 
@@ -43,6 +43,7 @@ extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.todo',
               'nbsphinx',
               'sphinx.ext.mathjax',
+              'IPython.sphinxext.ipython_console_highlighting',
               ]
 
 todo_include_todos = True
