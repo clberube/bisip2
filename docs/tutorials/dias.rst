@@ -20,6 +20,7 @@ polarizable rock sample can be described by
 
 where :math:`\boldsymbol{\omega}` is the vector of angular measurement frequencies
 (:math:`\omega=2\pi f`) and :math:`i` is the imaginary unit. Additionally,
+
 | :math:`\mu = i\omega\tau + \left(i\omega\tau''\right)^{1/2}`,
 | :math:`\tau' = (\tau/\delta)(1 - \delta)/(1 - m)` and
 | :math:`\tau'' = \tau^2 \eta^2`.
@@ -158,8 +159,6 @@ Finally let's look at the optimal parameters and their uncertainties.
 
     for n, v, u in zip(model.param_names, values, uncertainties):
         print(f'{n}: {v:.3f} +/- {u:.3f}')
-
-.. rst-class:: center
 
 | :math:`\rho_0 = 1.008 \pm 0.052`
 | :math:`m = 0.424 \pm 0.218`
