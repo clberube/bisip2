@@ -69,11 +69,10 @@ First let's look at the parameter traces
     model.plot_traces()
 
 .. figure:: ./figures/dias_wide_traces.png
-    :width: 50%
+    :width: 100%
     :align: center
 
-    The chains struggle to reach the same stationary state because the priors
-    are really wide. Some walkers may get stuck in local minima.
+    Some walkers get stuck in local minima because the priors are really wide. 
 
 Nevertheless, we can see that the median solution of all these chains gives a
 satisfying result.
@@ -92,7 +91,7 @@ satisfying result.
 
 A good strategy to reduce the chance that walkers get stuck in local minima
 would be to tighten the priors are the values we think give a good result. Here
-we will set new boundaries for :math:`\eta` and :math:`\log_{\tau}`.
+we will set new boundaries for :math:`\eta` and :math:`\log \tau`.
 
 .. code-block:: python
 
@@ -104,7 +103,7 @@ we will set new boundaries for :math:`\eta` and :math:`\log_{\tau}`.
     model.plot_traces()
 
 .. figure:: ./figures/dias_bounds_updated.png
-    :width: 50%
+    :width: 100%
     :align: center
 
     We can see that the stricter priors have allowed all walkers to find the
