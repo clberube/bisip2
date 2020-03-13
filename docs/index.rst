@@ -6,12 +6,13 @@ BISIP
 Spectral Induced Polarization data with Markov-chain Monte Carlo simulation.
 See our original
 `paper <https://ui.adsabs.harvard.edu/abs/2017CG....105...51B/abstract>`_ in
-Computers & Geosciences for more details. BISIP uses `Goodman & Weare's Affine
-Invariant Ensemble sampler
-<https://projecteuclid.org/euclid.camcos/1513731992>`_ as
-implemented in `emcee <https://emcee.readthedocs.io/en/stable/>`_ to explore
-the SIP models' parameter spaces with multiple walkers. You can read the paper
-by Foreman-Mackey et al. explaining the emcee algorithm in detail
+Computers & Geosciences for more details. It should be noted that the original
+version of the BISIP was built on top of the `PyMC <https://pymc-devs.github.io/pymc/`_
+framework when the code was developed in 2015. Now, BISIP uses
+`Goodman & Weare's Affine Invariant Ensemble sampler <https://projecteuclid.org/euclid.camcos/1513731992>`_
+as implemented in the `emcee <https://emcee.readthedocs.io/en/stable/>`_ library
+to explore the SIP models' parameter spaces with multiple walkers. You can read
+the original paper by Foreman-Mackey et al. explaining the emcee algorithm in detail
 `here <https://arxiv.org/abs/1202.3665>`_.
 
 BISIP is being developed on `GitHub
