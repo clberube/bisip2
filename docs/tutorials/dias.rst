@@ -16,15 +16,17 @@ predicts that the complex resistivity spectra :math:`\boldsymbol{\rho^*}` of a
 polarizable rock sample can be described by
 
 .. math::
+
     \rho^* = \rho_0 \left[ 1-m\left(1-\frac{1}{1+i\omega\tau'(1+\frac{1}{\mu})} \right) \right],
 
 where :math:`\omega` is the measurement angular frequencies
 (:math:`\omega=2\pi f`) and :math:`i` is the imaginary unit. Additionally,
 
 .. math::
-    \mu = i\omega\tau + \left(i\omega\tau''\right)^{1/2},
-    \tau' = (\tau/\delta)(1 - \delta)/(1 - m),
-    \tau'' = \tau^2 \eta^2.
+
+    \mu &= i\omega\tau + \left(i\omega\tau''\right)^{1/2}, \\
+    \tau' &= (\tau/\delta)(1 - \delta)/(1 - m), \\
+    \tau'' &= \tau^2 \eta^2.
 
 Here, :math:`\rho^*` depends on 5 parameters:
 
@@ -162,11 +164,12 @@ Finally let's look at the optimal parameters and their uncertainties.
         print(f'{n}: {v:.3f} +/- {u:.3f}')
 
 .. math::
-  \rho_0 = 1.008 \pm 0.052
-  m = 0.424 \pm 0.218
-  \tau = -9.038 \pm 6.046
-  \eta = 84.133 \pm 47.866
-  \delta = 0.480 \pm 0.263
+
+  \rho_0 &= 1.008 \pm 0.052 \\
+  m &= 0.424 \pm 0.218 \\
+  \tau &= -9.038 \pm 6.046 \\
+  \eta &= 84.133 \pm 47.866 \\
+  \delta &= 0.480 \pm 0.263 \\
 
 The relatively large error bars on the data have correctly been propagated
 in the inversion process, and we observe that several parameters are weakly defined.
