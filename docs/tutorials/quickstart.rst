@@ -11,7 +11,7 @@ the :ref:`Decomposition` tutorial.
 Running your first inversion
 ----------------------------
 
-To perform inversion of a SIP data file, you would use the following approach:
+To invert a SIP data file, you would use the following approach:
 
     - Import the base :code:`Polynomial Decomposition` model.
     - Pass :code:`filepath` to instantiate the model with a specific data file.
