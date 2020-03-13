@@ -115,9 +115,6 @@ we will set new boundaries for :math:`\eta` and :math:`\log \tau`.
     otherwise the chains will start in areas of 0 probability and fail to reach
     a stationary state.
 
-.. todo::
-    Automatically detect if parameters were updated and reset initial values.
-
 .. figure:: ./figures/dias/dias_bounds_updated.png
     :width: 100%
     :align: center
@@ -159,3 +156,6 @@ independent from the others. We also note that :math:`m` and :math:`\tau` are
 characterized by a strong correlation coefficient. Most importantly, we find that
 this correlation makes the range of 'best' values for these parameters quite large,
 indicating that these parameters are not well resolved for this particular data file.
+
+.. todo::
+    Automatically detect if parameters were updated and reset initial values.
