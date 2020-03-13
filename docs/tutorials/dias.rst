@@ -24,9 +24,9 @@ where :math:`\omega` is the measurement angular frequencies
 
 .. math::
 
-    \mu = i\omega\tau + \left(i\omega\tau''\right)^{1/2}, \\
-    \tau' = (\tau/\delta)(1 - \delta)/(1 - m), \\
-    \tau'' = \tau^2 \eta^2.
+    &\mu = i\omega\tau + \left(i\omega\tau''\right)^{1/2}, \\
+    &\tau' = (\tau/\delta)(1 - \delta)/(1 - m), \\
+    &\tau'' = \tau^2 \eta^2.
 
 Here, :math:`\rho^*` depends on 5 parameters:
 
@@ -166,7 +166,7 @@ Finally let's look at the optimal parameters and their uncertainties.
   &\tau = -9.038 \pm 6.046 \\
   &\eta = 84.133 \pm 47.866 \\
   &\delta = 0.480 \pm 0.263 \\
-  
+
 The relatively large error bars on the data have correctly been propagated
 in the inversion process, and we observe that several parameters are weakly defined.
 
