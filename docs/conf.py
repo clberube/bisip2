@@ -1,7 +1,7 @@
 # @Author: charles
 # @Date:   2020-03-06T13:54:13-05:00
 # @Last modified by:   charles
-# @Last modified time: 2020-03-13T19:11:41-04:00
+# @Last modified time: 2020-03-13T19:18:17-04:00
 
 
 
@@ -49,10 +49,10 @@ extensions = ['sphinx.ext.autodoc',
 todo_include_todos = True
 
 nbsphinx_prompt_width = 0
-nbsphinx_execute_arguments = [
-    "--InlineBackend.figure_formats={'retina', 'pdf'}",
-    "--InlineBackend.rc={'figure.dpi': 144}",
-]
+# nbsphinx_execute_arguments = [
+#     "--InlineBackend.figure_formats={'retina', 'pdf'}",
+#     "--InlineBackend.rc={'figure.dpi': 144}",
+# ]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
