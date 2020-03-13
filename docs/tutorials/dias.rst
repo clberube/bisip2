@@ -16,14 +16,15 @@ predicts that the complex resistivity spectra :math:`\boldsymbol{\rho^*}` of a
 polarizable rock sample can be described by
 
 .. math::
-  \rho^* = \rho_0 \left[ 1-m\left(1-\frac{1}{1+i\omega\tau'(1+\frac{1}{\mu})} \right) \right],
+    \rho^* = \rho_0 \left[ 1-m\left(1-\frac{1}{1+i\omega\tau'(1+\frac{1}{\mu})} \right) \right],
 
 where :math:`\omega` is the measurement angular frequencies
 (:math:`\omega=2\pi f`) and :math:`i` is the imaginary unit. Additionally,
 
-| :math:`\mu = i\omega\tau + \left(i\omega\tau''\right)^{1/2}`,
-| :math:`\tau' = (\tau/\delta)(1 - \delta)/(1 - m)` and
-| :math:`\tau'' = \tau^2 \eta^2`.
+.. math::
+    \mu = i\omega\tau + \left(i\omega\tau''\right)^{1/2},
+    \tau' = (\tau/\delta)(1 - \delta)/(1 - m),
+    \tau'' = \tau^2 \eta^2.
 
 Here, :math:`\rho^*` depends on 5 parameters:
 
