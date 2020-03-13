@@ -159,11 +159,13 @@ Finally let's look at the optimal parameters and their uncertainties.
     for n, v, u in zip(model.param_names, values, uncertainties):
         print(f'{n}: {v:.3f} +/- {u:.3f}')
 
-- :math:`\rho_0 = 1.008 \pm 0.052`
-- :math:`m = 0.424 \pm 0.218`
-- :math:`\tau = -9.038 \pm 6.046`
-- :math:`\eta = 84.133 \pm 47.866`
-- :math:`\delta = 0.480 \pm 0.263`
+.. class:: center
+
+:math:`\rho_0 = 1.008 \pm 0.052`
+:math:`m = 0.424 \pm 0.218`
+:math:`\tau = -9.038 \pm 6.046`
+:math:`\eta = 84.133 \pm 47.866`
+:math:`\delta = 0.480 \pm 0.263`
 
 Conclusion
 ----------
