@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-12T21:29:33-04:00
+# @Last modified time: 2020-03-12T21:36:18-04:00
 # -*- coding: utf-8 -*-
 """
 Created on Fri Sep 29 16:18:50 2017
@@ -29,7 +29,7 @@ REQUIRES = ['emcee', 'corner', 'matplotlib', 'tqdm']
 
 cmdclass = {}
 EXT_MODULES = [Extension("bisip.cython_funcs",
-                         sources=["./src/bisip/cython_funcs.pyx"])]
+                         sources=["src/bisip/cython_funcs.pyx"])]
 
 setup(
     name='bisip',
@@ -50,5 +50,4 @@ setup(
     ext_modules=EXT_MODULES,
     include_dirs=[numpy.get_include()],
     include_package_data=True,
-    # package_data={'': ['data/*.dat']},
 )
