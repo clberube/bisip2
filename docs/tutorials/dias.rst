@@ -3,11 +3,12 @@
 The Dias (2000) model
 =====================
 
+Introduction
+------------
 The model proposed by `Dias (1972) <https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/JB077i026p04945>`_
 describes the petrophysical properties of rocks from measurements of their
 electrical polarization in a frequency range typically from
-1 mHz to 100 kHz. In this tutorial we will explore the parameter space of this
-semi-empirical SIP model.
+1 mHz to 100 kHz.
 
 We refer to `Dias (2000) <https://library.seg.org/doi/10.1190/1.1444738>`_
 for the implementation of the complex resistivity formula in BISIP. This model
@@ -33,6 +34,13 @@ Here, :math:`\rho^*` depends on 5 parameters:
   electrochemical environment producing polarization.
 - :math:`\delta \in [0, 1)`, the pore length fraction of the electrical double
   layer zone in the material.
+
+In this tutorial we will invert a SIP data with the Dias model to explore the
+parameter space of this semi-empirical SIP model. We will also quantify the
+relationship between the various parameters.
+
+Exploring the parameter space
+-----------------------------
 
 To invert a SIP data file with the Dias model and plot the, start by instantiating a
 :class:`Dias2000` object and fall the fit() method to estimate the parameters.
@@ -144,6 +152,8 @@ distribution of the Dias model with the `plot_corner` method.
 
     The corner plot shows interesting correlations between various parameters.
 
+Conclusion
+----------
 From this experiment, we conclude that the :math:`\rho_0` parameter is relatively
 independent from the others. We also note that :math:`m` and :math:`\tau` are
 characterized by a strong correlation coefficient. Most importantly, we find that
