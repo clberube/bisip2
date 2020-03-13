@@ -147,7 +147,7 @@ distribution of the Dias model with the `plot_corner` method.
     model.plot_corner(discard=500)
 
 .. figure:: ./figures/dias/dias_corner.png
-    :width: 50%
+    :width: 100%
     :align: center
 
     The corner plot shows interesting correlations between various parameters.
