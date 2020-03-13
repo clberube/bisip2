@@ -25,7 +25,7 @@ BISIP implements the generalized form of the Pelton Cole-Cole model given by
 where the subscript :math:`k` refers to one of :math:`K` superimposed Cole-Cole
 relaxation modes. Here, :math:`\rho^*` depends on :math:`1 + 3K` parameters:
 
-  - :math:`\rho_0 \in [0, \infty)`, the direct current resistivity :math:`\rho_0 = \rho (\omega\to 0)`.
+  - :math:`\rho_0 \in [0, \infty)`, the direct current resistivity :math:`\rho_0 = \rho^*(\omega\to 0)`.
   - :math:`m_k \in [0, 1]`, each mode's chargeability :math:`m=(\rho_0 - \rho_\infty)/\rho_0`.
   - :math:`\tau_k \in [0, \infty)`, each mode's relaxation time, related to
     average polarizable particle size.
