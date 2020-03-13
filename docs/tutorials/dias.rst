@@ -122,8 +122,7 @@ we will set new boundaries for :math:`\eta` and :math:`\log \tau`.
     :width: 100%
     :align: center
 
-    We can see that the stricter priors have allowed all walkers to find the
-    same parameter values that maximize the likelihood.
+    The stricter priors have allowed all walkers to find a similar stationary state.
 
 With these improved parameter chains the fit quality should be improved.
 
