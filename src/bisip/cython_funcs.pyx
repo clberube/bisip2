@@ -76,7 +76,7 @@ def ColeCole_cyth(cnp.ndarray[DTYPE_t, ndim=1] w, DTYPE_t R0, cnp.ndarray[DTYPE_
         Z[1,j] = z_.imag
     return Z
 
-def Dias_cyth(cnp.ndarray[DTYPE_t, ndim=1] w, DTYPE_t R0, DTYPE_t m, DTYPE_t log_tau, DTYPE_t eta, DTYPE_t delta):
+def Dias2000_cyth(cnp.ndarray[DTYPE_t, ndim=1] w, DTYPE_t R0, DTYPE_t m, DTYPE_t log_tau, DTYPE_t eta, DTYPE_t delta):
     cdef int N = w.shape[0]
     cdef int j
     cdef cnp.ndarray[DTYPE_t, ndim=2] Z = np.empty((2,N), dtype=DTYPE)

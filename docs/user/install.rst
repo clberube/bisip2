@@ -20,13 +20,13 @@ These optional packages are used for progress bars and corner plots:
 - `tqdm <https://tqdm.github.io/>`_
 - `corner <https://corner.readthedocs.io/en/latest/>`_
 
-Installing with package managers
---------------------------------
+Package managers
+----------------
 
-TODO
+TODO: Add BISIP to conda-forge.
 
-Installing from source
-----------------------
+From source
+-----------
 
 BISIP is developed on `GitHub <https://github.com/clberube/bisip2>`_.
 Clone the repository to your computer.
@@ -50,9 +50,9 @@ To test if everything was installed correctly, do the following:
   import bisip
   bisip.run_test()
 
-If everything is OK the code will load a data file and perform ColeCole
-and Debye decomposition of a data file, then print the best parameters and
-plot traces and fit quality for the decomposition approach. Then you should
+If everything is OK the code will load a data file and perform inversion of a
+data file using various models. Then it will print the best parameters and
+plot traces and fit quality for the last model used. At the end, you should
 see the following line:
 
 .. code-block:: text

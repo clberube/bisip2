@@ -3,8 +3,8 @@
 # @Author: cberube
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
-# @Last modified by:   cberube
-# @Last modified time: 12-03-2020
+# @Last modified by:   charles
+# @Last modified time: 2020-03-12T22:43:07-04:00
 
 
 import emcee
@@ -12,7 +12,7 @@ import numpy as np
 
 from .cython_funcs import Decomp_cyth
 from .cython_funcs import ColeCole_cyth
-from .cython_funcs import Dias_cyth
+from .cython_funcs import Dias2000_cyth
 
 from . import utils
 from . import plotlib
@@ -39,13 +39,21 @@ class Inversion(plotlib.plotlib, utils.utils):
 
     def __init__(self, filepath, nwalkers=32, nsteps=5000, headers=1,
                  ph_units='mrad'):
+
+        # Get arguments
         self.filepath = filepath
         self.nwalkers = nwalkers
         self.nsteps = nsteps
         self.headers = headers
         self.ph_units = ph_units
+
+        # Set default attributes
+        self._p0 = None
         self._params = {}
         self.__fitted = False
+
+        # Load data
+        self._data = self.load_data(self.filepath, self.headers, self.ph_units)
 
     def _log_likelihood(self, theta, f, x, y, yerr):
         """Returns the conditional log-likelihood of the observations. """
@@ -86,7 +94,9 @@ class Inversion(plotlib.plotlib, utils.utils):
 
         """
         self.ndim = self._bounds.shape[1]
-        self.p0 = np.random.uniform(*self._bounds, (self.nwalkers, self.ndim))
+        if self._p0 is None:
+            self._p0 = np.random.uniform(*self._bounds,
+                                         (self.nwalkers, self.ndim))
 
         model_args = (self.forward, self._bounds, self._data['w'],
                       self._data['zn'], self._data['zn_err'])
@@ -98,7 +108,7 @@ class Inversion(plotlib.plotlib, utils.utils):
                                               pool=pool,
                                               moves=moves,
                                               )
-        self._sampler.run_mcmc(self.p0, self.nsteps, progress=True)
+        self._sampler.run_mcmc(self._p0, self.nsteps, progress=True)
         self.__fitted = True
 
     def get_chain(self, **kwargs):
@@ -120,6 +130,25 @@ class Inversion(plotlib.plotlib, utils.utils):
         return self._sampler.get_chain(**kwargs)
 
     @property
+    def p0(self):
+        """:obj:`ndarray`: Starting parameter values. Should have shape
+            of (nwalkers, ndim)"""
+        return self._p0
+
+    @p0.setter
+    def p0(self, var):
+        self._p0 = var
+
+    @property
+    def params(self):
+        """:obj:`dict`: Parameter names and their bounds."""
+        return self._params
+
+    @params.setter
+    def params(self, var):
+        self._params = var
+
+    @property
     def sampler(self):
         """:obj:`EnsembleSampler`: A `emcee` sampler object (see
             https://emcee.readthedocs.io/en/stable/user/sampler/)."""
@@ -130,19 +159,6 @@ class Inversion(plotlib.plotlib, utils.utils):
     def data(self):
         """:obj:`dict`: The input data dictionary."""
         return self._data
-
-    @data.setter
-    def data(self, var):
-        self._data = var
-
-    @property
-    def params(self):
-        """:obj:`dict`: Parameter names and their bounds."""
-        return self._params
-
-    @params.setter
-    def params(self, var):
-        self._params = var
 
     @property
     def fitted(self):
@@ -177,9 +193,6 @@ class PolynomialDecomposition(Inversion):
         super().__init__(*args, **kwargs)
         self.c_exp = c_exp
         self.poly_deg = poly_deg
-
-        # Load data
-        self._data = self.load_data(self.filepath, self.headers, self.ph_units)
 
         # Define a range of relaxation time values for the RTD
         min_tau = np.floor(min(np.log10(1./self._data['w'])) - 1)
@@ -228,9 +241,6 @@ class PeltonColeCole(Inversion):
         super().__init__(*args, **kwargs)
         self.n_modes = n_modes
 
-        # Load data
-        self._data = self.load_data(self.filepath, self.headers, self.ph_units)
-
         # Add multi-mode ColeCole parameters to dict
         range_modes = list(range(self.n_modes))
         self.params.update({'r0': [0.9, 1.1]})
@@ -270,9 +280,6 @@ class Dias2000(Inversion):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # Load data
-        self._data = self.load_data(self.filepath, self.headers, self.ph_units)
-
         # Add Dias parameters to dict
         self.params.update({'r0': [0.9, 1.1],
                             'm': [0, 1],
@@ -283,7 +290,7 @@ class Dias2000(Inversion):
         self._bounds = np.array(self.param_bounds).T
 
     def forward(self, theta, w):
-        """Returns a Dias impedance.
+        """Returns a Dias (2000) impedance.
 
         Args:
             theta (:obj:`ndarray`): Ordered array of R0, m, log_tau, log_eta,
@@ -292,4 +299,4 @@ class Dias2000(Inversion):
                 impedance for (w = 2*pi*f).
 
         """
-        return Dias_cyth(w, *theta)
+        return Dias2000_cyth(w, *theta)
