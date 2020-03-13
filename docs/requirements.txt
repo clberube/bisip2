@@ -4,3 +4,4 @@ emcee
 corner
 cython
 nbsphinx
+ipython
