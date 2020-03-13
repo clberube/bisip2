@@ -11,16 +11,16 @@ noted that the complex resistivity spectra of rocks :math:`\boldsymbol{\rho^*}`
 could be interpreted using Cole-Cole relaxation models:
 
 .. math::
-  \boldsymbol{\rho^*} = \rho_0 \left[ 1-m\left(1-\frac{1}{1+(i\boldsymbol{\omega}\tau)^c} \right) \right],
+  \rho^* = \rho_0 \left[ 1-m\left(1-\frac{1}{1+(i\omega\tau)^c} \right) \right],
 
-where :math:`\boldsymbol{\omega}` is the vector of angular measurement frequencies
+where :math:`\omega` is the vector of angular measurement frequencies
 (:math:`\omega=2\pi f`) and :math:`i` is the imaginary unit.
 
 BISIP implements the generalized form of the Pelton Cole-Cole model given by
 `Chen et al., (2008) <https://doi.org/10.1190/1.2976115>`_:
 
 .. math::
-  \boldsymbol{\rho^*} = \rho_0 \left[ 1 - \sum_{k=1}^{K} m_k\left(1-\frac{1}{1+(i\boldsymbol{\omega}\tau_k)^c_k} \right) \right],
+  \rho^* = \rho_0 \left[ 1 - \sum_{k=1}^{K} m_k\left(1-\frac{1}{1+(i\omega\tau_k)^c_k} \right) \right],
 
 where the subscript :math:`k` refers to one of :math:`K` superimposed Cole-Cole
 relaxation modes. Here, :math:`\rho^*` depends on :math:`1 + 3K` parameters:

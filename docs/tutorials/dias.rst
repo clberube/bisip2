@@ -16,9 +16,9 @@ predicts that the complex resistivity spectra :math:`\boldsymbol{\rho^*}` of a
 polarizable rock sample can be described by
 
 .. math::
-  \boldsymbol{\rho^*} = \rho_0 \left[ 1-m\left(1-\frac{1}{1+i\boldsymbol{\omega}\tau'(1+\frac{1}{\mu})} \right) \right],
+  \rho^* = \rho_0 \left[ 1-m\left(1-\frac{1}{1+i\omega\tau'(1+\frac{1}{\mu})} \right) \right],
 
-where :math:`\boldsymbol{\omega}` is the vector of angular measurement frequencies
+where :math:`\omega` is the measurement angular frequencies
 (:math:`\omega=2\pi f`) and :math:`i` is the imaginary unit. Additionally,
 
 | :math:`\mu = i\omega\tau + \left(i\omega\tau''\right)^{1/2}`,
