@@ -1,1 +1,1 @@
-include bisip/data/*.dat
+include src/bisip/data/*.dat
