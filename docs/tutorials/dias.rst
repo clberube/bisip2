@@ -161,11 +161,11 @@ Finally let's look at the optimal parameters and their uncertainties.
 
 .. rst-class:: center
 
-| :math:`\rho_0 = 1.008 \pm 0.052`
-| :math:`m = 0.424 \pm 0.218`
-| :math:`\tau = -9.038 \pm 6.046`
-| :math:`\eta = 84.133 \pm 47.866`
-| :math:`\delta = 0.480 \pm 0.263`
+    | :math:`\rho_0 = 1.008 \pm 0.052`
+    | :math:`m = 0.424 \pm 0.218`
+    | :math:`\tau = -9.038 \pm 6.046`
+    | :math:`\eta = 84.133 \pm 47.866`
+    | :math:`\delta = 0.480 \pm 0.263`
 
 The relatively large error bars on the data have correctly been propagated
 in the inversion process, and we observe that several parameters are weakly defined.
