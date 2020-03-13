@@ -1,7 +1,7 @@
 # @Author: charles
 # @Date:   2020-03-06T13:54:13-05:00
 # @Last modified by:   charles
-# @Last modified time: 2020-03-06T16:11:08-05:00
+# @Last modified time: 2020-03-13T12:20:19-04:00
 
 
 
@@ -39,7 +39,9 @@ master_doc = 'index'
 # ones.
 extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.coverage',
-              'sphinx.ext.napoleon']
+              'sphinx.ext.napoleon',
+              'sphinx.ext.todo',
+              ]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
