@@ -15,7 +15,7 @@
 Visit https://bisip.readthedocs.io/en/latest/ to consult the full documentation including API docs, tutorials and examples.
 
 ### Installation
-Clone this repository to your computer. Then navigate to the bisip directory. Finally run the setup.py script with Python.
+Clone this repository to your computer. Then navigate to the bisip directory. Finally run the setup.py script with Python. The `-f` option forces a reinstall if the package is already present.
 
 ```
 git clone https://github.com/clberube/bisip2
@@ -24,7 +24,8 @@ python setup.py install -f
 ```
 
 ### Quickstart
-Import BISIP in your Python scripts as follows:
+See the [quickstart tutorial](https://bisip.readthedocs.io/en/latest/tutorials/quickstart.html)
+for the full example. Import BISIP in your Python scripts as follows:
 
 ```python
 from bisip import PolynomialDecomposition
