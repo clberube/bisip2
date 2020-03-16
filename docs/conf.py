@@ -1,7 +1,7 @@
 # @Author: charles
 # @Date:   2020-03-06T13:54:13-05:00
 # @Last modified by:   charles
-# @Last modified time: 2020-03-16T11:08:39-04:00
+# @Last modified time: 2020-03-16T11:10:39-04:00
 
 
 
@@ -51,7 +51,6 @@ todo_include_todos = True
 nbsphinx_prompt_width = 0
 nbsphinx_timeout = 60
 # nbsphinx_execute_arguments = [
-    # kernel_name='python3'
 #     "--InlineBackend.figure_formats={'retina', 'pdf'}",
 #     "--InlineBackend.rc={'figure.dpi': 144}",
 # ]
