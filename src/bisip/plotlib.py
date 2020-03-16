@@ -4,9 +4,10 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-13T18:53:23-04:00
+# @Last modified time: 2020-03-16T17:21:53-04:00
 
 
+import numpy as np
 import matplotlib.pyplot as plt
 from corner import corner
 
@@ -127,6 +128,60 @@ class plotlib:
             ax[i].plot(data['freq'], lines[2][i], ls=':', c='0.5')
             ax[i].set_ylabel(r'$\rho${} (normalized)'.format((i+1)*"'"))
             # ax[i].yaxis.set_label_coords(-0.2, 0.5)
+            ax[i].set_xscale('log')
+            ax[i].set_xlabel('$f$ (Hz)')
+        fig.tight_layout()
+        return fig
+
+    def plot_fit_pa(self, chain=None, p=[2.5, 50, 97.5], **kwargs):
+        """
+        Plots the input data, best fit and confidence interval of a model.
+        Shows the amplitude and phase spectra.
+
+        Args:
+            chain (:obj:`ndarray`): A numpy array containing the MCMC chain to
+                plot. Should have a shape (nsteps, nwalkers, ndim) or
+                (nsteps*nwalkers, ndim). If None, the full, unflattened chain
+                will be used and all walkers will be plotted. Defaults to None.
+            p (:obj:`list` of :obj:`int`): Percentile values for lower
+                confidence interval, best fit curve, and upper confidence
+                interval, **in that order**. Defaults to [2.5, 50, 97.5] for
+                the median and 95% HPD.
+            **kwargs: Additional keyword arguments for the get_chain function
+                (see below). Use these arguments only if not explicitly passing
+                the `chain` argument.
+
+        Keyword Args:
+            discard (:obj:`int`): The number of steps to discard.
+            thin (:obj:`int`): The thinning factor (keep every `thin` step).
+            flat (:obj:`bool`): Whether to flatten the walkers into a single
+                chain or not.
+
+        Returns:
+            :obj:`Figure`: A matplotlib figure.
+
+        """
+        self._check_if_fitted()
+        data = self.data
+        lines = self.get_model_percentile(p, chain, **kwargs)
+        fig, ax = plt.subplots(1, 2, figsize=(8, 3))
+
+        ax[0].errorbar(data['freq'], data['amp']/data["norm_factor"],
+                       yerr=data['amp_err']/data["norm_factor"],
+                       markersize=3, fmt=".k", capsize=0)
+        ax[0].plot(data['freq'], np.linalg.norm(lines[0], axis=0), ls=':', c='0.5')
+        ax[0].plot(data['freq'], np.linalg.norm(lines[1], axis=0), c='C3')
+        ax[0].plot(data['freq'], np.linalg.norm(lines[2], axis=0), ls=':', c='0.5')
+        ax[0].set_ylabel('Amplitude (normalized)')
+
+        ax[1].errorbar(data['freq'], data['pha'], yerr=data['pha_err'],
+                       markersize=3, fmt=".k", capsize=0)
+        ax[1].plot(data['freq'], np.arctan2(*lines[0][::-1]), ls=':', c='0.5')
+        ax[1].plot(data['freq'], np.arctan2(*lines[1][::-1]), c='C3')
+        ax[1].plot(data['freq'], np.arctan2(*lines[2][::-1]), ls=':', c='0.5')
+        ax[1].set_ylabel('-Phase (normalized)')
+
+        for i in range(2):
             ax[i].set_xscale('log')
             ax[i].set_xlabel('$f$ (Hz)')
         fig.tight_layout()
