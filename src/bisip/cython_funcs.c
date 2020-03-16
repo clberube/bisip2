@@ -597,7 +597,6 @@ static CYTHON_INLINE float __PYX_NAN() {
 #include <stdio.h>
 #include "numpy/arrayobject.h"
 #include "numpy/ufuncobject.h"
-#include <stdlib.h>
 #include "math.h"
 #ifdef _OPENMP
 #include <omp.h>
@@ -1059,12 +1058,12 @@ typedef npy_double __pyx_t_5numpy_double_t;
  */
 typedef npy_longdouble __pyx_t_5numpy_longdouble_t;
 
-/* "bisip/cython_funcs.pyx":22
+/* "bisip/cython_funcs.pyx":20
  * 
  * DTYPE = np.float_
  * ctypedef cnp.float_t DTYPE_t             # <<<<<<<<<<<<<<
+ * 
  * DTYPE2 = np.complex128
- * ctypedef cnp.complex128_t DTYPE2_t
  */
 typedef __pyx_t_5numpy_float_t __pyx_t_5bisip_12cython_funcs_DTYPE_t;
 /* Declarations.proto */
@@ -1743,8 +1742,6 @@ static PyTypeObject *__pyx_ptype_5numpy_ndarray = 0;
 static PyTypeObject *__pyx_ptype_5numpy_ufunc = 0;
 static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *, char *, char *, int *); /*proto*/
 
-/* Module declarations from 'libc.stdlib' */
-
 /* Module declarations from 'bisip.cython_funcs' */
 static __pyx_t_double_complex __pyx_f_5bisip_12cython_funcs_C_ColeCole(double, double, double, double); /*proto*/
 static __pyx_t_double_complex __pyx_f_5bisip_12cython_funcs_C_Dias(double, double, double, double, double, double); /*proto*/
@@ -1811,7 +1808,7 @@ static const char __pyx_k_bisip_cython_funcs[] = "bisip.cython_funcs";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_src_bisip_cython_funcs_pyx[] = "src/bisip/cython_funcs.pyx";
 static const char __pyx_k_ndarray_is_not_C_contiguous[] = "ndarray is not C contiguous";
-static const char __pyx_k_Created_on_Wed_Nov_4_14_05_35_2[] = "\nCreated on Wed Nov  4 14:05:35 2015\n@author:    clafreniereberube@gmail.com\n            \303\211cole Polytechnique de Montr\303\251al\nCopyright (c) 2015-2016 Charles L. B\303\251rub\303\251\n";
+static const char __pyx_k_Created_on_Wed_Nov_4_14_05_35_2[] = "\nCreated on Wed Nov  4 14:05:35 2015\n@author:    charleslberube@gmail.com\n            Polytechnique Montr\303\251al\nCopyright (c) 2015-2016 Charles L. B\303\251rub\303\251\n";
 static const char __pyx_k_numpy_core_multiarray_failed_to[] = "numpy.core.multiarray failed to import";
 static const char __pyx_k_unknown_dtype_code_in_numpy_pxd[] = "unknown dtype code in numpy.pxd (%d)";
 static const char __pyx_k_Format_string_allocated_too_shor[] = "Format string allocated too short, see comment in numpy.pxd";
@@ -6938,46 +6935,46 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "bisip/cython_funcs.pyx":16
+  /* "bisip/cython_funcs.pyx":15
  * """
  * 
  * import numpy as np             # <<<<<<<<<<<<<<
  * cimport numpy as cnp
  * 
  */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 15, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 16, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 15, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "bisip/cython_funcs.pyx":21
- * from libc.stdlib cimport malloc, free
+  /* "bisip/cython_funcs.pyx":19
+ * 
  * 
  * DTYPE = np.float_             # <<<<<<<<<<<<<<
  * ctypedef cnp.float_t DTYPE_t
- * DTYPE2 = np.complex128
+ * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DTYPE, __pyx_t_2) < 0) __PYX_ERR(0, 21, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DTYPE, __pyx_t_2) < 0) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "bisip/cython_funcs.pyx":23
- * DTYPE = np.float_
+  /* "bisip/cython_funcs.pyx":22
  * ctypedef cnp.float_t DTYPE_t
+ * 
  * DTYPE2 = np.complex128             # <<<<<<<<<<<<<<
  * ctypedef cnp.complex128_t DTYPE2_t
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_complex128); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_complex128); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DTYPE2, __pyx_t_1) < 0) __PYX_ERR(0, 23, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DTYPE2, __pyx_t_1) < 0) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "bisip/cython_funcs.pyx":64

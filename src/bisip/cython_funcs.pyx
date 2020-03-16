@@ -4,24 +4,24 @@
 #cython: cdivision=True
 #cython: nonecheck=False
 #cython: wraparound=False
-#cython: boundscheck=False
 
 """
 Created on Wed Nov  4 14:05:35 2015
-@author:    clafreniereberube@gmail.com
-            École Polytechnique de Montréal
+@author:    charleslberube@gmail.com
+            Polytechnique Montréal
 Copyright (c) 2015-2016 Charles L. Bérubé
 """
 
 import numpy as np
 cimport numpy as cnp
 
-from libc.stdlib cimport malloc, free
 
 DTYPE = np.float_
 ctypedef cnp.float_t DTYPE_t
+
 DTYPE2 = np.complex128
 ctypedef cnp.complex128_t DTYPE2_t
+
 
 cdef extern from "math.h":
     double exp(double x) nogil
