@@ -26,3 +26,28 @@ the format output of the SIP-Fuchs-III instrument and software.
     - Amplitude units may be Ohm-m or Ohm, the data will be normalized.
     - A number of header lines may be skipped function argument (e.g. in this case headers=1).
     - Scientific or standard notation is OK.
+
+Example data files
+------------------
+
+Several real-life data files are included with the BISIP package. These files contain
+the complex resistivity spectra of mineralized rock samples.
+Once you have installed BISIP in your Python environment, you may get the paths
+to these data files using the :class:`DataFiles` class.
+
+.. autoclass:: bisip.utils.DataFiles
+    :members:
+    :show-inheritance:
+
+The following example shows how to get the absolute file paths to the BISIP
+data files in your Python installation.
+
+.. code:: python
+
+    from bisip import DataFiles
+
+    files = DataFiles()  # initialize the dictionary
+    print(files.keys())  # see the various data file names
+
+    filepath = files['SIP-K389172']  # extract one path
+    print(filepath)
