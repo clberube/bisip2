@@ -7,3 +7,4 @@ nbsphinx
 ipython
 jupyter_client
 ipykernel
+sphinx_navtree

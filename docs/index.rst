@@ -47,7 +47,7 @@ default parameters, you would use the following code:
     :width: 50%
     :align: center
 
-A more detailed example is available in the :ref:`Quickstart` tutorial.
+A more detailed example is available in the :ref:`quickstart` tutorial.
 
 .. toctree::
    :maxdepth: 2
