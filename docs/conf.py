@@ -1,7 +1,7 @@
 # @Author: charles
 # @Date:   2020-03-06T13:54:13-05:00
 # @Last modified by:   charles
-# @Last modified time: 2020-03-17T10:24:34-04:00
+# @Last modified time: 2020-03-17T10:40:26-04:00
 
 
 
@@ -44,12 +44,9 @@ extensions = ['sphinx.ext.autodoc',
               'nbsphinx',
               'sphinx.ext.mathjax',
               'IPython.sphinxext.ipython_console_highlighting',
-              'sphinx_navtree',
               ]
 
 todo_include_todos = True
-
-navtree_maxdepth = {'User Guide': 2, 'Tutorials': 1}
 
 nbsphinx_prompt_width = 0
 nbsphinx_timeout = 60
