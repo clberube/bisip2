@@ -61,7 +61,7 @@ A more detailed example is available in the :ref:`Quickstart` tutorial.
    :maxdepth: 1
    :caption: Tutorials
 
-   tutorials/quickstart
+   tutorials/quickstart_tutorial
    tutorials/decomposition
    tutorials/pelton_tutorial
    tutorials/dias_tutorial

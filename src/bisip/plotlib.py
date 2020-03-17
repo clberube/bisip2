@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-16T17:22:55-04:00
+# @Last modified time: 2020-03-17T08:48:08-04:00
 
 
 import numpy as np
@@ -174,11 +174,11 @@ class plotlib:
         ax[0].plot(data['freq'], np.linalg.norm(lines[2], axis=0), ls=':', c='0.5')
         ax[0].set_ylabel('Amplitude (normalized)')
 
-        ax[1].errorbar(data['freq'], data['pha'], yerr=data['pha_err'],
+        ax[1].errorbar(data['freq'], -data['pha'], yerr=data['pha_err'],
                        markersize=3, fmt=".k", capsize=0)
-        ax[1].plot(data['freq'], np.arctan2(*lines[0][::-1]), ls=':', c='0.5')
-        ax[1].plot(data['freq'], np.arctan2(*lines[1][::-1]), c='C3')
-        ax[1].plot(data['freq'], np.arctan2(*lines[2][::-1]), ls=':', c='0.5')
+        ax[1].plot(data['freq'], -np.arctan2(*lines[0][::-1]), ls=':', c='0.5')
+        ax[1].plot(data['freq'], -np.arctan2(*lines[1][::-1]), c='C3')
+        ax[1].plot(data['freq'], -np.arctan2(*lines[2][::-1]), ls=':', c='0.5')
         ax[1].set_ylabel('-Phase (normalized)')
 
         for i in range(2):
