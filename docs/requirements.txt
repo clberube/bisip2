@@ -6,4 +6,3 @@ cython
 nbsphinx
 ipython
 jupyter_client
-ipykernel
