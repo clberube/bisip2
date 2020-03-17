@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-13T12:19:23-04:00
+# @Last modified time: 2020-03-17T09:55:58-04:00
 
 
 import emcee
@@ -247,7 +247,7 @@ class PeltonColeCole(Inversion):
         range_modes = list(range(self.n_modes))
         self.params.update({'r0': [0.9, 1.1]})
         self.params.update({f'm{i+1}': [0.0, 1.0] for i in range_modes})
-        self.params.update({f'log_tau{i+1}': [-20, 10] for i in range_modes})
+        self.params.update({f'log_tau{i+1}': [-15, 5] for i in range_modes})
         self.params.update({f'c{i+1}': [0.0, 1.0] for i in range_modes})
 
         self._bounds = np.array(self.param_bounds).T

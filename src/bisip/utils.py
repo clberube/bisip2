@@ -3,13 +3,26 @@
 # @Author: cberube
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
-# @Last modified by:   cberube
-# @Last modified time: 12-03-2020
+# @Last modified by:   charles
+# @Last modified time: 2020-03-17T09:50:58-04:00
 
 
+import os
 import warnings
+import glob
 
 import numpy as np
+import bisip
+
+
+class DataFiles(dict):
+
+    def __init__(self, *args, **kwargs):
+        super(DataFiles, self).__init__(*args, **kwargs)
+        dir = os.path.join(os.path.dirname(bisip.__file__), 'data/*.dat')
+        files = sorted(glob.glob(dir))
+        keys = [os.path.splitext(os.path.basename(x))[0] for x in files]
+        self.update({k: v for k, v in zip(keys, files)})
 
 
 class utils:
