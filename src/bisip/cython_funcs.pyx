@@ -23,43 +23,28 @@ DTYPE2 = np.complex128
 ctypedef cnp.complex128_t DTYPE2_t
 
 
+cdef double complex jay
+jay.real = 0.0
+jay.imag = 1.0
+
 cdef extern from "math.h":
     double exp(double x) nogil
 
 cdef double complex C_ColeCole(double w_, double m_, double lt_, double c_):
-    cdef double complex Z_i
-    cdef double complex jay
-    jay.real = 0.0
-    jay.imag = 1.0
-    Z_i = m_*(1.0 - 1.0/(1.0 + ((jay*w_*exp(lt_))**c_)))
-    return Z_i
+    return m_*(1.0 - 1.0/(1.0 + ((jay*w_*exp(lt_))**c_)))
 
 cdef double complex C_Dias(double w_, double R0_, double m_, double log_tau_, double eta_, double delta_):
-    cdef double complex Z_i
-    cdef double complex jay
-    jay.real = 0.0
-    jay.imag = 1.0
     tau_p = exp(log_tau_)*(1/delta_ - 1)/(1 - m_)
     tau_pp = exp(log_tau_)**2 * eta_**2
     mu = jay*w_*exp(log_tau_) + (jay*w_*tau_pp)**0.5
-    Z_i = R0_*(1 - m_*(1 - 1.0 / (1+jay*w_*tau_p*(1 + 1/mu))))
-    return Z_i
+    return R0_*(1 - m_*(1 - 1.0 / (1+jay*w_*tau_p*(1 + 1/mu))))
 
 cdef double complex C_Shin(double w_, double R_, double log_Q_, double n_):
-    cdef double complex Z_i
-    cdef double complex jay
-    jay.real = 0.0
-    jay.imag = 1.0
-    Z_i = R_ / ((jay*w_**n_)*((10**log_Q_))*R_ + 1)
-    return Z_i
+    z_cpe = 1 / (exp(log_Q_)*(jay*w_)**n_)
+    return (1/z_cpe + 1/R_)**-1
 
 cdef double complex C_Debye(double w_, double m_, double tau_, double c_):
-    cdef double complex Z_i
-    cdef double complex jay
-    jay.real = 0.0
-    jay.imag = 1.0
-    Z_i = m_*(1 - 1.0/(1 + ((jay*w_*(tau_))**c_)))
-    return Z_i
+    return m_*(1 - 1.0/(1 + ((jay*w_*(tau_))**c_)))
 
 def ColeCole_cyth(cnp.ndarray[DTYPE_t, ndim=1] w, DTYPE_t R0, cnp.ndarray[DTYPE_t, ndim=1] m, cnp.ndarray[DTYPE_t, ndim=1] lt, cnp.ndarray[DTYPE_t, ndim=1] c):
     cdef int N = w.shape[0]
@@ -108,15 +93,16 @@ def Decomp_cyth(cnp.ndarray[DTYPE_t, ndim=1] w, cnp.ndarray[DTYPE_t, ndim=1] tau
         Z[1,j] = z_.imag
     return Z
 
-def Shin_cyth(cnp.ndarray[DTYPE_t, ndim=1] w, cnp.ndarray[DTYPE_t, ndim=1] R, cnp.ndarray[DTYPE_t, ndim=1] log_Q, cnp.ndarray[DTYPE_t, ndim=1] n):
+def Shin2015_cyth(cnp.ndarray[DTYPE_t, ndim=1] w, cnp.ndarray[DTYPE_t, ndim=1] R, cnp.ndarray[DTYPE_t, ndim=1] log_Q, cnp.ndarray[DTYPE_t, ndim=1] n):
     cdef int D = R.shape[0]
     cdef int N = w.shape[0]
     cdef int i, j
-    cdef cnp.ndarray[DTYPE2_t, ndim=1] z_ = np.zeros(N, dtype=DTYPE2)
-    cdef cnp.ndarray[DTYPE_t, ndim=2] Z = np.empty((2,N), dtype=DTYPE)
+    cdef double complex z_
+    cdef cnp.ndarray[DTYPE_t, ndim=2] Z = np.empty((2, N), dtype=DTYPE)
     for j in range(N):
+        z_ = 0
         for i in range(D):
-            z_[j] = z_[j] + C_Shin(w[j], R[i], log_Q[i], n[i])
-        Z[0,j] = z_[j].real
-        Z[1,j] = z_[j].imag
+            z_ += C_Shin(w[j], R[i], log_Q[i], n[i])
+        Z[0,j] = z_.real
+        Z[1,j] = z_.imag
     return Z

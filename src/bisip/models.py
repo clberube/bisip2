@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-17T09:55:58-04:00
+# @Last modified time: 2020-03-17T16:36:13-04:00
 
 
 import emcee
@@ -13,6 +13,7 @@ import numpy as np
 from .cython_funcs import Decomp_cyth
 from .cython_funcs import ColeCole_cyth
 from .cython_funcs import Dias2000_cyth
+from .cython_funcs import Shin2015_cyth
 
 from . import utils
 from . import plotlib
@@ -302,3 +303,43 @@ class Dias2000(Inversion):
 
         """
         return Dias2000_cyth(w, *theta)
+
+
+class Shin2015(Inversion):
+    """A Shin (2015) inversion scheme for SIP data.
+
+    Args:
+        *args: Arguments passed to the Inversion class.
+        **kwargs: Additional keyword arguments passed to the Inversion class.
+
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Add Dias parameters to dict
+        self.params.update({'R1': [0.0, 1.0],
+                            'R2': [0.0, 1.0],
+                            'log_Q1': [-15, -13],
+                            'log_Q2': [-7, -5],
+                            'n1': [0, 1],
+                            'n2': [0, 1],
+                            })
+
+        self._bounds = np.array(self.param_bounds).T
+
+    def forward(self, theta, w):
+        """Returns a Dias (2000) impedance.
+
+        Args:
+            theta (:obj:`ndarray`): Ordered array of R0, m, log_tau, log_eta,
+                delta. See https://doi.org/10.1016/j.cageo.2017.05.001.
+            w (:obj:`ndarray`): Array of angular frequencies to compute the
+                impedance for (w = 2*pi*f).
+
+        """
+        return Shin2015_cyth(w,
+                             R=theta[:2],
+                             log_Q=theta[2:4],
+                             n=theta[4:]
+                             )
