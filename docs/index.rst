@@ -47,9 +47,9 @@ default parameters, you would use the following code:
     :width: 50%
     :align: center
 
-A more detailed example is available in the `Quickstart`_ tutorial.
+A more detailed example is available in the `Quickstart tutorial`_.
 
-.. _Quickstart: tutorials/quickstart.ipynb
+.. _Quickstart tutorial: tutorials/quickstart.ipynb
 
 .. toctree::
    :maxdepth: 2
