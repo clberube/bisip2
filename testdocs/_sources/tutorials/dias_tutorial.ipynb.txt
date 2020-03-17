@@ -1,0 +1,328 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "nbsphinx": "hidden"
+   },
+   "outputs": [],
+   "source": [
+    "%config InlineBackend.figure_formats={'retina', 'pdf'}\n",
+    "%config InlineBackend.figure_dpi = 72"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# The Dias (2000) model"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Introduction"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The model proposed by [Dias (1972)](https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/JB077i026p04945)\n",
+    "describes the petrophysical properties of rocks from measurements of their\n",
+    "electrical polarization in a frequency range typically from\n",
+    "1 mHz to 100 kHz.\n",
+    "\n",
+    "We refer to [Dias (2000)](https://library.seg.org/doi/10.1190/1.1444738)\n",
+    "for the implementation of the complex resistivity formula in BISIP. This model\n",
+    "predicts that the complex resistivity spectra $\\rho^*$ of a\n",
+    "polarizable rock sample can be described by"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "\\begin{equation}\n",
+    "\\rho^* = \\rho_0 \\left[ 1-m\\left(1-\\frac{1}{1+i\\omega\\tau'(1+\\frac{1}{\\mu})} \\right) \\right],\n",
+    "\\end{equation}"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "where $\\omega$ is the measurement angular frequencies\n",
+    "($\\omega=2\\pi f$) and $i$ is the imaginary unit. Additionally,"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "\\begin{equation}\n",
+    "    \\mu = i\\omega\\tau + \\left(i\\omega\\tau''\\right)^{1/2}, \\\\\n",
+    "    \\tau' = (\\tau/\\delta)(1 - \\delta)/(1 - m), \\\\\n",
+    "    \\tau'' = \\tau^2 \\eta^2.\n",
+    "\\end{equation}"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Here, $\\rho^*$ depends on 5 parameters:\n",
+    "\n",
+    "- $\\rho_0 \\in [0, \\infty)$, the direct current resistivity $\\rho_0 = \\rho^*(\\omega\\to 0)$.\n",
+    "- $m \\in [0, 1)$, the chargeability $m=(\\rho_0 - \\rho_\\infty)/\\rho_0$.\n",
+    "- $\\tau \\in [0, \\infty)$, the relaxation time, related to\n",
+    "  average polarizable particle size.\n",
+    "- $\\eta \\in [0, 150]$, characteristic of the\n",
+    "  electrochemical environment producing polarization.\n",
+    "- $\\delta \\in [0, 1)$, the pore length fraction of the electrical double\n",
+    "  layer zone in the material.\n",
+    "\n",
+    "In this tutorial we will invert a SIP data with the Dias model to explore the\n",
+    "parameter space of this semi-empirical SIP model. We will also quantify the\n",
+    "relationship between the various parameters."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Exploring the parameter space"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "First import the required packages."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import os\n",
+    "\n",
+    "import numpy as np\n",
+    "import bisip\n",
+    "from bisip import Dias2000\n",
+    "\n",
+    "from IPython.display import display, Math\n",
+    "\n",
+    "np.random.seed(42)\n",
+    "\n",
+    "# Define this utility function to nicely print parameter values \n",
+    "# for the Dias model with LaTeX\n",
+    "def print_dias_parameters(names, values, uncertainties):\n",
+    "    for n, v, u in zip(names, values, uncertainties):\n",
+    "        txt = '{0}: {1:.3f} \\pm {2:.3f}'\n",
+    "        n = '\\\\'+n.replace('_', '\\\\')\n",
+    "        n = n.replace('\\\\r0', '\\\\rho_0')\n",
+    "        n = n.replace('\\\\m', 'm')\n",
+    "        txt = txt.format(n, v, u)\n",
+    "        display(Math(txt))"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "To invert a SIP data file with the Dias model, start by instantiating a\n",
+    ":class:`Dias2000` object and fall the fit() method to estimate the parameters."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# This will get one of the example data files in the BISIP package\n",
+    "fp = f'data/SIP-K389172.dat'\n",
+    "fp = os.path.join(os.path.dirname(bisip.__file__), fp)\n",
+    "\n",
+    "# Define MCMC parameters and Dias model\n",
+    "nwalkers = 32\n",
+    "nsteps = 1000\n",
+    "model = Dias2000(filepath=fp, nwalkers=nwalkers, nsteps=nsteps)\n",
+    "# Fit model to data\n",
+    "model.fit()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fig = model.plot_traces()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Some walkers get stuck in local minima because the priors are really wide. Nevertheless, we can see that the median solution of all these chains gives a satisfying result."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Plot the fit by discarding the first 500 steps\n",
+    "fig = model.plot_fit(discard=500)"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "The adjustment is satisfying, but the 95% HPD is very wide because some of the walkers were stuck in local minima far from the solution. A good strategy to reduce the chance that walkers get stuck in local minima would be to tighten the priors are the values we think give a good result. Here we will set new boundaries for :math:`\\eta` and :math:`\\log \\tau`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Adjust the boundaries\n",
+    "model.params.update(eta=[0, 25], log_tau=[-15, -5])\n",
+    "model.p0 = None  # here we reset the randomly selected initial values\n",
+    "\n",
+    "model.fit()\n",
+    "fig = model.plot_traces()"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    ".. warning::\n",
+    "    It is important to reset the starting values with :code:`model.p0 = None` after changing the boundaries,\n",
+    "    otherwise the chains will start in areas of 0 probability and fail to reach\n",
+    "    a stationary state."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The stricter priors have allowed all walkers to find a similar stationary state. With these improved parameter chains the fit quality should be improved."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Plot the fit by discarding the first 500 steps\n",
+    "fig = model.plot_fit(discard=500)"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "The adjustment is satisfying, and the 95% HPD reasonable if we consider the measurement error bars. We will now visualize the posterior distribution of the Dias model with the `plot_corner` method.\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Plot the posterior by discarding the first 500 steps\n",
+    "fig = model.plot_corner(discard=500)"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "The corner plot shows interesting correlations between various parameters. Finally, let's look at the optimal parameters and their uncertainties."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "\n",
+    "# Print the mean and std of the parameters after discarding burn-in samples\n",
+    "values = model.get_param_mean(discard=500)\n",
+    "uncertainties = model.get_param_std(discard=500)\n",
+    "\n",
+    "print_dias_parameters(model.param_names, values, uncertainties)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Conclusions"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "From this experiment, we conclude that the :math:`\\rho_0` parameter is relatively\n",
+    "independent from the others. We also note that :math:`m` and :math:`\\tau` are\n",
+    "characterized by a strong correlation coefficient. Most importantly, we find that\n",
+    "this correlation makes the range of 'best' values for these parameters quite large,\n",
+    "indicating that these parameters are not well resolved for this particular data file.\n",
+    "\n",
+    ".. todo::\n",
+    "    Automatically detect if parameters were updated and reset initial values."
+   ]
+  }
+ ],
+ "metadata": {
+  "celltoolbar": "Edit Metadata",
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.1"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

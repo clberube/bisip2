@@ -1,0 +1,884 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The Pelton Cole-Cole model &mdash; BISIP 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The Dias (2000) model" href="dias_tutorial.html" />
+    <link rel="prev" title="Polynomial Decomposition" href="decomposition.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> BISIP
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/models.html">The Inversion Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/data_format.html">Data format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart_tutorial.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="decomposition.html">Polynomial Decomposition</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The Pelton Cole-Cole model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Defining-the-number-of-modes">Defining the number of modes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Large-uncertainties">Large uncertainties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Weak-polarization">Weak polarization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dias_tutorial.html">The Dias (2000) model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shin.html">The Shin (2015) model</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BISIP</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>The Pelton Cole-Cole model</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tutorials/pelton_tutorial.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container,
+div.nbinput.container div.prompt,
+div.nbinput.container div.input_area,
+div.nbinput.container div[class*=highlight],
+div.nbinput.container div[class*=highlight] pre,
+div.nboutput.container,
+div.nboutput.container div.prompt,
+div.nboutput.container div.output_area,
+div.nboutput.container div[class*=highlight],
+div.nboutput.container div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    min-width: 0;
+    padding-top: 0.3rem;
+    padding-right: 0.3rem;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 0.3rem;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="The-Pelton-Cole-Cole-model">
+<h1>The Pelton Cole-Cole model<a class="headerlink" href="#The-Pelton-Cole-Cole-model" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Introduction">
+<h2>Introduction<a class="headerlink" href="#Introduction" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/JB077i026p04945">Pelton (1978)</a>
+noted that the complex resistivity spectra of rocks <span class="math notranslate nohighlight">\(\rho^*\)</span>
+could be interpreted using Cole-Cole relaxation models:</p>
+<div class="math notranslate nohighlight">
+\[\rho^* = \rho_0 \left[ 1-m\left(1-\frac{1}{1+(i\omega\tau)^c} \right) \right],\]</div>
+<p>where <span class="math notranslate nohighlight">\(\omega\)</span> is the measurement angular frequency
+(<span class="math notranslate nohighlight">\(\omega=2\pi f\)</span>) and <span class="math notranslate nohighlight">\(i\)</span> is the imaginary unit.</p>
+<p>BISIP implements the generalized form of the Pelton Cole-Cole model given by
+<a class="reference external" href="https://doi.org/10.1190/1.2976115">Chen et al., (2008)</a>:</p>
+<div class="math notranslate nohighlight">
+\[\rho^* = \rho_0 \left[ 1 - \sum_{k=1}^{K} m_k\left(1-\frac{1}{1+(i\omega\tau_k)^{c_k}} \right) \right],\]</div>
+<p>where the subscript <span class="math notranslate nohighlight">\(k\)</span> refers to one of <span class="math notranslate nohighlight">\(K\)</span> superimposed Cole-Cole
+relaxation modes. Here, <span class="math notranslate nohighlight">\(\rho^*\)</span> depends on <span class="math notranslate nohighlight">\(1 + 3K\)</span> parameters:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\rho_0 \in [0, \infty)\)</span>, the direct current resistivity <span class="math notranslate nohighlight">\(\rho_0 = \rho^*(\omega\to 0)\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(m_k \in [0, 1]\)</span>, each mode’s chargeability <span class="math notranslate nohighlight">\(m=(\rho_0 - \rho_\infty)/\rho_0\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\tau_k \in [0, \infty)\)</span>, each mode’s relaxation time, related to
+average polarizable particle size.</p></li>
+<li><p><span class="math notranslate nohighlight">\(c_k \in [0, 1]\)</span>, the slope of the measured phase shift for each mode.</p></li>
+</ul>
+</div></blockquote>
+<p>In this tutorial we will show that the parameter space of the generalized
+Cole-Cole model can be quite complex for some data sets.</p>
+</div>
+<div class="section" id="Defining-the-number-of-modes">
+<h2>Defining the number of modes<a class="headerlink" href="#Defining-the-number-of-modes" title="Permalink to this headline">¶</a></h2>
+<p>First import the required packages.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">bisip</span>
+<span class="kn">from</span> <span class="nn">bisip</span> <span class="kn">import</span> <span class="n">PeltonColeCole</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Math</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Define this utility function to nicely print parameter values</span>
+<span class="c1"># for the Pelton model with LaTeX</span>
+<span class="k">def</span> <span class="nf">print_pelton_parameters</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">uncertainties</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">u</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">uncertainties</span><span class="p">):</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="s1">&#39;{0}: {1:.3f} \pm {2:.3f}&#39;</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="o">+</span><span class="n">n</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">r0&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">rho_0&#39;</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">m&#39;</span><span class="p">,</span> <span class="s1">&#39;m_&#39;</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">c&#39;</span><span class="p">,</span> <span class="s1">&#39;c_&#39;</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">tau&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">tau_&#39;</span><span class="p">)</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="n">txt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
+        <span class="n">display</span><span class="p">(</span><span class="n">Math</span><span class="p">(</span><span class="n">txt</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>To invert a SIP data file with the Pelton model, start by instantiating a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">PeltonColeCole</span></code> object and fall the <cite>fit()</cite> method to estimate the parameters.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># This will get one of the example data files in the BISIP package</span>
+<span class="n">fp</span> <span class="o">=</span> <span class="n">f</span><span class="s1">&#39;data/SIP-K389174.dat&#39;</span>
+<span class="n">fp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">bisip</span><span class="o">.</span><span class="vm">__file__</span><span class="p">),</span> <span class="n">fp</span><span class="p">)</span>
+
+<span class="c1"># Define MCMC parameters and ColeCole model</span>
+<span class="n">nwalkers</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="n">nsteps</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">PeltonColeCole</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">fp</span><span class="p">,</span> <span class="n">nwalkers</span><span class="o">=</span><span class="n">nwalkers</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="n">nsteps</span><span class="p">)</span>
+<span class="c1"># Fit model to data</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|██████████| 1000/1000 [00:01&lt;00:00, 723.30it/s]
+</pre></div></div>
+</div>
+<p>Let’s look at the fit quality first, discarding the first 500 steps. You can inspect the parameter traces to convince yourself that this is an appropriate burn-in period.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Plot the fit by discarding the first 500 steps</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">plot_fit</span><span class="p">(</span><span class="n">discard</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/tutorials_pelton_tutorial_10_0.png"><img alt="../_images/tutorials_pelton_tutorial_10_0.png" src="../_images/tutorials_pelton_tutorial_10_0.png" style="width: 572px; height: 203px;" /></a>
+</div>
+</div>
+<p>Not good. clearly, our data is not well represented by the default ColeCole <code class="docutils literal notranslate"><span class="pre">n_modes=1</span></code>. In fact, we see two bumps in the imaginary part of the resistivity spectra (the first at 1 Hz and the second at &gt; 10 kHz. Let’s redefine our model with <code class="docutils literal notranslate"><span class="pre">n_modes</span> <span class="pre">=</span> <span class="pre">2</span></code> and <code class="docutils literal notranslate"><span class="pre">nwalkers</span> <span class="pre">=</span> <span class="pre">64</span></code>. We run the simulation with more walkers because the number of parameters to solve has increased.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Add the n_modes = 2 argument.</span>
+<span class="n">nsteps</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">n_modes</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">nwalkers</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">PeltonColeCole</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">fp</span><span class="p">,</span> <span class="n">nwalkers</span><span class="o">=</span><span class="n">nwalkers</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="n">nsteps</span><span class="p">,</span> <span class="n">n_modes</span><span class="o">=</span><span class="n">n_modes</span><span class="p">)</span>
+<span class="c1"># Fit model to data</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|██████████| 1000/1000 [00:02&lt;00:00, 443.73it/s]
+</pre></div></div>
+</div>
+<p>Let’s check the traces again. We expect two values for <span class="math notranslate nohighlight">\(m\)</span>, <span class="math notranslate nohighlight">\(\log \tau\)</span> and <span class="math notranslate nohighlight">\(c\)</span> because we have two Cole-Cole modes.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">plot_traces</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/tutorials_pelton_tutorial_14_0.png"><img alt="../_images/tutorials_pelton_tutorial_14_0.png" src="../_images/tutorials_pelton_tutorial_14_0.png" style="width: 571px; height: 420px;" /></a>
+</div>
+</div>
+<p>This is quite interesting. It’s not even worth yet to look at the fit quality, because the parameter traces tell us that there are at least two possible solutions to the inverse problem. This is because both Cole-Cole modes are interchangeable – meaning that mode 1 can take on the parameters of mode 2 and vice versa. We will now see how to fix this problem by adjusting the parameter boundaries.</p>
+<p>First we note that <span class="math notranslate nohighlight">\(\log \tau_1\)</span> has two solutions: one around 0 and another around -15. The same is true for <span class="math notranslate nohighlight">\(\log \tau_2\)</span>. We will fix <span class="math notranslate nohighlight">\(\log \tau_1\)</span> so that its values is constrained between -5 and 0, and fix the <span class="math notranslate nohighlight">\(\log \tau_2\)</span> to be constrained between -10 and -15.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Adjust the boundaries</span>
+<span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">log_tau1</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="n">log_tau2</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">model</span><span class="o">.</span><span class="n">p0</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># here we reset the randomly selected initial values</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>It is important to reset the starting values with <code class="code docutils literal notranslate"><span class="pre">model.p0</span> <span class="pre">=</span> <span class="pre">None</span></code> after changing the boundaries,
+otherwise the chains will start in areas of 0 probability and fail to reach
+a stationary state.</p>
+</div>
+<p>Next we fit the model using these new boundaries and visualize the traces.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">plot_traces</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|██████████| 1000/1000 [00:02&lt;00:00, 396.39it/s]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/tutorials_pelton_tutorial_20_1.png"><img alt="../_images/tutorials_pelton_tutorial_20_1.png" src="../_images/tutorials_pelton_tutorial_20_1.png" style="width: 571px; height: 420px;" /></a>
+</div>
+</div>
+<p>Amazing! The stricter priors have allowed all 64 walkers to find a unique solution. With these improved parameter chains the fit quality should be improved. Let’s plot the fit quality while discarding the first 1000 steps.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Extract the chain</span>
+<span class="n">chain</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_chain</span><span class="p">(</span><span class="n">discard</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">thin</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># Plot the fit by discarding the first 1000 steps</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">plot_fit</span><span class="p">(</span><span class="n">chain</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/tutorials_pelton_tutorial_22_0.png"><img alt="../_images/tutorials_pelton_tutorial_22_0.png" src="../_images/tutorials_pelton_tutorial_22_0.png" style="width: 572px; height: 203px;" /></a>
+</div>
+</div>
+<p>The adjustment is satisfying, and the 95% HPD reasonable if we consider the relatively small measurement error bars. Let’s inspect the mean parameters and their uncertainties.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Print the mean and std of the parameters after discarding burn-in samples</span>
+<span class="n">values</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_param_mean</span><span class="p">(</span><span class="n">chain</span><span class="p">)</span>
+<span class="n">uncertainties</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_param_std</span><span class="p">(</span><span class="n">chain</span><span class="p">)</span>
+
+<span class="n">print_pelton_parameters</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">param_names</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">uncertainties</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle \rho_0: 1.010 \pm 0.002$</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle m_1: 0.140 \pm 0.004$</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle m_2: 0.935 \pm 0.055$</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle \log\tau_1: -1.574 \pm 0.089$</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle \log\tau_2: -12.838 \pm 0.148$</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle c_1: 0.451 \pm 0.015$</div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle c_2: 0.608 \pm 0.015$</div></div>
+</div>
+<p>It looks like the parameters are very well resolved, and due to the small data error bars the uncertainties on the Pelton parameters are also very small (but you should still not neglect them). Feel free to visualize the posterior distribution of the Pelton model with the <code class="docutils literal notranslate"><span class="pre">plot_corner</span></code> method, which shows that the <span class="math notranslate nohighlight">\(m_2\)</span> parameter has accumulated at <span class="math notranslate nohighlight">\(m_2 \to 1\)</span>. This tells us that although the fit quality is good, the Pelton model does not explain well our data set.</p>
+</div>
+<div class="section" id="Large-uncertainties">
+<h2>Large uncertainties<a class="headerlink" href="#Large-uncertainties" title="Permalink to this headline">¶</a></h2>
+<p>Let’s now consider a different rock sample where the measurement uncertainty is relatively lage (<code class="docutils literal notranslate"><span class="pre">K389172</span></code>), we apply the same method we did previously and put it all together in the following cell:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># This will get one of the example data files in the BISIP package</span>
+<span class="n">fp</span> <span class="o">=</span> <span class="n">f</span><span class="s1">&#39;data/SIP-K389172.dat&#39;</span>
+<span class="n">fp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">bisip</span><span class="o">.</span><span class="vm">__file__</span><span class="p">),</span> <span class="n">fp</span><span class="p">)</span>
+
+<span class="c1"># Define MCMC parameters and ColeCole model</span>
+<span class="n">nwalkers</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">nsteps</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">n_modes</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">PeltonColeCole</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">fp</span><span class="p">,</span> <span class="n">nwalkers</span><span class="o">=</span><span class="n">nwalkers</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="n">nsteps</span><span class="p">,</span> <span class="n">n_modes</span><span class="o">=</span><span class="n">n_modes</span><span class="p">)</span>
+
+<span class="c1"># Adjust the boundaries</span>
+<span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">log_tau1</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="n">log_tau2</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">model</span><span class="o">.</span><span class="n">p0</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># here we reset the randomly selected initial values</span>
+
+<span class="c1"># Fit model to data</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">plot_traces</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|██████████| 1000/1000 [00:02&lt;00:00, 392.28it/s]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/tutorials_pelton_tutorial_28_1.png"><img alt="../_images/tutorials_pelton_tutorial_28_1.png" src="../_images/tutorials_pelton_tutorial_28_1.png" style="width: 571px; height: 420px;" /></a>
+</div>
+</div>
+<p>The inversion has reached a unique solution, but due to the large error bars on the data we can see from the traces that the parameters of mode 2 (<span class="math notranslate nohighlight">\(m_2\)</span>, <span class="math notranslate nohighlight">\(\log \tau_2\)</span>, <span class="math notranslate nohighlight">\(c_2\)</span>) are quite ill-defined.</p>
+</div>
+<div class="section" id="Weak-polarization">
+<h2>Weak polarization<a class="headerlink" href="#Weak-polarization" title="Permalink to this headline">¶</a></h2>
+<p>Finally, let’s consider rock sample <code class="docutils literal notranslate"><span class="pre">K389176</span></code>, where the Cole-Cole modes are not well defined in the data (i.e. where the phase shift spectrum shows a relatively flat response.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># This will get one of the example data files in the BISIP package</span>
+<span class="n">fp</span> <span class="o">=</span> <span class="n">f</span><span class="s1">&#39;data/SIP-K389176.dat&#39;</span>
+<span class="n">fp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">bisip</span><span class="o">.</span><span class="vm">__file__</span><span class="p">),</span> <span class="n">fp</span><span class="p">)</span>
+
+<span class="c1"># Define MCMC parameters and ColeCole model</span>
+<span class="n">nwalkers</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">nsteps</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">n_modes</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">PeltonColeCole</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">fp</span><span class="p">,</span> <span class="n">nwalkers</span><span class="o">=</span><span class="n">nwalkers</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="n">nsteps</span><span class="p">,</span> <span class="n">n_modes</span><span class="o">=</span><span class="n">n_modes</span><span class="p">)</span>
+
+<span class="c1"># Adjust the boundaries</span>
+<span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">log_tau1</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="n">log_tau2</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">model</span><span class="o">.</span><span class="n">p0</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># here we reset the randomly selected initial values</span>
+
+<span class="c1"># Fit model to data</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="c1"># Print the mean and std of the parameters after discarding burn-in samples</span>
+<span class="n">values</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_param_mean</span><span class="p">(</span><span class="n">discard</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">uncertainties</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_param_std</span><span class="p">(</span><span class="n">discard</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">print_pelton_parameters</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">param_names</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">uncertainties</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|██████████| 1000/1000 [00:02&lt;00:00, 405.22it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle \rho_0: 1.021 \pm 0.014$</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle m_1: 0.112 \pm 0.029$</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle m_2: 0.735 \pm 0.161$</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle \log\tau_1: -1.489 \pm 1.507$</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle \log\tau_2: -13.016 \pm 0.913$</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle c_1: 0.237 \pm 0.146$</div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle c_2: 0.731 \pm 0.127$</div></div>
+</div>
+<p>Inspect the traces and fit figures, you will notice that the data is well fitted by the double Pelton model. However, we note that due to the weak polarization (flat response) in the low-frequency range, the <span class="math notranslate nohighlight">\(\log \tau_1\)</span> parameter is extremely ill-defined (the relative error is more than 100%!). This is because the absence of a clear polarization peak (low values of <span class="math notranslate nohighlight">\(c\)</span>) can’t be explained with Cole-Cole type models, which expect a well-defined local maximum in the phase shift
+spectrum. This is discussed in more detail in <a class="reference external" href="https://doi.org/10.1016/j.cageo.2017.05.001">Bérubé et al. (2017)</a>.</p>
+</div>
+<div class="section" id="Conclusions">
+<h2>Conclusions<a class="headerlink" href="#Conclusions" title="Permalink to this headline">¶</a></h2>
+<p>From this experiment, we learned that the Pelton Cole-Cole model modes are interchangeable, and that to avoid this problem we must fix the <span class="math notranslate nohighlight">\(\log \tau_k\)</span> parameters to take on boundaries that do not overlap. It also appears that the <span class="math notranslate nohighlight">\(m_2\)</span> parameter is often not well resolved because it has accumulated at its upper limit. This implies that even higher values of <span class="math notranslate nohighlight">\(m_2\)</span> may explain our data better. However, because <span class="math notranslate nohighlight">\(m\)</span> is defined in the interval <span class="math notranslate nohighlight">\([0, 1]\)</span> our results
+suggest that the Pelton Cole-Cole model may not explain well our data set, especially its high-frequency response. Finally, we saw that data error bars have a high impact of the quality of resolved Cole-Cole parameters, and that weak polarization responses will most certaintly yield ill-defined inversion parameters.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dias_tutorial.html" class="btn btn-neutral float-right" title="The Dias (2000) model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="decomposition.html" class="btn btn-neutral float-left" title="Polynomial Decomposition" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Charles L. Bérubé
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
