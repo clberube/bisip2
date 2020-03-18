@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-17T12:50:01-04:00
+# @Last modified time: 2020-03-18T16:25:04-04:00
 
 
 import numpy as np
@@ -92,6 +92,7 @@ class plotlib:
     def plot_fit(self, chain=None, p=[2.5, 50, 97.5], **kwargs):
         """
         Plots the input data, best fit and confidence interval of a model.
+        Shows the real and imaginary parts.
 
         Args:
             chain (:obj:`ndarray`): A numpy array containing the MCMC chain to
@@ -132,6 +133,45 @@ class plotlib:
             ax[i].set_xlabel('$f$ (Hz)')
         fig.tight_layout()
         return fig
+
+    def plot_data(self, feature='phase', **kwargs):
+        """
+        Plots the input data.
+
+        Args:
+            feature (:obj:`str`): Which data feature to plot. Choices are
+                'phase', 'amplitude', 'real', 'imaginary'. Defaults to 'phase'.
+            **kwargs: Additional keyword arguments passed to the matplotlib
+                errorbar function.
+
+        Returns:
+            :obj:`Figure`: A matplotlib figure.
+
+        """
+        kwargs.setdefault('fmt', '.k')
+        kwargs.setdefault('capsize', 0)
+        kwargs.setdefault('markersize', 3)
+
+        data = self.data
+        fig, ax = plt.subplots()
+        x = data['freq']
+        y = {'phase': (-data['pha'],
+                       data['pha_err'],
+                       '-Phase (rad)'),
+             'amplitude': (data['amp']/data['norm_factor'],
+                           data['amp_err']/data['norm_factor'],
+                           'Amplitude (normalized)'),
+             'real': (data['Z'][0]/data['norm_factor'],
+                      data['Z_err'][0]/data['norm_factor'],
+                      'Real part (normalized)'),
+             'imaginary': (-data['Z'][1]/data['norm_factor'],
+                           data['Z_err'][1]/data['norm_factor'],
+                           '-Imaginary part (normalized)'),
+             }
+        ax.errorbar(x, y[feature][0], yerr=y[feature][1], **kwargs)
+        ax.set_xlabel('Frequency (Hz)')
+        ax.set_ylabel(y[feature][2])
+        ax.set_xscale('log')
 
     def plot_fit_pa(self, chain=None, p=[2.5, 50, 97.5], **kwargs):
         """

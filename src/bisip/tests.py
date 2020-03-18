@@ -4,7 +4,7 @@
 # @Date:   12-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-12T22:34:38-04:00
+# @Last modified time: 2020-03-18T16:01:58-04:00
 
 
 import os
@@ -72,6 +72,10 @@ def run_test(dias=True, colecole=True, debye=True):
             print(f'{n}: {v:.5f} +/- {u:.5f}')
 
     print('Testing plotlib with last results')
+
+    fig = model.plot_data(feature='phase')
+    plt.show(block=False)
+
     fig = model.plot_traces()
     # fig.savefig('./docs/tutorials/figures/ex1_traces.png', dpi=144, bbox_inches='tight')
     plt.show(block=False)
