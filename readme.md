@@ -24,54 +24,24 @@ python setup.py install -f
 ```
 
 ### Quickstart
-See the [quickstart tutorial](https://bisip.readthedocs.io/en/latest/tutorials/quickstart.html)
-for the full example. Import BISIP in your Python scripts as follows:
+Using BISIP is as simple as importing a SIP model, initializing it and fitting it to a data set.
+BISIP also offers many utility functions for plotting and analyzing inversion results. See the [tutorials](https://bisip.readthedocs.io/en/latest/tutorials/quickstart.html)
+for more examples.
 
 ```python
 from bisip import PolynomialDecomposition
 
 # Define a data file to invert
-filepath = '/bisip/data/SIP-K389175.dat'
-
-# Define a Polynomial Decomposition model with
-# a 4th order approximation and c-exponent equal to 1 (Debye)
-# The simulation will run for 500 steps with 32 walkers
-# exploring the Debye Decomposition parameter space
+filepath = '/path/to/DataFile_1.csv'
+# Initialize the inversion model
 model = PolynomialDecomposition(filepath=filepath,
                                 nwalkers=32,  # number of walkers
-                                nsteps=500,  # number of MCMC steps
-                                poly_deg=4,  # 4th order polynomial
-                                c_exp=1.0,  # debye decomposition
+                                nsteps=1000,  # number of MCMC steps
                                 )
-
 # Fit the model to this data file
 model.fit()
 ```
 ```
 Out:
 100%|██████████| 1000/1000 [00:01<00:00, 558.64it/s]
-```
-
-```python
-# Plot the parameter traces
-fig = model.plot_traces()
-```
-<p align="center">
-    <img src="https://raw.githubusercontent.com/clberube/bisip2/master/figures/traces.png" width="100%">
-</p>
-
-<img src="https://raw.githubusercontent.com/clberube/bisip2/master/figures/fitted.png" width="25%" align="right">
-
-```python
-# Extract the parameter values for all walkers
-# after a <discard> period.
-# Thin the chain by selecting every <thin> steps
-# Flatten the walkers into a single chain
-chain = model.get_chain(discard=300,
-                        thin=30,
-                        flat=True)
-
-# Plot the model against the data for
-# the remaining parameter values in the chain
-fig = model.plot_fit(chain)
 ```
