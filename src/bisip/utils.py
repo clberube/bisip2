@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-19T10:08:30-04:00
+# @Last modified time: 2020-03-19T10:23:43-04:00
 
 
 import warnings
@@ -118,25 +118,29 @@ class utils(object):
 
         """
         # Importation des données .DAT
-        dat_file = np.loadtxt(f"{filename}", skiprows=headers, delimiter=',')
-        labels = ["freq", "amp", "pha", "amp_err", "pha_err"]
+        dat_file = np.loadtxt(f'{filename}', skiprows=headers, delimiter=',')
+        labels = ['freq', 'amp', 'pha', 'amp_err', 'pha_err']
         data = {l: dat_file[:, i] for (i, l) in enumerate(labels)}
-        if ph_units == "mrad":
-            data["pha"] = data["pha"]/1000  # mrad to rad
-            data["pha_err"] = data["pha_err"]/1000  # mrad to rad
-        if ph_units == "deg":
-            data["pha"] = np.radians(data["pha"])  # deg to rad
-            data["pha_err"] = np.radians(data["pha_err"])  # deg to rad
-        data["phase_range"] = abs(max(data["pha"])-min(data["pha"]))  # Range of phase measurements (used in NRMS error calculation)
-        data["Z"] = data["amp"]*(np.cos(data["pha"]) + 1j*np.sin(data["pha"]))
-        EI = np.sqrt(((data["amp"]*np.cos(data["pha"])*data["pha_err"])**2)+(np.sin(data["pha"])*data["amp_err"])**2)
-        ER = np.sqrt(((data["amp"]*np.sin(data["pha"])*data["pha_err"])**2)+(np.cos(data["pha"])*data["amp_err"])**2)
-        data["Z_err"] = ER + 1j*EI
+
+        if ph_units == 'mrad':
+            data['pha'] = data['pha']/1000  # mrad to rad
+            data['pha_err'] = data['pha_err']/1000  # mrad to rad
+        if ph_units == 'deg':
+            data['pha'] = np.radians(data['pha'])  # deg to rad
+            data['pha_err'] = np.radians(data['pha_err'])  # deg to rad
+
+        data['Z'] = data['amp']*(np.cos(data['pha']) + 1j*np.sin(data['pha']))
+        EI = np.sqrt(((data['amp']*np.cos(data['pha'])*data['pha_err'])**2)
+                     + (np.sin(data['pha'])*data['amp_err'])**2)
+        ER = np.sqrt(((data['amp']*np.sin(data['pha'])*data['pha_err'])**2)
+                     + (np.cos(data['pha'])*data['amp_err'])**2)
+        data['Z_err'] = ER + 1j*EI
         # Normalization of amplitude
-        data["norm_factor"] = max(abs(data["Z"]))  # Maximum amplitude
-        zn, zn_e = data["Z"]/data["norm_factor"], data["Z_err"]/data["norm_factor"]  # Normalization of impedance by max amplitude
-        data["zn"] = np.array([zn.real, zn.imag])  # 2D array with first column = real values, second column = imag values
-        data["zn_err"] = np.array([zn_e.real, zn_e.imag])  # 2D array with first column = real values, second column = imag values
+        data['norm_factor'] = max(abs(data['Z']))  # Maximum amplitude
+        zn = data['Z']/data['norm_factor']  # Normalization
+        zn_e = data['Z_err']/data['norm_factor']  # Normalization
+        data['zn'] = np.array([zn.real, zn.imag])
+        data['zn_err'] = np.array([zn_e.real, zn_e.imag])
         data['N'] = len(data['freq'])
         data['w'] = 2*np.pi*data['freq']
 
