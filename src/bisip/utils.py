@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-19T10:05:35-04:00
+# @Last modified time: 2020-03-19T10:08:30-04:00
 
 
 import warnings
@@ -142,8 +142,7 @@ class utils(object):
 
         return data
 
-    def print_latex_parameters(self, names, values, uncertainties, decimals=3,
-                               **kwargs):
+    def print_latex_parameters(self, names, values, uncertainties, decimals=3):
         """Prints Pelton parameters and their uncertainties with LaTeX.
 
         Requires the code to be run in interactive mode either from a Jupyter
