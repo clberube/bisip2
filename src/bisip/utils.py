@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-19T10:34:54-04:00
+# @Last modified time: 2020-03-19T10:56:14-04:00
 
 
 import warnings
@@ -14,16 +14,16 @@ import numpy as np
 
 class utils(object):
 
-    def get_model_percentile(self, p, chain=None, **kwargs):
+    def get_model_percentile(self, p=[2.5, 50, 97.5], chain=None, **kwargs):
         """Gets percentiles of the model values for a MCMC chain.
 
         Args:
             p (:obj:`float` or :obj:`list` of :obj:`float`): percentiles values
-                to compute.
+                to compute. Defaults to [2.5, 50, 97.5].
             chain (:obj:`ndarray`): A numpy array containing the MCMC chain to
-                plot. Should have a shape (nwalkers, nsteps, ndim) or
-                (nsteps, ndim). If None, the full, unflattened chain will be
-                used and all walkers will be plotted. Defaults to None.
+                plot. Should be a 2D array (nsteps, ndim). If None and no
+                kwargs are passed to discard iterations, will raise a warning
+                and the full chain will be used. Defaults to None.
 
         Keyword Args:
             **kwargs: See kwargs of the get_chain method.
@@ -34,16 +34,16 @@ class utils(object):
             results[i] = self.forward(chain[i], self.data['w'])
         return np.percentile(results, p, axis=0)
 
-    def get_param_percentile(self, p, chain=None, **kwargs):
+    def get_param_percentile(self, p=[2.5, 50, 97.5], chain=None, **kwargs):
         """Gets percentiles of the parameter values for a MCMC chain.
 
         Args:
             p (:obj:`float` or :obj:`list` of :obj:`float`): percentiles values
-                to compute.
+                to compute. Defaults to [2.5, 50, 97.5].
             chain (:obj:`ndarray`): A numpy array containing the MCMC chain to
-                plot. Should have a shape (nwalkers, nsteps, ndim) or
-                (nsteps, ndim). If None, the full, unflattened chain will be
-                used and all walkers will be plotted. Defaults to None.
+                plot. Should be a 2D array (nsteps, ndim). If None and no
+                kwargs are passed to discard iterations, will raise a warning
+                and the full chain will be used. Defaults to None.
 
         Keyword Args:
             **kwargs: See kwargs of the get_chain method.
@@ -57,9 +57,9 @@ class utils(object):
 
         Args:
             chain (:obj:`ndarray`): A numpy array containing the MCMC chain to
-                plot. Should have a shape (nwalkers, nsteps, ndim) or
-                (nsteps, ndim). If None, the full, unflattened chain will be
-                used and all walkers will be plotted. Defaults to None.
+                plot. Should be a 2D array (nsteps, ndim). If None and no
+                kwargs are passed to discard iterations, will raise a warning
+                and the full chain will be used. Defaults to None.
 
         Keyword Args:
             **kwargs: See kwargs of the get_chain method.
@@ -73,9 +73,9 @@ class utils(object):
 
         Args:
             chain (:obj:`ndarray`): A numpy array containing the MCMC chain to
-                plot. Should have a shape (nwalkers, nsteps, ndim) or
-                (nsteps, ndim). If None, the full, unflattened chain will be
-                used and all walkers will be plotted. Defaults to None.
+                plot. Should be a 2D array (nsteps, ndim). If None and no
+                kwargs are passed to discard iterations, will raise a warning
+                and the full chain will be used. Defaults to None.
 
         Keyword Args:
             **kwargs: See kwargs of the get_chain method.
@@ -94,7 +94,6 @@ class utils(object):
                                'Pass discard and thin keywords to remove '
                                'burn-in samples and reduce autocorrelation.'),
                               UserWarning)
-
         else:
             if chain.ndim > 2:
                 raise ValueError('Flatten chain by passing flat=True.')
