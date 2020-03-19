@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-19T10:46:44-04:00
+# @Last modified time: 2020-03-19T10:49:41-04:00
 
 
 import emcee
@@ -308,13 +308,13 @@ class Dias2000(Inversion):
 class Shin2015(Inversion):
     """A Shin (2015) inversion scheme for SIP data.
 
-    .. warning::
-        The Shin model implementation is currently yielding unexpected results
-        and needs to be reviewed.
-
     Args:
         *args: Arguments passed to the Inversion class.
         **kwargs: Additional keyword arguments passed to the Inversion class.
+
+    .. warning::
+        The Shin model implementation is yielding unexpected results
+        and needs to be reviewed.
 
     """
 
