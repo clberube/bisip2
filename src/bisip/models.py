@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-19T10:49:41-04:00
+# @Last modified time: 2020-03-19T10:51:04-04:00
 
 
 import emcee
