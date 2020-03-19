@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-19T10:23:43-04:00
+# @Last modified time: 2020-03-19T10:32:35-04:00
 
 
 import warnings
@@ -154,11 +154,11 @@ class utils(object):
 
         Args:
             names (:obj:`list`): The list of parameter names. Obtain it from
-                `Inversion.param_names`.
-            values (:obj:`list`): Ordered list of mean parameter values. obtain
-                it from `Inversion.get_param_mean`.
+                ``Inversion.param_names``.
+            values (:obj:`list`): Ordered list of mean parameter values. Obtain
+                it from ``Inversion.get_param_mean``.
             uncertainties (:obj:`list`): Ordered list of parameter
-                uncertainties. Obtain it  from `Inversion.get_param_std`.
+                uncertainties. Obtain it  from ``Inversion.get_param_std``.
             decimals (:obj:`int`): The number of decimals to display.
 
         """
