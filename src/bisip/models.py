@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-17T16:36:13-04:00
+# @Last modified time: 2020-03-19T10:43:50-04:00
 
 
 import emcee
@@ -296,7 +296,7 @@ class Dias2000(Inversion):
         """Returns a Dias (2000) impedance.
 
         Args:
-            theta (:obj:`ndarray`): Ordered array of R0, m, log_tau, log_eta,
+            theta (:obj:`ndarray`): Ordered array of R0, m, log_tau, eta,
                 delta. See https://doi.org/10.1016/j.cageo.2017.05.001.
             w (:obj:`ndarray`): Array of angular frequencies to compute the
                 impedance for (w = 2*pi*f).
@@ -307,6 +307,9 @@ class Dias2000(Inversion):
 
 class Shin2015(Inversion):
     """A Shin (2015) inversion scheme for SIP data.
+
+    The Shin model implementation is currently yielding unexpected results and
+    needs to be reviewed.
 
     Args:
         *args: Arguments passed to the Inversion class.
@@ -329,11 +332,11 @@ class Shin2015(Inversion):
         self._bounds = np.array(self.param_bounds).T
 
     def forward(self, theta, w):
-        """Returns a Dias (2000) impedance.
+        """Returns a Shin (2015) impedance.
 
         Args:
-            theta (:obj:`ndarray`): Ordered array of R0, m, log_tau, log_eta,
-                delta. See https://doi.org/10.1016/j.cageo.2017.05.001.
+            theta (:obj:`ndarray`): Ordered array of R1, R2, log_Q1, log_Q2,
+                n1, n2.
             w (:obj:`ndarray`): Array of angular frequencies to compute the
                 impedance for (w = 2*pi*f).
 
