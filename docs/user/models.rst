@@ -12,17 +12,29 @@ inversion model classes described in the SIP models section below.
 SIP models
 ----------
 
+Pelton Cole-Cole
+^^^^^^^^^^^^^^^^
+
 .. autoclass:: bisip.models.PeltonColeCole
     :members:
     :show-inheritance:
+
+Polynomial decomposition
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. autoclass:: bisip.models.PolynomialDecomposition
     :members:
     :show-inheritance:
 
+Dias (2000)
+^^^^^^^^^^^
+
 .. autoclass:: bisip.models.Dias2000
     :members:
     :show-inheritance:
+
+Shin (2015)
+^^^^^^^^^^^
 
 .. autoclass:: bisip.models.Shin2015
     :members:
