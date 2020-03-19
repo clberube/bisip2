@@ -4,25 +4,12 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-17T09:50:58-04:00
+# @Last modified time: 2020-03-19T09:17:25-04:00
 
 
-import os
 import warnings
-import glob
 
 import numpy as np
-import bisip
-
-
-class DataFiles(dict):
-
-    def __init__(self, *args, **kwargs):
-        super(DataFiles, self).__init__(*args, **kwargs)
-        dir = os.path.join(os.path.dirname(bisip.__file__), 'data/*.dat')
-        files = sorted(glob.glob(dir))
-        keys = [os.path.splitext(os.path.basename(x))[0] for x in files]
-        self.update({k: v for k, v in zip(keys, files)})
 
 
 class utils:
@@ -154,3 +141,24 @@ class utils:
         data['w'] = 2*np.pi*data['freq']
 
         return data
+
+
+def print_pelton_parameters(names, values, uncertainties):
+    """Prints Pelton parameters and their uncertainties with LaTeX.
+
+    Args:
+        names (:obj:`list`): The parameter names from `Inversion.param_names`.
+        values (:obj:`list`): Mean parameters from `Inversion.get_param_mean`.
+        uncertainties (:obj:`list`): Std values from `Inversion.get_param_std`.
+
+    """
+    from IPython.display import display, Math
+    for n, v, u in zip(names, values, uncertainties):
+        txt = '{0}: {1:.3f} \pm {2:.3f}'
+        n = '\\'+n.replace('_', '\\')
+        n = n.replace('\\r0', '\\rho_0')
+        n = n.replace('\\m', 'm_')
+        n = n.replace('\\c', 'c_')
+        n = n.replace('\\tau', '\\tau_')
+        txt = txt.format(n, v, u)
+        display(Math(txt))
