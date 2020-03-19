@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-18T16:25:04-04:00
+# @Last modified time: 2020-03-19T09:28:32-04:00
 
 
 import numpy as np
@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 from corner import corner
 
 
-class plotlib:
+class plotlib(object):
 
     def plot_traces(self, chain=None, **kwargs):
         """

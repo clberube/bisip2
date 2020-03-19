@@ -58,7 +58,6 @@ A more detailed example is available in the `Quickstart tutorial`_.
    user/install
    user/models
    user/data_format
-   user/utilities
 
 .. toctree::
    :maxdepth: 1

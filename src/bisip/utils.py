@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-19T09:17:25-04:00
+# @Last modified time: 2020-03-19T10:05:35-04:00
 
 
 import warnings
@@ -12,7 +12,7 @@ import warnings
 import numpy as np
 
 
-class utils:
+class utils(object):
 
     def get_model_percentile(self, p, chain=None, **kwargs):
         """Gets percentiles of the model values for a MCMC chain.
@@ -142,23 +142,44 @@ class utils:
 
         return data
 
+    def print_latex_parameters(self, names, values, uncertainties, decimals=3,
+                               **kwargs):
+        """Prints Pelton parameters and their uncertainties with LaTeX.
 
-def print_pelton_parameters(names, values, uncertainties):
-    """Prints Pelton parameters and their uncertainties with LaTeX.
+        Requires the code to be run in interactive mode either from a Jupyter
+        notebook or IPython console to use display and Math functions.
 
-    Args:
-        names (:obj:`list`): The parameter names from `Inversion.param_names`.
-        values (:obj:`list`): Mean parameters from `Inversion.get_param_mean`.
-        uncertainties (:obj:`list`): Std values from `Inversion.get_param_std`.
+        Args:
+            names (:obj:`list`): The list of parameter names. Obtain it from
+                `Inversion.param_names`.
+            values (:obj:`list`): Ordered list of mean parameter values. obtain
+                it from `Inversion.get_param_mean`.
+            uncertainties (:obj:`list`): Ordered list of parameter
+                uncertainties. Obtain it  from `Inversion.get_param_std`.
+            decimals (:obj:`int`): The number of decimals to display.
 
-    """
-    from IPython.display import display, Math
-    for n, v, u in zip(names, values, uncertainties):
-        txt = '{0}: {1:.3f} \pm {2:.3f}'
-        n = '\\'+n.replace('_', '\\')
-        n = n.replace('\\r0', '\\rho_0')
-        n = n.replace('\\m', 'm_')
-        n = n.replace('\\c', 'c_')
-        n = n.replace('\\tau', '\\tau_')
-        txt = txt.format(n, v, u)
-        display(Math(txt))
+        """
+        from IPython.display import display, Math
+
+        def replace_all(text, dic):
+            for i, j in dic.items():
+                text = text.replace(i, j)
+            return text
+
+        model_name = type(self).__name__
+
+        if model_name == 'PeltonColeCole':
+            dic = {'\\r0': '\\rho_0',
+                   '\\m': 'm_',
+                   '\\c': 'c_',
+                   '\\log_tau': '\\log\\tau_',
+                   }
+        elif model_name == 'Dias2000':
+            dic = {'\\r0': '\\rho_0',
+                   '\\m': 'm',
+                   '\\log_tau': '\\log\\tau'}
+
+        for n, v, u in zip(names, values, uncertainties):
+            txt = '\\{0}: {1:.{3}f} \pm {2:.{3}f}'.format(n, v, u, decimals)
+            txt = replace_all(txt, dic)
+            display(Math(txt))
