@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-19T09:28:32-04:00
+# @Last modified time: 2020-03-19T11:49:13-04:00
 
 
 import numpy as np
@@ -46,7 +46,7 @@ class plotlib(object):
             ax = axes[i]
             ax.plot(chain[:, :, i], 'k', alpha=0.3)
             ax.set_xlim(0, len(chain))
-            ax.set_ylim(self.param_bounds[i])
+            ax.set_ylim(self.param_bounds[:, i])
             ax.set_ylabel(labels[i])
             ax.yaxis.set_label_coords(-0.1, 0.5)
         axes[-1].set_xlabel('Steps')

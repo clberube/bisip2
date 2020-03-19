@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-19T10:51:04-04:00
+# @Last modified time: 2020-03-19T11:47:29-04:00
 
 
 import emcee
@@ -39,7 +39,7 @@ class Inversion(plotlib.plotlib, utils.utils):
     """
 
     def __init__(self, filepath, nwalkers=32, nsteps=5000, headers=1,
-                 ph_units='mrad', p0=None):
+                 ph_units='mrad'):
 
         # Get arguments
         self.filepath = filepath
@@ -47,9 +47,9 @@ class Inversion(plotlib.plotlib, utils.utils):
         self.nsteps = nsteps
         self.headers = headers
         self.ph_units = ph_units
-        self.p0 = p0
 
         # Set default attributes
+        self._p0 = None
         self._params = {}
         self.__fitted = False
 
@@ -81,10 +81,13 @@ class Inversion(plotlib.plotlib, utils.utils):
             raise AssertionError('Model is not fitted! Fit the model to a '
                                  'dataset before attempting to plot results.')
 
-    def fit(self, pool=None, moves=None):
+    def fit(self, p0=None, pool=None, moves=None):
         """Samples the posterior distribution to fit the model to the data.
 
         Args:
+            p0 (:obj:`ndarray`): Starting parameter values. Should be a 2D
+                array with shape (nwalkers, ndim). If None, random values will
+                be uniformly drawn from the parameter bounds. Defaults to None.
             pool (:obj:`pool`, optional): A pool object from the
                 Python multiprocessing library. See
                 https://emcee.readthedocs.io/en/stable/tutorials/parallel/.
@@ -94,14 +97,15 @@ class Inversion(plotlib.plotlib, utils.utils):
                 the emcee algorithm `StretchMove` is used. Defaults to None.
 
         """
-        self._bounds = np.array(self.param_bounds).T
-        self.ndim = self._bounds.shape[1]
+        self._p0 = p0
+        # self._bounds = self.param_bounds
+        self.ndim = self.param_bounds.shape[1]
 
         if self._p0 is None:
-            self._p0 = np.random.uniform(*self._bounds,
+            self._p0 = np.random.uniform(*self.param_bounds,
                                          (self.nwalkers, self.ndim))
 
-        model_args = (self.forward, self._bounds, self._data['w'],
+        model_args = (self.forward, self.param_bounds, self._data['w'],
                       self._data['zn'], self._data['zn_err'])
 
         self._sampler = emcee.EnsembleSampler(self.nwalkers,
@@ -134,13 +138,9 @@ class Inversion(plotlib.plotlib, utils.utils):
 
     @property
     def p0(self):
-        """:obj:`ndarray`: Starting parameter values. Should have shape
-            of (nwalkers, ndim)"""
+        """:obj:`ndarray`: Starting parameter values. Should be a 2D array with
+            shape (nwalkers, ndim)."""
         return self._p0
-
-    @p0.setter
-    def p0(self, var):
-        self._p0 = var
 
     @property
     def params(self):
@@ -176,7 +176,7 @@ class Inversion(plotlib.plotlib, utils.utils):
     @property
     def param_bounds(self):
         """:obj:`list` of :obj:`float`: Ordered bounds of the parameters."""
-        return list(self.params.values())
+        return np.array(list(self.params.values())).T
 
 
 class PolynomialDecomposition(Inversion):
@@ -212,7 +212,7 @@ class PolynomialDecomposition(Inversion):
         self.params.update({'r0': [0.9, 1.1]})
         self.params.update({f'a{x}': [-1, 1] for x in deg_range})
 
-        self._bounds = np.array(self.param_bounds).T
+        # self._bounds = np.array(self.param_bounds).T
 
     def forward(self, theta, w):
         """Returns a Polynomial Decomposition impedance.
@@ -251,7 +251,7 @@ class PeltonColeCole(Inversion):
         self.params.update({f'log_tau{i+1}': [-15, 5] for i in range_modes})
         self.params.update({f'c{i+1}': [0.0, 1.0] for i in range_modes})
 
-        self._bounds = np.array(self.param_bounds).T
+        # self._bounds = np.array(self.param_bounds).T
 
     def forward(self, theta, w):
         """Returns a ColeCole impedance.
@@ -290,7 +290,7 @@ class Dias2000(Inversion):
                             'eta': [0, 150],
                             'delta': [0, 1]})
 
-        self._bounds = np.array(self.param_bounds).T
+        # self._bounds = np.array(self.param_bounds).T
 
     def forward(self, theta, w):
         """Returns a Dias (2000) impedance.
@@ -330,7 +330,7 @@ class Shin2015(Inversion):
                             'n2': [0, 1],
                             })
 
-        self._bounds = np.array(self.param_bounds).T
+        # self._bounds = np.array(self.param_bounds).T
 
     def forward(self, theta, w):
         """Returns a Shin (2015) impedance.
