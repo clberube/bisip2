@@ -64,7 +64,7 @@ A more detailed example is available in the `Quickstart tutorial`_.
    :caption: Tutorials
 
    tutorials/quickstart
-   tutorials/decomposition
    tutorials/pelton
    tutorials/dias
+   tutorials/decomposition
    tutorials/shin
