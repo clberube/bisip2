@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-23T09:18:14-04:00
+# @Last modified time: 2020-03-23T15:49:25-04:00
 
 
 import numpy as np
@@ -222,6 +222,7 @@ class plotlib(object):
         ax[1].plot(data['freq'], -np.arctan2(*lines[1][::-1]), c='C3')
         ax[1].plot(data['freq'], -np.arctan2(*lines[2][::-1]), ls=':', c='0.5')
         ax[1].set_ylabel('-Phase (rad)')
+        ax[1].set_yscale('log')
 
         for i in range(2):
             ax[i].set_xscale('log')
