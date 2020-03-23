@@ -4,7 +4,7 @@
 # @Date:   05-03-2020
 # @Email:  charles@goldspot.ca
 # @Last modified by:   charles
-# @Last modified time: 2020-03-19T11:49:13-04:00
+# @Last modified time: 2020-03-23T09:18:14-04:00
 
 
 import numpy as np
@@ -172,6 +172,8 @@ class plotlib(object):
         ax.set_xlabel('Frequency (Hz)')
         ax.set_ylabel(y[feature][2])
         ax.set_xscale('log')
+        fig.tight_layout()
+        return fig
 
     def plot_fit_pa(self, chain=None, p=[2.5, 50, 97.5], **kwargs):
         """
